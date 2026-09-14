@@ -1,0 +1,140 @@
+<mxfile host="app.diagrams.net" agent="Claude">
+  <diagram name="CrowdSec Systems View" id="crowdsec-sys-view">
+    <mxGraphModel dx="1847" dy="1155" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="internet" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" value="INTERNET / EXTERNAL USERS" vertex="1">
+          <mxGeometry height="50" width="260" x="440" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="boundaryA" parent="1" style="line;strokeColor=#B20000;strokeWidth=2;fontColor=#B20000;fontStyle=1;verticalAlign=bottom;labelPosition=center;align=center;spacingBottom=4;dashed=1;" value="TRUST BOUNDARY A — Internet ↔ Enterprise Edge" vertex="1">
+          <mxGeometry height="10" width="980" x="60" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="edgeZone" parent="1" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;" value="ENTERPRISE EDGE" vertex="1">
+          <mxGeometry height="140" width="360" x="370" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="edgeFW" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=14;" value="Firewall / WAF / Proxy" vertex="1">
+          <mxGeometry height="40" width="320" x="390" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="edgeBouncer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="Bouncer (edge enforcement point)" vertex="1">
+          <mxGeometry height="40" width="280" x="410" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="publicApps" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" value="Public Applications / Web &amp;amp; API Servers&#xa;+ Security Engine agent (edge logs)" vertex="1">
+          <mxGeometry height="70" width="360" x="390" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="internalZone" parent="1" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;" value="INTERNAL ENTERPRISE NETWORK" vertex="1">
+          <mxGeometry height="140" width="280" x="60" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="internalHosts" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=14;" value="Linux/VM Servers, Containers,&#xa;Network Devices" vertex="1">
+          <mxGeometry height="40" width="240" x="80" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="internalAgent" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" value="+ Security Engine agent(s) (internal logs)" vertex="1">
+          <mxGeometry height="40" width="240" x="80" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="boundaryB" parent="1" style="line;strokeColor=#B20000;strokeWidth=2;fontColor=#B20000;fontStyle=1;verticalAlign=bottom;labelPosition=center;align=center;spacingBottom=4;dashed=1;fontSize=14;" value="TRUST BOUNDARY B — Monitored hosts/apps ↔ Decision plane&#xa;(agent→LAPI auth: mTLS / scoped API key, least privilege)" vertex="1">
+          <mxGeometry height="10" width="980" x="60" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="lapi" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" value="LAPI&#xa;Local API / Decision Store&#xa;(auth&#39;d read/write per component identity)" vertex="1">
+          <mxGeometry height="70" width="280" x="410" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="boundaryC" parent="1" style="line;strokeColor=#B20000;strokeWidth=2;fontColor=#B20000;fontStyle=1;verticalAlign=bottom;labelPosition=center;align=center;spacingBottom=4;dashed=1;fontSize=14;" value="TRUST BOUNDARY C — Decision plane ↔ Enforcement points&#xa;(bouncer→LAPI auth: scoped, revocable API key)" vertex="1">
+          <mxGeometry height="10" width="980" x="60" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="webBouncer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="Web Bouncer&#xa;(enforces at web server)" vertex="1">
+          <mxGeometry height="60" width="220" x="120" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="fwBouncer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="Firewall Bouncer&#xa;(enforces at firewall/WAF)" vertex="1">
+          <mxGeometry height="60" width="220" x="440" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="_fhwk9sABvhP7h7qLyqG-1" edge="1" parent="1" source="otherRemediation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="900" y="760" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="otherRemediation" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" value="Other Remediation Components&#xa;(apps, LB, etc.)" vertex="1">
+          <mxGeometry height="70" width="220" x="790" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="boundaryD" parent="1" style="line;strokeColor=#B20000;strokeWidth=2;fontColor=#B20000;fontStyle=1;verticalAlign=bottom;labelPosition=center;align=center;spacingBottom=4;dashed=1;fontSize=14;" value="TRUST BOUNDARY D — Operational plane ↔ Management plane" vertex="1">
+          <mxGeometry height="10" width="980" x="60" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="admins" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" value="Security Admins / SOC / DevOps / IT" vertex="1">
+          <mxGeometry height="50" width="280" x="410" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="console" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" value="CrowdSec Console / Central Configuration&#xa;(parsers, scenarios, policy versioning)" vertex="1">
+          <mxGeometry height="60" width="340" x="380" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="boundaryE" parent="1" style="line;strokeColor=#B20000;strokeWidth=2;fontColor=#B20000;fontStyle=1;verticalAlign=bottom;labelPosition=center;align=center;spacingBottom=4;dashed=1;fontSize=14;" value="TRUST BOUNDARY E — Enterprise ↔ External CrowdSec services" vertex="1">
+          <mxGeometry height="10" width="980" x="60" y="1080" as="geometry" />
+        </mxCell>
+        <mxCell id="external" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" value="CrowdSec External Console / Community Threat Intelligence&#xa;(integrity-checked before use)" vertex="1">
+          <mxGeometry height="70" width="340" x="380" y="1130" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="internet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="edgeFW">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="edgeFW" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="edgeBouncer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="edgeBouncer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="publicApps" value="Allow/Block">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="publicApps" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;" target="lapi" value="Logs/Events">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="850" y="345" />
+              <mxPoint x="850" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="internalAgent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="lapi" value="Logs/Events">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="470" />
+              <mxPoint x="200" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="lapi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="webBouncer" value="Decisions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="lapi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="fwBouncer" value="Decisions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="lapi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="otherRemediation" value="Decisions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="admins" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=13;" target="console" value="Authenticated administration">
+          <mxGeometry relative="1" x="0.0175" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="console" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="siem">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="console" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=14;" target="lapi" value="Config push (parsers/scenarios/policy)">
+          <mxGeometry relative="1" x="-0.0198" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="900.05" y="920.05" />
+              <mxPoint x="900.05" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="siem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=14;" target="console" value="Threat intel / blocklists / updates">
+          <mxGeometry relative="1" x="-0.3333" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fGS8stHsSNOtIjLucFsM-1" edge="1" parent="1" source="external" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="siem" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="1090" as="sourcePoint" />
+            <mxPoint x="550" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="siem" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" value="Logs / SIEM / Audit Storage" vertex="1">
+          <mxGeometry height="50" width="280" x="410" y="1000" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
