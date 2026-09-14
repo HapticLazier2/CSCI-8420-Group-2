@@ -48,7 +48,6 @@ Threat → Feature mapping
 Threat	Addressed by
 [threat]	[feature]
 [threat]	[feature]
-
 ## 4. Team Motivation
 
 Our team selected **CrowdSec** because it is a practical open-source security project that addresses real-world cybersecurity threats. From a technical perspective, CrowdSec is useful because it can analyze system and application logs, identify suspicious behavior, generate security decisions, and work with remediation components to respond to malicious activity. Its architecture also includes different security-related components such as parsers, detection scenarios, APIs, and threat-intelligence mechanisms, which gives our team several areas to study from a software assurance perspective.
@@ -82,7 +81,6 @@ blotus, buxior & Jdv / CrowdSec SAS, 86 Contributors
 - Go Template 1.3%
 - HTML 0.7%
 - Makefile 0.7%
-
 Core dependencies: Docker, Go, Grok Patterns, SSH, SQLite
 
 ### Supported platforms
