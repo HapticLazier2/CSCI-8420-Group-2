@@ -26,15 +26,12 @@ Project Board: [link](https://github.com/users/StevePhan412/projects/1)
 
 ### Hypothetical operational environment
 
-[home / office / enterprise / bank / government — 
-describe the setting and why users there would deploy this software]
+[home / office / enterprise / bank / government — describe the setting and why users there would deploy this software]
 
 ### Systems engineering diagram
 
 [Embed diagram image here, e.g. ![systems diagram]
-(diagrams/systems-view.png). Diagram should show the software's components, 
-the actors/users involved, adjacent systems it interacts with, network zones, 
-and trust boundaries within the chosen environment.]
+(diagrams/systems-view.png). Diagram should show the software's components, the actors/users involved, adjacent systems it interacts with, network zones, and trust boundaries within the chosen environment.]
 
 ## 3. Security Needs, Threats, and Features
 
@@ -42,16 +39,11 @@ and trust boundaries within the chosen environment.]
 
 ### Threats perceived by users
 
-[List realistic threats a user in 
-this environment would worry about
-who the likely attacker is, what 
-they're after, and the attack surface.]
+[List realistic threats a user in this environment would worry about who the likely attacker is, what they're after, and the attack surface.]
 
 ### Security features in the software
-
 [List the software's actual security 
 features that address the threats above.]
-
 Threat → Feature mapping
 Threat	Addressed by
 [threat]	[feature]
