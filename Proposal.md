@@ -59,13 +59,10 @@ Threat	Addressed by
 
 ## 4. Team Motivation
 
-(Issue #5)
-
-[Why the team chose this project
-tie it to team skills/interests 
-(networking background, Go learning goal,
-research interest) and to what's genuinely 
-useful or interesting about the software itself.]
+Our team selected **CrowdSec** because it is a practical open-source security project that addresses real-world cybersecurity threats. From a technical perspective, CrowdSec is useful because it can analyze system and application logs, identify suspicious behavior, generate security decisions, and work with remediation components to respond to malicious activity. Its architecture also includes different security-related components such as parsers, detection scenarios, APIs, and threat-intelligence mechanisms, which gives our team several areas to study from a software assurance perspective.
+Another reason we selected CrowdSec is that it can be deployed in environments such as servers, web applications, containers, and enterprise systems. This allows our team to create a Docker-based testing environment and observe how the software processes security events and makes decisions. Having an environment that we can actually configure and evaluate makes the project more technically meaningful than only studying documentation.
+CrowdSec also has publicly available source code, documentation, an active open-source community, and a history of security-related development. These resources give us opportunities to study its **architecture, security requirements, source code, vulnerabilities, security features, and development practices**.
+Overall, we believe CrowdSec provides a good balance of **technical depth, real-world security value, and manageable project scope** for applying the software assurance concepts covered in this course.
 
 ## 5. Open-Source Project Description
 
