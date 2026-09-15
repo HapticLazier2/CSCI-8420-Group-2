@@ -124,19 +124,65 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 
 ### License
 
-[license name — confirm it's OSI-recognized open source]
+CrowdSec is under the MIT License. The `LICENSE` file at the root of
+`crowdsecurity/crowdsec` reads "Copyright (c) 2020-2023 Crowdsec". MIT is OSI-approved and
+one of the most permissive licenses in common use. The Hub detection content (parsers,
+scenarios, collections, AppSec rules) is MIT too, so the engine and its rules share terms.
+CrowdSec SAS sells products around the free engine, the hosted Console, premium blocklists,
+and the CTI API, which makes this open-core rather than purely community-run.
 
 ### What it permits/requires
 
-[modification, redistribution, commercial use, copyleft implications]
+Anyone can use, copy, modify, distribute, sublicense, and sell the software for free,
+including commercially. Its primary requirement is that the original copyright and
+permission notices stay in any substantial portion of the software.
+
+There is no copyleft. A derivative work can ship under any terms its author wants, including
+proprietary ones, as long as that notice is retained. GPL-family licenses would force
+derivatives back under the same license, so an organization can repackage CrowdSec without
+picking up obligations downstream.
+
+The software is provided "as is", with warranties and liability disclaimed. That reads
+differently for an IDS/IPS than for a library. An operator who relies on CrowdSec and then
+suffers an intrusion because a detection didn't fire has no recourse against the project.
 
 ### Contribution process
 
-[summary of CONTRIBUTING.md — PR process, code review norms, testing/style requirements]
+Bugs go through the GitHub issue tracker, with Discourse for design discussion and Discord
+for quick questions. A contributor forks the repo, commits to a branch, and opens a PR
+against `master`. The core team reviews and merges, usually after asking for changes. The
+rest is enforced rather than suggested:
+
+- The PR template wants what changed and why, a `Fixes #` reference, and the test commands
+  with their real output.
+- One concern per PR, and nothing broken in the LAPI/CAPI payloads, database schema, config
+  keys, or `cscli -o json|raw` output.
+- A box confirms a human reviewed the diff, and a field discloses how much AI assistance was
+  used.
+- `AGENTS.md`, symlinked as `CLAUDE.md` and addressed to "human, or LLM", rules out
+  reformatting and manual dependency bumps. Dependabot owns `go.mod`. Diffs over roughly 400
+  lines get split or justified.
+- Three test layers: Go unit and integration (`make test`, needs Docker with LocalStack),
+  BATS functional (`make bats-all`), and Hub tests. Linting is `golangci-lint` v2.13.
+- A governance bot in `.github/governance.yml` fails any PR without exactly one `kind/*`
+  label, since release notes are generated from it.
+
+Security reports skip all of this. `SECURITY.md` asks that vulnerabilities be emailed to
+`security@crowdsec.net`, optionally GPG-encrypted, not filed as public issues.
+
 
 ### Contributor agreement
 
-[CLA or DCO requirement, if any]
+CrowdSec requires neither a Contributor License Agreement (CLA) nor a Developer Certificate
+of Origin (DCO). No CLA bot runs on PRs, nothing asks for a `Signed-off-by` trailer, and no
+equivalent attestation appears in the PR template, `AGENTS.md`, or the contribution docs.
+`CONTRIBUTING.md` is one line pointing at the documentation site.
+
+Contributions are accepted on the inbound-equals-outbound convention instead: a contribution
+comes in under the same license the project distributes under. A merged PR becomes part of
+the MIT-licensed codebase, and that is the whole arrangement. Easier than projects gating
+PRs behind a CLA signature, but the project holds no signed patent or copyright grant beyond
+what MIT already implies.
 
 ## 7. Security-Related History
 
