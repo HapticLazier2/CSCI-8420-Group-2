@@ -26,7 +26,7 @@ Project Board: [link](https://github.com/users/HapticLazier2/projects/1/views/1)
 
 CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment.
 
-### Systems engineering diagram
+### Systems engineering diagram discription
 
 We thought it would be helpful to look at the system in layers, based on trust boundaries and walls, to identify threats that could compromise each layer and features that could protect each layer.
 
