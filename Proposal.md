@@ -37,10 +37,14 @@ I thought it would be helpful to look at the system in layers, based on trust bo
 the actors/users involved, adjacent systems it interacts with, network zones, 
 and trust boundaries within the chosen environment.]
 
+<img src="resources/static/systems-view-diagram.png" alt="System View Diagram" Width="600" />
+
 ## 3. Security Needs, Threats, and Features
 I reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system. 
 
 ### Threats 
+Intrusion detection a prevention is a quiet challenging area of the Cyber Security. A cyber product may remediate one threat and result in a new one. For this project I looked at the CrowdSec available documents on its repository and found some of the threat that may challenge deploying CrowSec in an enterprise infrastructure and network environment. 
+
 #### Compromise of CowdSec Agents and the Local API / LAPI
 A direct compromise of the CowdSec LAPI could allow an attacker to manipulate the detection, communication, and decision behaviour, which could result in affecting protected systems. 
 
@@ -69,11 +73,26 @@ Any vulnerability in dependencies could be inherited by CrowdSec, compromise it 
 Overwhelming the CrowdSec with high-volume malicious traffic could ingest a high log volume that eventually congests the detection pipeline.
 
 
+### Security Features
+Thus far, and as I have been exploring CrowdSec, I have found great security features that help in detection analysis and remediation of threats. One of the strongest is the modularity and multi-layer enforcement. Here is a list of some of the and mentionable security features.
 
+#### Scoped and Distinct to Components Authentication 
+CrowdSec components have different authentication mechanisms with fairly limited permissions that reduce the impact of unauthorized access through stolen credentials. 
 
-### Security Threats 
+#### Separate Detection and Remediation Points
+The detect here ( By Agents ) and remediate there ( By Bouncer ) mechanism of  CrowdSec limits the capability of a compromised component to generate malicious decisions or enforce a malicious decision. 
 
-#### 1. Comp
+#### Diversity-Based Trust-Scoring of Blocklist 
+CrowdSec profiles the reporter source to ensure cross-source consistency, which helps prevent a single malicious source from poisoning that shared data source 
+
+#### Modular Remediation in Different Trust Boundaries 
+Bouncers can enforce a decision at multiple points in an enterprise network and in any boundary; in other words, it provides a multi-layer enforcer component targeting enforcing a decision from the public internet interface to the hosts (Firewall Bouncer, IP table Bouncer, Web server Bouncer, Reverse proxy Bouncer). 
+
+### Vulnerability Disclosure Process
+CrowdSec discloses vulnerabilities through a private email newsletter to stakeholders covering the targeted scope.
+
+#### MIT License
+CrowdSec releases parsers and scenarios on the Hub. The Hub is open to reviewers and security reviewers from cybersecurity communities can review thw detection rules  
 
 (Issue #4)
 
@@ -174,7 +193,7 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 
 ### Individual reflections (what did you learn from this assignment? what did you find most useful?)
 
-Mujib: [reflection]
+Mujib: 
 Kowshik: [reflection]
 Leonard: [reflection]
 Trung: [reflection]
