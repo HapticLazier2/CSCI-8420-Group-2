@@ -26,13 +26,12 @@ Project Board: [link](https://github.com/users/StevePhan412/projects/1)
 
 ### Hypothetical operational environment
 
-[home / office / enterprise / bank / government — 
-describe the setting and why users there would deploy this software]
+CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde]([)](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency?utm_source=chatgpt.com) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment. 
 
 ### Systems engineering diagram
 
 I thought it would be helpful to look at the system in layers, based on trust boundaries and walls, to identify threats that could compromise each layer and features that could protect each layer. 
-<img src="resources/static/systems-view-diagram.png" alt="System View Diagram" Width="1200" />
+<img src="resources/static/systems-view-diagram.png" alt="System View Diagram" height="1200" Width="1200" />
 
 ## 3. Security Needs, Threats, and Features
 I reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system. 
