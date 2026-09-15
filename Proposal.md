@@ -26,7 +26,7 @@ Project Board: [link](https://github.com/users/StevePhan412/projects/1)
 
 ### Hypothetical operational environment
 
-CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency?utm_source=chatgpt.com) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment. 
+CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment. 
 
 ### Systems engineering diagram
 
