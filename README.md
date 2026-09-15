@@ -29,5 +29,3 @@ Every task is tracked as a GitHub Issue linked to a card on the Project Board.
 Before an issue is closed, it should have a comment summarizing what was done and
 at least one teammate's review. See the [Wiki](../../wiki) for full workflow
 norms, meeting notes, and the decisions log.
-
-
