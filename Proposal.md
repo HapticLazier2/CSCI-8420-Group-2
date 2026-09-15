@@ -31,12 +31,49 @@ describe the setting and why users there would deploy this software]
 
 ### Systems engineering diagram
 
+I thought it would be helpful to look at the system in layers, based on trust boundaries and walls, to identify threats that could compromise each layer and features that could protect each layer. 
 [Embed diagram image here, e.g. ![systems diagram]
 (diagrams/systems-view.png). Diagram should show the software's components, 
 the actors/users involved, adjacent systems it interacts with, network zones, 
 and trust boundaries within the chosen environment.]
 
 ## 3. Security Needs, Threats, and Features
+I reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system. 
+
+### Threats 
+#### Compromise of CowdSec Agents and the Local API / LAPI
+A direct compromise of the CowdSec LAPI could allow an attacker to manipulate the detection, communication, and decision behaviour, which could result in affecting protected systems. 
+
+#### Credentials and API Keys of the Bouncer and Agents 
+Stolen API keys and credentials could allow attackers to impersonate trusted CowdSec components such as the Bouncer and Agents to retrieve information about a Bouncer decision or enforce a decision that is against a protected system. 
+
+#### Malicious logs and crafted HTTP traffic
+Manipulated logs and controlled HTTP traffic could target the core logic of the parser, in which CrowSec itself becomes a target point for attackers to gain access to the network. 
+
+#### Poisoned Malicious or Buggy detection contents 
+A parser could be poisoned by the malicious community and run into bugs that can create a collection of false positives and false negatives across a multi-deployment plan of wide distribution to the hub.
+
+#### Bouncer Compromise or Spoofing
+A compromised and fake remediation bouncer component could be used to manipulate a decision, expose a security decision, or enforce decisions like preventing legitimate blocks and enforcing a wrong decision in a local level.  
+
+#### Third-party Bouncers
+Third-party Bouncer components could become a security risk, and the impact may depend on the privileges given to the bouncer. 
+
+#### Poisoned or Falsified Blocklists
+If the community submits a legitimate IP to be blocked or a malicious IP to be escaped, it can cause problems with the accuracy of the of enforcing a security good decision
+
+#### Dependency Vulnerability 
+Any vulnerability in dependencies could be inherited by CrowdSec, compromise it indirectly and impact a large number of deployments. 
+
+#### Denial of Service DoS
+Overwhelming the CrowdSec with high-volume malicious traffic could ingest a high log volume that eventually congests the detection pipeline.
+
+
+
+
+### Security Threats 
+
+#### 1. Comp
 
 (Issue #4)
 
