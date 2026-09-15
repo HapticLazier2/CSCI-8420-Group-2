@@ -124,12 +124,17 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 
 ## 8. Reflection
 
-(Issue #9)
+### Kowshik Chowdhury – Individual Reflection
+
+From this assignment, I learned that selecting an open-source security project requires more than simply choosing software with security features. While working on the motivation section, I explored why CrowdSec is technically useful, what kinds of security problems it addresses, and why it is a suitable project for applying software assurance concepts.
+
+The most useful part for me was understanding how CrowdSec can be studied from different software assurance perspectives, such as its security features, architecture, vulnerabilities, open-source development practices, and testing possibilities. I also learned that choosing a project with a manageable scope and real-world security value is important for completing the later stages of the course project.
+
+I also gained experience using GitHub branches, pull requests, commits, and reviews to contribute my part of a group assignment. Overall, this assignment helped me better understand both the technical value of CrowdSec and the importance of structured collaboration in a software assurance project.
 
 ### Individual reflections (what did you learn from this assignment? what did you find most useful?)
 
 Mujib: [reflection]
-Kowshik: [reflection]
 Leonard: [reflection]
 Trung: [reflection]
 Hrudhay: [reflection]
