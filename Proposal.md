@@ -4,9 +4,9 @@
 
 Mujib Latifi · Kowshik Chowdhury · Leonard Meredith · Trung Phan · Hrudhay Rao Chepyala
 
-Repository: [link](https://github.com/StevePhan412/CSCI-8420-Group-2)
+Repository: [link](https://github.com/HapticLazier2/CSCI-8420-Group-2)
 
-Project Board: [link](https://github.com/users/StevePhan412/projects/1)
+Project Board: [link](https://github.com/users/HapticLazier2/projects/1/views/1)
 
 ## 1. Open-Source Software
 
@@ -22,24 +22,16 @@ Project Board: [link](https://github.com/users/StevePhan412/projects/1)
 
 ## 2. Systems Engineering View
 
-(Issue #3)
 
 ### Hypothetical operational environment
 
 CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment. 
 
 ### Systems engineering diagram
-
-I thought it would be helpful to look at the system in layers, based on trust boundaries and walls, to identify threats that could compromise each layer and features that could protect each layer. 
 <img src="resources/static/systems-view-diagram.png" alt="System View Diagram" height="1200" Width="1200" />
-[home / office / enterprise / bank / government — describe the setting and why users there would deploy this software]
-
-### Systems engineering diagram
-
-[Embed diagram image here, e.g. ![systems diagram] (diagrams/systems-view.png). Diagram should show the software's components, the actors/users involved, adjacent systems it interacts with, network zones, and trust boundaries within the chosen environment.]
 
 ## 3. Security Needs, Threats, and Features
-I reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system. 
+We reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system. 
 
 ### Threats 
 Intrusion detection a prevention is a quiet challenging area of the Cyber Security. A cyber product may remediate one threat and result in a new one. For this project I looked at the CrowdSec available documents on its repository and found some of the threat that may challenge deploying CrowSec in an enterprise infrastructure and network environment. 
@@ -89,14 +81,6 @@ Bouncers can enforce a decision at multiple points in an enterprise network and 
 
 ### Vulnerability Disclosure Process
 CrowdSec discloses vulnerabilities through a private email newsletter to stakeholders covering the targeted scope.
-
-#### MIT License
-CrowdSec releases parsers and scenarios on the Hub. The Hub is open to reviewers and security reviewers from cybersecurity communities can review thw detection rules  
-
-Crowdsec represents a critical advancement in cybersecurity, addressing a prevalent and increasingly sophisticated issue: the accurate detection of IP addresses associated with VPNs or proxy services often used to conceal malicious online activity.
-
-VPNs and proxy services are regularly utilized by threat actors to obfuscate their identities and locations, undermining the ability of organizations to detect, attribute, and mitigate cyber threats effectively. This layer of anonymity not only conceals the origins of malicious actions but also exacerbates the complexity of preventing unauthorized intrusions and various cybercrimes.
-
 
 ## Security Features in the Software
 
@@ -178,8 +162,6 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 - [GitHub README](https://github.com/crowdsecurity/crowdsec) — overall introduction to how CrowdSec works
 
 ## 6. License, Contribution Procedures, and Contributor Agreements
-
-(Issue #7)
 
 ### License
 
@@ -291,9 +273,9 @@ An unauthenticated remote attacker can bypass the entire AppSec body-inspection 
 * If you are using a multi-server setup, LAPI will be exposed in the network, in which case you are at risk if untrusted IPs can access it.
 
 
-## 8. Reflection
+### Individual reflections (what did you learn from this assignment? what did you find most useful?)
 
-### Kowshik Chowdhury – Individual Reflection
+Kowshik Chowdhury
 
 From this assignment, I learned that selecting an open-source security project requires more than simply choosing software with security features. While working on the motivation section, I explored why CrowdSec is technically useful, what kinds of security problems it addresses, and why it is a suitable project for applying software assurance concepts.
 
@@ -301,10 +283,10 @@ The most useful part for me was understanding how CrowdSec can be studied from d
 
 I also gained experience using GitHub branches, pull requests, commits, and reviews to contribute my part of a group assignment. Overall, this assignment helped me better understand both the technical value of CrowdSec and the importance of structured collaboration in a software assurance project.
 
-### Individual reflections (what did you learn from this assignment? what did you find most useful?)
 
 Mujib: [reflection]
-Leonard: [reflection]
+
+Leonard: I was able to learn about crowdsec a program I hadn't heard about until now, and integrate it into my own firewall. As the team leader I have become more familiar with github and its ability for project management. This is not something I have explored deeply outside of small instances of gitlab.
 
 Trung:
 I was able to learn about Intrusion Detection System and its usage within an enterprise. I am quite excited to see such a tool existed within the cyber industry and solving the very difficult challenge involving cyberattacks. I also gained more knowledge with Github to lookup CVEs, how to create pipelines and use it effectively. I think the most useful knowledge about this assignment is how even for a security software, there are still flaws and can also be a vulnerability to the system. 
