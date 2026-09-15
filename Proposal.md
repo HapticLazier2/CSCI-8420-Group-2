@@ -26,7 +26,7 @@ Project Board: [link](https://github.com/users/StevePhan412/projects/1)
 
 ### Hypothetical operational environment
 
-CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde]([)](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency?utm_source=chatgpt.com) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment. 
+CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency?utm_source=chatgpt.com) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment. 
 
 ### Systems engineering diagram
 
@@ -187,7 +187,9 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 
 ### Individual reflections (what did you learn from this assignment? what did you find most useful?)
 
-Mujib: 
+#### Mujib: 
+Although this milestone of the project was challenging in terms of getting introduced to a completely new product, exploring its design and architecture, and finding security issues especially in operating environment to system, computer networks and technology infrastructure, it was highly helpful to learn about CrowdSec as an intrusion detection and prevention technology product. Throughout the process, I learned about the different layers and boundaries that CrowSed agents and bouncers could be deployed. CrowdSec features and possible threats that could be considered a compromise.  CrowdSec has great features, and one that stood out to me is that it is an obvious, transparent platform- not that it is secured, but that it takes security from a vendor-provided box or software product to a community-supported open-source platform. Thanks to everyone on my team who are motivated to learn and explore CrowdSec from a Software Assurance and Software Security perspective. I am quite excited to learn more and happy to work alongside my team to contributr in improvement of at least one aspect of this open-source project and implement the knowledge that we will gian thoughout the class. 
+
 Kowshik: [reflection]
 Leonard: [reflection]
 Trung: [reflection]
