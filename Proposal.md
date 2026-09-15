@@ -32,6 +32,11 @@ CrowdSec is meant to be deployed primarily for high security and highly monitore
 
 I thought it would be helpful to look at the system in layers, based on trust boundaries and walls, to identify threats that could compromise each layer and features that could protect each layer. 
 <img src="resources/static/systems-view-diagram.png" alt="System View Diagram" height="1200" Width="1200" />
+[home / office / enterprise / bank / government — describe the setting and why users there would deploy this software]
+
+### Systems engineering diagram
+
+[Embed diagram image here, e.g. ![systems diagram] (diagrams/systems-view.png). Diagram should show the software's components, the actors/users involved, adjacent systems it interacts with, network zones, and trust boundaries within the chosen environment.]
 
 ## 3. Security Needs, Threats, and Features
 I reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system. 
@@ -92,16 +97,11 @@ CrowdSec releases parsers and scenarios on the Hub. The Hub is open to reviewers
 
 ### Threats perceived by users
 
-[List realistic threats a user in 
-this environment would worry about
-who the likely attacker is, what 
-they're after, and the attack surface.]
+[List realistic threats a user in this environment would worry about who the likely attacker is, what they're after, and the attack surface.]
 
 ### Security features in the software
 
-[List the software's actual security 
-features that address the threats above.]
-
+[List the software's actual security features that address the threats above.]
 Threat → Feature mapping
 Threat	Addressed by
 [threat]	[feature]
@@ -109,13 +109,13 @@ Threat	Addressed by
 
 ## 4. Team Motivation
 
-(Issue #5)
+Our team selected **CrowdSec** because it is a practical open-source security project that addresses real-world cybersecurity threats. From a technical perspective, CrowdSec is useful because it can analyze system and application logs, identify suspicious behavior, generate security decisions, and work with remediation components to respond to malicious activity. Its architecture also includes different security-related components such as parsers, detection scenarios, APIs, and threat-intelligence mechanisms, which gives our team several areas to study from a software assurance perspective.
 
-[Why the team chose this project
-tie it to team skills/interests 
-(networking background, Go learning goal,
-research interest) and to what's genuinely 
-useful or interesting about the software itself.]
+Another reason we selected CrowdSec is that it can be deployed in environments such as servers, web applications, containers, and enterprise systems. This allows our team to create a Docker-based testing environment and observe how the software processes security events and makes decisions. Having an environment that we can actually configure and evaluate makes the project more technically meaningful than only studying documentation.
+
+CrowdSec also has publicly available source code, documentation, an active open-source community, and a history of security-related development. These resources give us opportunities to study its **architecture, security requirements, source code, vulnerabilities, security features, and development practices**.
+
+Overall, we believe CrowdSec provides a good balance of **technical depth, real-world security value, and manageable project scope** for applying the software assurance concepts covered in this course.
 
 ## 5. Open-Source Project Description
 
