@@ -144,7 +144,7 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 
 ## 7. Security-Related History
 
-## [GHSA-rh69-4vqj-9gj8](https://github.com/advisories/GHSA-rh69-4vqj-9gj8): Unbounded request-body read in kubernetes-audit acquisition webhook
+## [GHSA-rh69-4vqj-9gj8](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rh69-4vqj-9gj8): Unbounded request-body read in kubernetes-audit acquisition webhook
 * **CVE ID:** N/A
 * **Weaknesses:** N/A
 * **Affected version:** <= 1.7.8
@@ -156,7 +156,7 @@ The kubernetes-audit acquisition webhook reads the entire request body with `io.
 
 ---
 
-## [GHSA-g2x2-jgfg-pg7g](https://github.com/advisories/GHSA-g2x2-jgfg-pg7g): HTTP acquisition datasource lacks a decompressed body cap and trusts Content-Length
+## [GHSA-g2x2-jgfg-pg7g](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-g2x2-jgfg-pg7g): HTTP acquisition datasource lacks a decompressed body cap and trusts Content-Length
 * **CVE ID:** [CVE-2026-44982](https://nvd.nist.gov/vuln/detail/CVE-2026-44982)
 * **Weaknesses:** [CWE-409](https://cwe.mitre.org/data/definitions/409.html), [CWE-770](https://cwe.mitre.org/data/definitions/770.html)
 
@@ -165,7 +165,7 @@ The HTTP acquisition datasource does not bound the size of request bodies it buf
 
 ---
 
-## [GHSA-rw47-hm26-6wr7](https://github.com/advisories/GHSA-rw47-hm26-6wr7): CrowdSec AppSec silently drops request body for chunked / HTTP-2 requests
+## [GHSA-rw47-hm26-6wr7](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rw47-hm26-6wr7): CrowdSec AppSec silently drops request body for chunked / HTTP-2 requests
 * **CVE ID:** N/A
 * **Weaknesses:** [CWE-693](https://cwe.mitre.org/data/definitions/693.html)
 
@@ -176,7 +176,7 @@ An unauthenticated remote attacker can bypass the entire AppSec body-inspection 
 
 ---
 
-## [GHSA-273h-gvwr-c3qj](https://github.com/advisories/GHSA-273h-gvwr-c3qj): CrowdSec LAPI: Denial of Service via Unbounded Gzip Decompression
+## [GHSA-273h-gvwr-c3qj](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-273h-gvwr-c3qj): CrowdSec LAPI: Denial of Service via Unbounded Gzip Decompression
 * **CVE ID:** [CVE-2026-44981](https://nvd.nist.gov/vuln/detail/CVE-2026-44981)
 * **Weaknesses:** [CWE-409](https://cwe.mitre.org/data/definitions/409.html)
 
