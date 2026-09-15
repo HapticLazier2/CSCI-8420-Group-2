@@ -183,14 +183,17 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 
 ## 8. Reflection
 
-(Issue #9)
+### Kowshik Chowdhury – Individual Reflection
+
+From this assignment, I learned that selecting an open-source security project requires more than simply choosing software with security features. While working on the motivation section, I explored why CrowdSec is technically useful, what kinds of security problems it addresses, and why it is a suitable project for applying software assurance concepts.
+
+The most useful part for me was understanding how CrowdSec can be studied from different software assurance perspectives, such as its security features, architecture, vulnerabilities, open-source development practices, and testing possibilities. I also learned that choosing a project with a manageable scope and real-world security value is important for completing the later stages of the course project.
+
+I also gained experience using GitHub branches, pull requests, commits, and reviews to contribute my part of a group assignment. Overall, this assignment helped me better understand both the technical value of CrowdSec and the importance of structured collaboration in a software assurance project.
 
 ### Individual reflections (what did you learn from this assignment? what did you find most useful?)
 
-#### Mujib: 
-Although this milestone of the project was challenging in terms of getting introduced to a completely new product, exploring its design and architecture, and finding security issues especially in operating environment to system, computer networks and technology infrastructure, it was highly helpful to learn about CrowdSec as an intrusion detection and prevention technology product. Throughout the process, I learned about the different layers and boundaries that CrowSed agents and bouncers could be deployed. CrowdSec features and possible threats that could be considered a compromise.  CrowdSec has great features, and one that stood out to me is that it is an obvious, transparent platform- not that it is secured, but that it takes security from a vendor-provided box or software product to a community-supported open-source platform. Thanks to everyone on my team who are motivated to learn and explore CrowdSec from a Software Assurance and Software Security perspective. I am quite excited to learn more and happy to work alongside my team to contributr in improvement of at least one aspect of this open-source project and implement the knowledge that we will gian thoughout the class. 
-
-Kowshik: [reflection]
+Mujib: [reflection]
 Leonard: [reflection]
 Trung: [reflection]
 Hrudhay: [reflection]
