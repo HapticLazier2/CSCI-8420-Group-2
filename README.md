@@ -4,10 +4,10 @@
 
 | Name | Role |
 |---|---|
-| Trung Phan | Team Lead |
+| Leonard Meredith | Team Lead |
 | Kowshik Chowdhury | Member |
 | Mujib Latifi | Member |
-| Leonard Meredith | Member |
+| Trung Phan | Member |
 | Hrudhay Rao Chepyala | Member |
 
 ## Quick Links
@@ -20,7 +20,7 @@
 ## Status
 
 - [x] GitHub backend infrastructure (repo, board, labels, wiki)
-- [ ] Open-source project selection
+- [x] Open-source project selection
 - [ ] Project proposal — in progress
 
 ## How We Work
