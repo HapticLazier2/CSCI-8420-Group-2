@@ -38,24 +38,41 @@ and trust boundaries within the chosen environment.]
 
 ## 3. Security Needs, Threats, and Features
 
-(Issue #4)
+Crowdsec represents a critical advancement in cybersecurity, addressing a prevalent and increasingly sophisticated issue: the accurate detection of IP addresses associated with VPNs or proxy services often used to conceal malicious online activity. 
 
-### Threats perceived by users
+VPNs and proxy services are regularly utilized by threat actors to obfuscate their identities and locations, undermining the ability of organizations to detect, attribute, and mitigate cyber threats effectively. This layer of anonymity not only conceals the origins of malicious actions but also exacerbates the complexity of preventing unauthorized intrusions and various cybercrimes.
 
-[List realistic threats a user in 
-this environment would worry about
-who the likely attacker is, what 
-they're after, and the attack surface.]
 
-### Security features in the software
+## Security Features in the Software
 
-[List the software's actual security 
-features that address the threats above.]
+### Behavioral Scenario Engine (Log-Based Detection)
+* **How it works:** Analyzes ingested logs (system, auth, web server, or container logs) and applies leaky-bucket logic to correlate suspicious patterns over time.
+* **Brute-Force & Password Spraying:** Detects repeated failed logins within a short time window on services like SSH, RDP, FTP, or web login forms.
+* **Port Scanning & Host Enumeration:** Flags rapid reconnaissance attempts across multiple ports or endpoints from a single source.
+* **Business Logic Abuse & Bot Scalping:** Identifies non-standard abusive behaviors, such as bots bulk-buying inventory (ticket scalping), shopping cart exhaustion, or rapid URL scraping.
 
-Threat → Feature mapping
-Threat	Addressed by
-[threat]	[feature]
-[threat]	[feature]
+### AppSec Component
+* **How it works:** Inspects HTTP requests directly at the proxy or web server layer in real time (in-band or out-of-band) using rule sets like OWASP CRS.
+* **Web Application Exploits:** Blocks SQL injection (SQLi), Cross-Site Scripting (XSS), command injection, and Path Traversal before they reach backend application code.
+* **Virtual Patching (Zero-Day/1-Day Mitigations):** Shields legacy or unpatched platforms (e.g., WordPress plugins, CVE vulnerabilities) from exploit attempts while awaiting official code updates.
+* **Sensitive File & Directory Hunting:** Instantly terminates requests seeking exposed config files (`.env`, `wp-config.php`, Git repositories, or backup archives).
+
+### Decoupled Remediation Components (Bouncers)
+* **How it works:** Enforces remediation decisions at varying network and application layers according to policy rules (ban, drop, redirect, or challenge).
+* **Layer 3/4 Network Defense (Firewall Bouncers):** Uses nftables, iptables, or pf to drop volumetric connection attempts or port sweeps at the kernel level to conserve server CPU.
+* **Bot & Scraper Mitigation (Reverse Proxy Bouncers):** Deploys through Nginx, Traefik, or Cloudflare to present CAPTCHA challenges to suspected bot traffic instead of outright bans, preserving access for valid users.
+* **Application-Level Access Control (CMS/App Bouncers):** Intercepts traffic inside application runtimes (e.g., PHP, WordPress) to block access or invalidate compromised user sessions.
+
+### Community Blocklist & Global Threat Intelligence
+* **How it works:** Anonymizes, hashes, and validates attack data received from global instances through a central consensus engine, curating a shared feed of aggressive IPs.
+* **Preemptive Edge Protection:** Blocks known malicious hosts and mass internet scanners before they ever initiate a connection with your server.
+* **Distributed Botnet Defense:** Neutralizes distributed scanning networks by aggregating threat signals seen by other community members.
+* **Noise & Log Reduction:** Drops malicious probes at the perimeter, cutting down server log clutter and alerting fatigue by eliminating background internet noise.
+
+### Local API (LAPI) Distributed Fleet Coordination
+* **How it works:** Acts as a centralized orchestration layer allowing multiple CrowdSec log processors to push alerts and share ban decisions with remediation points across an entire fleet.
+* **Multi-Node / Multi-Cloud Protection:** When an IP attacks a public host or Kubernetes ingress node, the LAPI instantly distributes a ban to internal database nodes and reverse proxies across distinct clouds.
+* **Lateral Movement Prevention:** Prevents an attacker who triggered a defense rule on one external service from probing secondary web properties or internal APIs on the same network.
 
 ## 4. Team Motivation
 
@@ -127,9 +144,51 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 
 ## 7. Security-Related History
 
-(Issue #8)
+## [GHSA-rh69-4vqj-9gj8](https://github.com/advisories/GHSA-rh69-4vqj-9gj8): Unbounded request-body read in kubernetes-audit acquisition webhook
+* **CVE ID:** N/A
+* **Weaknesses:** N/A
+* **Affected version:** <= 1.7.8
+* **Patched version:** 1.8.0
+* **Impact:** Memory-exhaustion DoS
 
-[3–5 notable CVEs or security advisories: what the vulnerability was, severity, how/when it was fixed. Plus any notable security-driven design decisions — features added, removed, or hardened for security reasons.]
+**Summary:**
+The kubernetes-audit acquisition webhook reads the entire request body with `io.ReadAll` and no size limit, no authentication, and no server read timeout. A client able to reach the webhook port can POST an arbitrarily large body, causing memory exhaustion (a denial of service of the CrowdSec agent).
+
+---
+
+## [GHSA-g2x2-jgfg-pg7g](https://github.com/advisories/GHSA-g2x2-jgfg-pg7g): HTTP acquisition datasource lacks a decompressed body cap and trusts Content-Length
+* **CVE ID:** [CVE-2026-44982](https://nvd.nist.gov/vuln/detail/CVE-2026-44982)
+* **Weaknesses:** [CWE-409](https://cwe.mitre.org/data/definitions/409.html), [CWE-770](https://cwe.mitre.org/data/definitions/770.html)
+
+**Summary:**
+The HTTP acquisition datasource does not bound the size of request bodies it buffers. A client holding valid log-source credentials can send a single request that causes the Security Engine to allocate memory until the process is terminated by the OOM killer.
+
+---
+
+## [GHSA-rw47-hm26-6wr7](https://github.com/advisories/GHSA-rw47-hm26-6wr7): CrowdSec AppSec silently drops request body for chunked / HTTP-2 requests
+* **CVE ID:** N/A
+* **Weaknesses:** [CWE-693](https://cwe.mitre.org/data/definitions/693.html)
+
+**Summary:**
+The CrowdSec AppSec component fails to read the HTTP request body for any request whose `Content-Length` is not positive — most notably HTTP/1.1 requests using `Transfer-Encoding: chunked` and HTTP/2 requests sent without a `content-length` header. Coraza is then evaluated against an empty body, so every WAF rule targeting `REQUEST_BODY`, `BODY_ARGS`, `ARGS_POST`, `JSON`, or `XML` silently fails to match.
+
+An unauthenticated remote attacker can bypass the entire AppSec body-inspection pipeline by changing a single framing header on an otherwise-malicious request. The bypassed request is forwarded as allow and produces no WAF log entry.
+
+---
+
+## [GHSA-273h-gvwr-c3qj](https://github.com/advisories/GHSA-273h-gvwr-c3qj): CrowdSec LAPI: Denial of Service via Unbounded Gzip Decompression
+* **CVE ID:** [CVE-2026-44981](https://nvd.nist.gov/vuln/detail/CVE-2026-44981)
+* **Weaknesses:** [CWE-409](https://cwe.mitre.org/data/definitions/409.html)
+
+**Details:**
+* The LAPI router uses `gin-contrib/gzip` with `DefaultDecompressHandle` globally (`pkg/apiserver/controllers/controller.go`).
+* This middleware decompresses incoming request bodies without enforcing a maximum decompressed size.
+* The endpoints `/v1/watchers` or `/v1/watchers/login` require no authentication.
+* An attacker can send small gzip-compressed JSON payloads that, when decompressed, result in hundreds of MB of valid JSON occupying server memory.
+* Sending enough requests concurrently will cause LAPI to allocate excessive heap memory, leading the OS to forcibly terminate the process.
+* This vulnerability is not exploitable from the network in default configurations, as LAPI only listens on the loopback interface.
+* If you are using a multi-server setup, LAPI will be exposed in the network, in which case you are at risk if untrusted IPs can access it.
+
 
 ## 8. Reflection
 
@@ -140,7 +199,10 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 Mujib: [reflection]
 Kowshik: [reflection]
 Leonard: [reflection]
-Trung: [reflection]
+
+Trung:
+I was able to learn about Intrusion Detection System and its usage within an enterprise. I am quite excited to see such a tool existed within the cyber industry and solving the very difficult challenge involving cyberattacks. I also gained more knowledge with Github to lookup CVEs, how to create pipelines and use it effectively. I think the most useful knowledge about this assignment is how even for a security software, there are still flaws and can also be a vulnerability to the system. 
+
 Hrudhay: [reflection]
 
 ### Team reflection (compiled)
