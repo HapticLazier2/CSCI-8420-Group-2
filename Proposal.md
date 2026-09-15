@@ -69,7 +69,7 @@ useful or interesting about the software itself.]
 
 ## 5. Open-Source Project Description
 
-### What it is
+### What it is Leonard
 
 CrowdSec is an open-source security engine that works like Fail2Ban, but takes it a step further. Where Fail2Ban reacts to known malicious behavior on a single machine for instance, detecting a brute-force attempt and banning that IP from accessing the machine CrowdSec leverages every machine running the program to help stop known malicious IPs collectively. It records that IP and distributes it to all other machines running the service, meaning an attacker gets banned from other machines before even attempting to attack them.
 
