@@ -32,12 +32,7 @@ describe the setting and why users there would deploy this software]
 ### Systems engineering diagram
 
 I thought it would be helpful to look at the system in layers, based on trust boundaries and walls, to identify threats that could compromise each layer and features that could protect each layer. 
-[Embed diagram image here, e.g. ![systems diagram]
-(diagrams/systems-view.png). Diagram should show the software's components, 
-the actors/users involved, adjacent systems it interacts with, network zones, 
-and trust boundaries within the chosen environment.]
-
-<img src="resources/static/systems-view-diagram.png" alt="System View Diagram" Width="600" />
+<img src="resources/static/systems-view-diagram.png" alt="System View Diagram" Width="1200" />
 
 ## 3. Security Needs, Threats, and Features
 I reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system. 
