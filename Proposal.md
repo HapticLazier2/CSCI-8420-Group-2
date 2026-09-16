@@ -326,7 +326,7 @@ Leonard: I was able to learn about crowdsec a program I hadn't heard about until
 Trung:
 I was able to learn about Intrusion Detection System and its usage within an enterprise. I am quite excited to see such a tool existed within the cyber industry and solving the very difficult challenge involving cyberattacks. I also gained more knowledge with Github to lookup CVEs, how to create pipelines and use it effectively. I think the most useful knowledge about this assignment is how even for a security software, there are still flaws and can also be a vulnerability to the system.
 
-Hrudhay: [reflection]
+Hrudhay: My section was Issue #7, license and contribution procedures. Going in I assumed the license would be the interesting half and the contribution process would be boilerplate, and it was the other way around. MIT is four paragraphs and does almost nothing. The process is where all the real rules are, with a template, a label bot, and three test layers a change has to clear. I only found that by opening the files rather than reading about the project, which is the habit I'd keep from this.The main issue for our team early on was that none of us was clear on what the project outcome was actually supposed to be, so it was hard to know how much detail each section needed. That got sorted out once we all sat down together as a group. After that the work went smoothly and we could scope our sections properly. Talking it through was what fixed it.
 
 ### Team reflection (compiled)
 
