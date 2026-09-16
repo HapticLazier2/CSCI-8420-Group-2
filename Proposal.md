@@ -20,133 +20,7 @@ Project Board: [link](https://github.com/users/HapticLazier2/projects/1/views/1)
 
 [DockerHub](https://hub.docker.com/r/crowdsecurity/crowdsec)
 
-## 2. Systems Engineering View
-
-### Hypothetical operational environment
-
-CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment.
-
-### Systems engineering diagram discription
-
-We thought it would be helpful to look at the system in layers, based on trust boundaries and walls, to identify threats that could compromise each layer and features that could protect each layer.
-
-### Systems engineering diagram
-
-![System View Diagram](resources/static/systems-view-diagram.png)
-
-## 3. Security Needs, Threats, and Features
-
-We reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system.
-
-### Threats
-
-Intrusion detection a prevention is a quiet challenging area of the Cyber Security. A cyber product may remediate one threat and result in a new one. For this project I looked at the CrowdSec available documents on its repository and found some of the threat that may challenge deploying CrowSec in an enterprise infrastructure and network environment.
-
-#### Compromise of CowdSec Agents and the Local API / LAPI
-
-A direct compromise of the CowdSec LAPI could allow an attacker to manipulate the detection, communication, and decision behaviour, which could result in affecting protected systems.
-
-#### Credentials and API Keys of the Bouncer and Agents
-
-Stolen API keys and credentials could allow attackers to impersonate trusted CowdSec components such as the Bouncer and Agents to retrieve information about a Bouncer decision or enforce a decision that is against a protected system.
-
-#### Malicious logs and crafted HTTP traffic
-
-Manipulated logs and controlled HTTP traffic could target the core logic of the parser, in which CrowSec itself becomes a target point for attackers to gain access to the network.
-
-#### Poisoned Malicious or Buggy detection contents
-
-A parser could be poisoned by the malicious community and run into bugs that can create a collection of false positives and false negatives across a multi-deployment plan of wide distribution to the hub.
-
-#### Bouncer Compromise or Spoofing
-
-A compromised and fake remediation bouncer component could be used to manipulate a decision, expose a security decision, or enforce decisions like preventing legitimate blocks and enforcing a wrong decision in a local level.
-
-#### Third-party Bouncers
-
-Third-party Bouncer components could become a security risk, and the impact may depend on the privileges given to the bouncer.
-
-#### Poisoned or Falsified Blocklists
-
-If the community submits a legitimate IP to be blocked or a malicious IP to be escaped, it can cause problems with the accuracy of the of enforcing a security good decision
-
-#### Dependency Vulnerability
-
-Any vulnerability in dependencies could be inherited by CrowdSec, compromise it indirectly and impact a large number of deployments.
-
-#### Denial of Service DoS
-
-Overwhelming the CrowdSec with high-volume malicious traffic could ingest a high log volume that eventually congests the detection pipeline.
-
-### Security Features
-
-Thus far, and as I have been exploring CrowdSec, I have found great security features that help in detection analysis and remediation of threats. One of the strongest is the modularity and multi-layer enforcement. Here is a list of some of the and mentionable security features.
-
-#### Scoped and Distinct to Components Authentication
-
-CrowdSec components have different authentication mechanisms with fairly limited permissions that reduce the impact of unauthorized access through stolen credentials.
-
-#### Separate Detection and Remediation Points
-
-The detect here ( By Agents ) and remediate there ( By Bouncer ) mechanism of  CrowdSec limits the capability of a compromised component to generate malicious decisions or enforce a malicious decision.
-
-#### Diversity-Based Trust-Scoring of Blocklist
-
-CrowdSec profiles the reporter source to ensure cross-source consistency, which helps prevent a single malicious source from poisoning that shared data source
-
-#### Modular Remediation in Different Trust Boundaries
-
-Bouncers can enforce a decision at multiple points in an enterprise network and in any boundary; in other words, it provides a multi-layer enforcer component targeting enforcing a decision from the public internet interface to the hosts (Firewall Bouncer, IP table Bouncer, Web server Bouncer, Reverse proxy Bouncer).
-
-### Vulnerability Disclosure Process
-
-CrowdSec discloses vulnerabilities through a private email newsletter to stakeholders covering the targeted scope.
-
-#### MIT License
-
-CrowdSec releases parsers and scenarios on the Hub. The Hub is open to reviewers and security reviewers from cybersecurity communities can review thw detection rules
-
-Crowdsec represents a critical advancement in cybersecurity, addressing a prevalent and increasingly sophisticated issue: the accurate detection of IP addresses associated with VPNs or proxy services often used to conceal malicious online activity.
-
-VPNs and proxy services are regularly utilized by threat actors to obfuscate their identities and locations, undermining the ability of organizations to detect, attribute, and mitigate cyber threats effectively. This layer of anonymity not only conceals the origins of malicious actions but also exacerbates the complexity of preventing unauthorized intrusions and various cybercrimes.
-
-## Security Features in the Software
-
-### Behavioral Scenario Engine (Log-Based Detection)
-
-* **How it works:** Analyzes ingested logs (system, auth, web server, or container logs) and applies leaky-bucket logic to correlate suspicious patterns over time.
-* **Brute-Force & Password Spraying:** Detects repeated failed logins within a short time window on services like SSH, RDP, FTP, or web login forms.
-* **Port Scanning & Host Enumeration:** Flags rapid reconnaissance attempts across multiple ports or endpoints from a single source.
-* **Business Logic Abuse & Bot Scalping:** Identifies non-standard abusive behaviors, such as bots bulk-buying inventory (ticket scalping), shopping cart exhaustion, or rapid URL scraping.
-
-### AppSec Component
-
-* **How it works:** Inspects HTTP requests directly at the proxy or web server layer in real time (in-band or out-of-band) using rule sets like OWASP CRS.
-* **Web Application Exploits:** Blocks SQL injection (SQLi), Cross-Site Scripting (XSS), command injection, and Path Traversal before they reach backend application code.
-* **Virtual Patching (Zero-Day/1-Day Mitigations):** Shields legacy or unpatched platforms (e.g., WordPress plugins, CVE vulnerabilities) from exploit attempts while awaiting official code updates.
-* **Sensitive File & Directory Hunting:** Instantly terminates requests seeking exposed config files (`.env`, `wp-config.php`, Git repositories, or backup archives).
-
-### Decoupled Remediation Components (Bouncers)
-
-* **How it works:** Enforces remediation decisions at varying network and application layers according to policy rules (ban, drop, redirect, or challenge).
-* **Layer 3/4 Network Defense (Firewall Bouncers):** Uses nftables, iptables, or pf to drop volumetric connection attempts or port sweeps at the kernel level to conserve server CPU.
-* **Bot & Scraper Mitigation (Reverse Proxy Bouncers):** Deploys through Nginx, Traefik, or Cloudflare to present CAPTCHA challenges to suspected bot traffic instead of outright bans, preserving access for valid users.
-* **Application-Level Access Control (CMS/App Bouncers):** Intercepts traffic inside application runtimes (e.g., PHP, WordPress) to block access or invalidate compromised user sessions.
-
-### Community Blocklist & Global Threat Intelligence
-
-* **How it works:** Anonymizes, hashes, and validates attack data received from global instances through a central consensus engine, curating a shared feed of aggressive IPs.
-* **Preemptive Edge Protection:** Blocks known malicious hosts and mass internet scanners before they ever initiate a connection with your server.
-* **Distributed Botnet Defense:** Neutralizes distributed scanning networks by aggregating threat signals seen by other community members.
-* **Noise & Log Reduction:** Drops malicious probes at the perimeter, cutting down server log clutter and alerting fatigue by eliminating background internet noise.
-
-### Local API (LAPI) Distributed Fleet Coordination
-
-* **How it works:** Acts as a centralized orchestration layer allowing multiple CrowdSec log processors to push alerts and share ban decisions with remediation points across an entire fleet.
-* **Multi-Node / Multi-Cloud Protection:** When an IP attacks a public host or Kubernetes ingress node, the LAPI instantly distributes a ban to internal database nodes and reverse proxies across distinct clouds.
-* **Lateral Movement Prevention:** Prevents an attacker who triggered a defense rule on one external service from probing secondary web properties or internal APIs on the same network.
-
-## 4. Team Motivation
+## 2. Team Motivation
 
 Our team selected **CrowdSec** because it is a practical open-source security project that addresses real-world cybersecurity threats. From a technical perspective, CrowdSec is useful because it can analyze system and application logs, identify suspicious behavior, generate security decisions, and work with remediation components to respond to malicious activity. Its architecture also includes different security-related components such as parsers, detection scenarios, APIs, and threat-intelligence mechanisms, which gives our team several areas to study from a software assurance perspective.
 
@@ -156,7 +30,7 @@ CrowdSec also has publicly available source code, documentation, an active open-
 
 Overall, we believe CrowdSec provides a good balance of **technical depth, real-world security value, and manageable project scope** for applying the software assurance concepts covered in this course.
 
-## 5. Open-Source Project Description
+## 3. Open-Source Project Description
 
 ### What it is
 
@@ -194,7 +68,118 @@ Checkpoint, Cisco, F5, Fortinet, Juniper, Mikrotik, OPNsense, PaloAlto, pfSense,
 * [Official Docs](https://docs.crowdsec.net/) — comprehensive documentation and wiki maintained together
 * [GitHub README](https://github.com/crowdsecurity/crowdsec) — overall introduction to how CrowdSec works
 
-## 6. License, Contribution Procedures, and Contributor Agreements
+## 3. Systems Engineering View
+
+### Hypothetical operational environment
+
+CrowdSec is meant to be deployed primarily for high security and highly monitored enterprise or other similar information technology infrastructure or network environment. CrowdSec website mentions that [Le Monde](https://www.crowdsec.net/blog/le-monde-automates-security-maximizes-efficiency) a prominent French organization and multiple other uses CrowdSec. Thus the hypothetical operational environment is enterprise environment.
+
+### Systems engineering diagram discription
+
+We thought it would be helpful to look at the system in layers, based on trust boundaries and walls, to identify threats that could compromise each layer and features that could protect each layer.
+
+### Systems engineering diagram
+
+![System View Diagram](resources/static/systems-view-diagram.png)
+
+## 4. Security Needs, Threats, and Features
+
+We reviewed the CrowdSec website and documentation and scanned the CrowdSec GitHub repository to identify threats that could challenge CrowdSec and may need improvement before it can be fully trusted for deployment in an ideal enterprise system.
+
+### Threats
+
+Intrusion detection a prevention is a challenging area of the Cyber Security. A cyber product may remediate one threat and result in a new one. For this project I looked at the CrowdSec available documents on its repository and found some of the threat that may challenge deploying CrowSec in an enterprise infrastructure and network environment.
+
+#### Compromise of CowdSec Agents and the Local API / LAPI
+
+A direct compromise of the CowdSec LAPI could allow an attacker to manipulate the detection, communication, and decision behaviour, which could result in affecting protected systems.
+
+#### Credentials and API Keys of the Bouncer and Agents
+
+Stolen API keys and credentials could allow attackers to impersonate trusted CowdSec components such as the Bouncer and Agents to retrieve information about a Bouncer decision or enforce a decision that is against a protected system.
+
+#### Malicious logs and crafted HTTP traffic
+
+Manipulated logs and controlled HTTP traffic could target the core logic of the parser, in which CrowSec itself becomes a target point for attackers to gain access to the network.
+
+#### Poisoned Malicious or Buggy detection contents
+
+A parser could be poisoned by the malicious community and run into bugs that can create a collection of false positives and false negatives across a multi-deployment plan of wide distribution to the hub.
+
+#### Bouncer Compromise or Spoofing
+
+A compromised and fake remediation bouncer component could be used to manipulate a decision, expose a security decision, or enforce decisions like preventing legitimate blocks and enforcing a wrong decision in a local level.
+
+#### Dependency Vulnerability
+
+Any vulnerability in dependencies could be inherited by CrowdSec, compromise it indirectly and impact a large number of deployments.
+
+#### Denial of Service DoS
+
+Overwhelming the CrowdSec with high-volume malicious traffic could ingest a high log volume that eventually congests the detection pipeline.
+
+### Security Features
+
+Thus far, and as I have been exploring CrowdSec, I have found great security features that help in detection analysis and remediation of threats. One of the strongest is the modularity and multi-layer enforcement. Here is a list of some of the and mentionable security features.
+
+#### Scoped and Distinct to Components Authentication
+
+CrowdSec components have different authentication mechanisms with fairly limited permissions that reduce the impact of unauthorized access through stolen credentials.
+
+#### Separate Detection and Remediation Points
+
+The detect here ( By Agents ) and remediate there ( By Bouncer ) mechanism of  CrowdSec limits the capability of a compromised component to generate malicious decisions or enforce a malicious decision.
+
+#### Diversity-Based Trust-Scoring of Blocklist
+
+CrowdSec profiles the reporter source to ensure cross-source consistency, which helps prevent a single malicious source from poisoning that shared data source
+
+#### Modular Remediation in Different Trust Boundaries
+
+Bouncers can enforce a decision at multiple points in an enterprise network and in any boundary; in other words, it provides a multi-layer enforcer component targeting enforcing a decision from the public internet interface to the hosts (Firewall Bouncer, IP table Bouncer, Web server Bouncer, Reverse proxy Bouncer).
+
+### Vulnerability Disclosure Process
+
+CrowdSec discloses vulnerabilities through a private email newsletter to stakeholders covering the targeted scope.
+
+## Security Features in the Software
+
+### Behavioral Scenario Engine (Log-Based Detection)
+
+* **How it works:** Analyzes ingested logs (system, auth, web server, or container logs) and applies leaky-bucket logic to correlate suspicious patterns over time.
+* **Brute-Force & Password Spraying:** Detects repeated failed logins within a short time window on services like SSH, RDP, FTP, or web login forms.
+* **Port Scanning & Host Enumeration:** Flags rapid reconnaissance attempts across multiple ports or endpoints from a single source.
+* **Business Logic Abuse & Bot Scalping:** Identifies non-standard abusive behaviors, such as bots bulk-buying inventory (ticket scalping), shopping cart exhaustion, or rapid URL scraping.
+
+### AppSec Component
+
+* **How it works:** Inspects HTTP requests directly at the proxy or web server layer in real time (in-band or out-of-band) using rule sets like OWASP CRS.
+* **Web Application Exploits:** Blocks SQL injection (SQLi), Cross-Site Scripting (XSS), command injection, and Path Traversal before they reach backend application code.
+* **Virtual Patching (Zero-Day/1-Day Mitigations):** Shields legacy or unpatched platforms (e.g., WordPress plugins, CVE vulnerabilities) from exploit attempts while awaiting official code updates.
+* **Sensitive File & Directory Hunting:** Instantly terminates requests seeking exposed config files (`.env`, `wp-config.php`, Git repositories, or backup archives).
+
+### Decoupled Remediation Components (Bouncers)
+
+* **How it works:** Enforces remediation decisions at varying network and application layers according to policy rules (ban, drop, redirect, or challenge).
+* **Layer 3/4 Network Defense (Firewall Bouncers):** Uses nftables, iptables, or pf to drop volumetric connection attempts or port sweeps at the kernel level to conserve server CPU.
+* **Bot & Scraper Mitigation (Reverse Proxy Bouncers):** Deploys through Nginx, Traefik, or Cloudflare to present CAPTCHA challenges to suspected bot traffic instead of outright bans, preserving access for valid users.
+* **Application-Level Access Control (CMS/App Bouncers):** Intercepts traffic inside application runtimes (e.g., PHP, WordPress) to block access or invalidate compromised user sessions.
+
+### Community Blocklist & Global Threat Intelligence
+
+* **How it works:** Anonymizes, hashes, and validates attack data received from global instances through a central consensus engine, curating a shared feed of aggressive IPs.
+* **Preemptive Edge Protection:** Blocks known malicious hosts and mass internet scanners before they ever initiate a connection with your server.
+* **Distributed Botnet Defense:** Neutralizes distributed scanning networks by aggregating threat signals seen by other community members.
+* **Noise & Log Reduction:** Drops malicious probes at the perimeter, cutting down server log clutter and alerting fatigue by eliminating background internet noise.
+
+### Local API (LAPI) Distributed Fleet Coordination
+
+* **How it works:** Acts as a centralized orchestration layer allowing multiple CrowdSec log processors to push alerts and share ban decisions with remediation points across an entire fleet.
+* **Multi-Node / Multi-Cloud Protection:** When an IP attacks a public host or Kubernetes ingress node, the LAPI instantly distributes a ban to internal database nodes and reverse proxies across distinct clouds.
+* **Lateral Movement Prevention:** Prevents an attacker who triggered a defense rule on one external service from probing secondary web properties or internal APIs on the same network.
+
+
+## 5. License, Contribution Procedures, and Contributor Agreements
 
 ### License
 
@@ -257,7 +242,7 @@ the MIT-licensed codebase, and that is the whole arrangement. Easier than projec
 PRs behind a CLA signature, but the project holds no signed patent or copyright grant beyond
 what MIT already implies.
 
-## 7. Security-Related History
+## 6. Security-Related History
 
 ## [GHSA-rh69-4vqj-9gj8](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rh69-4vqj-9gj8): Unbounded request-body read in kubernetes-audit acquisition webhook
 
@@ -309,7 +294,7 @@ An unauthenticated remote attacker can bypass the entire AppSec body-inspection 
 * This vulnerability is not exploitable from the network in default configurations, as LAPI only listens on the loopback interface.
 * If you are using a multi-server setup, LAPI will be exposed in the network, in which case you are at risk if untrusted IPs can access it.
 
-### Individual reflections (what did you learn from this assignment? what did you find most useful?)
+### 7. Individual reflections (what did you learn from this assignment? what did you find most useful?)
 
 Kowshik Chowdhury
 
@@ -328,7 +313,7 @@ I was able to learn about Intrusion Detection System and its usage within an ent
 
 Hrudhay: My section was Issue #7, license and contribution procedures. Going in I assumed the license would be the interesting half and the contribution process would be boilerplate, and it was the other way around. MIT is four paragraphs and does almost nothing. The process is where all the real rules are, with a template, a label bot, and three test layers a change has to clear. I only found that by opening the files rather than reading about the project, which is the habit I'd keep from this.The main issue for our team early on was that none of us was clear on what the project outcome was actually supposed to be, so it was hard to know how much detail each section needed. That got sorted out once we all sat down together as a group. After that the work went smoothly and we could scope our sections properly. Talking it through was what fixed it.
 
-### Team reflection (compiled)
+### 8. Team reflection (compiled)
 Across all five reflections, the clearest pattern is that the team learned CrowdSec by actually operating on it rather than by reading about it. Leonard deployed CrowdSec on his own firewall and lived with the results. Mujib built a Docker environment specifically to explore agent and bouncer behavior beyond what the assignment required, Trung used GitHub directly to look up CVEs and build pipelines rather than taking documentation at face value, and Hrudhay found that the real substance of the license and contribution sections only became clear once the actual files, not the surrounding write-ups, were opened. 
 
 The team also grew substantially in GitHub literacy over the course of this assignment. Branches, pull requests, code review, and CI/CD pipelines were all practiced, and coordinating that infrastructure was itself part of the team lead's learning. The one real process issue the team hit surfaced early: nobody was initially clear on what the finished deliverable was supposed to look like, which made it hard to scope individual sections, consistent with the rest of the team's hands-on approach. Section scoping and pacing improved noticeably for the rest of the assignment once that happened.
