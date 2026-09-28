@@ -30,7 +30,7 @@ We followed the Sindre & Opdahl use/misuse case notation:
 
 For each use case we iterated in **rounds**. Round 1 starts from the most obvious misuse of the feature. We then added a security function that CrowdSec itself implements, asked *"once this control exists, what can an attacker still do?"*, and added the answer as the next round's misuse case. We stopped when the remaining misuse would require a control outside CrowdSec. In each diagram, rounds read top to bottom.
 
-Following the instructor's guidance, we preferred mitigations **implemented by the OSS project**. Each security function carries a status tag:
+Following the instruction, we preferred mitigations **implemented by the OSS project**. Each security function carries a status tag:
 
 | Tag | Meaning |
 |---|---|
