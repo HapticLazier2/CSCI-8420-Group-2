@@ -22,7 +22,7 @@ Earlier draft Case 5 (exporting alerts to a SIEM) was folded out because the ass
 
 ### 3.1 Method and notation
 
-We followed the Sindre & Opdahl use/misuse case notation used in class:
+We followed the Sindre & Opdahl use/misuse case notation:
 
 - **White ellipse** = use case or security function (security use case). **Black ellipse** = misuse case.
 - **White actor** = legitimate external actor. **Black actor** = misuser.
