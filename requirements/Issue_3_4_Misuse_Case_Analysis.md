@@ -75,7 +75,7 @@ The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. P
 | 2 | MC-1.2 Send oversized / gzip-bomb payload to a log datasource | Credentialed Log-Pusher | SF-1.2 Authenticate log sources; cap body size | [GHSA-g2x2-jgfg-pg7g](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-g2x2-jgfg-pg7g) (HTTP datasource, CVE-2026-44982) and [GHSA-rh69-4vqj-9gj8](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rh69-4vqj-9gj8) (k8s-audit, fixed 1.8.0) | fixed after advisory |
 | 3 | MC-1.3 Spread attack across many IPs below thresholds | Low-and-Slow Botnet Operator | SF-1.3 Slow/distributed scenarios + community blocklist | Hub ships slow-brute-force scenarios (e.g. `crowdsecurity/ssh-slow-bf`) and the community blocklist blocks IPs seen attacking elsewhere | implemented (coverage depends on installed collections) |
 
-![UC-1 use/misuse case diagram](resources/static/issue3-4/uc1-use-misuse.png)
+![UC-1 use/misuse case diagram](../resources/static/issue3-4/uc1-use-misuse.png)
 
 *Figure 1 — UC-1 final use/misuse case diagram.*
 
