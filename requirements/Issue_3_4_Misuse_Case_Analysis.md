@@ -97,7 +97,7 @@ An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec compon
 | 2 | MC-2.2 Hide payload with chunked / HTTP-2 body framing | WAF-Evasion Specialist | SF-2.2 Read & inspect body for every framing | [GHSA-rw47-hm26-6wr7](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rw47-hm26-6wr7): body was skipped when `Content-Length` was not positive | fixed after advisory (Issue #6 to confirm patched release) |
 | 3 | MC-2.3 Overload AppSec so requests fail open | WAF-Evasion Specialist | SF-2.3 Enforce timeouts; fail-closed failure action | Bouncer options `APPSEC_CONNECT_TIMEOUT`, `APPSEC_SEND_TIMEOUT`, `APPSEC_PROCESS_TIMEOUT` and `APPSEC_FAILURE_ACTION=passthrough\|deny`; [default is `passthrough`](https://docs.crowdsec.net/u/bouncers/openresty) | opt-in |
 
-![UC-2 use/misuse case diagram](resources/static/issue3-4/uc2-use-misuse.png)
+![UC-2 use/misuse case diagram](../resources/static/issue3-4/uc2-use-misuse.png)
 
 *Figure 2 — UC-2 final use/misuse case diagram.*
 
@@ -119,7 +119,7 @@ Remediation components authenticate to the Local API (LAPI), pull decisions, and
 | 3 | MC-3.3 Register rogue agent to push fake alerts | Rogue-Agent Registrant | SF-3.3 Machine validation; token + `allowed_ranges` | [Multi-server guide](https://docs.crowdsec.net/u/user_guides/multiserver_setup/): machines must be validated, or auto-register with a token **and** allowed IP ranges | implemented |
 | 4 | MC-3.4 Flood login endpoint with gzip bombs | Pre-Auth LAPI Flooder | SF-3.4 Loopback default; cap decompressed size | [GHSA-273h-gvwr-c3qj](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-273h-gvwr-c3qj) (CVE-2026-44981); LAPI listens on loopback by default | fixed after advisory |
 
-![UC-3 use/misuse case diagram](resources/static/issue3-4/uc3-use-misuse.png)
+![UC-3 use/misuse case diagram](../resources/static/issue3-4/uc3-use-misuse.png)
 
 *Figure 3 — UC-3 final use/misuse case diagram.*
 
@@ -142,7 +142,7 @@ The SOC Administrator uses `cscli` and configuration files to install Hub conten
 | 2 | MC-4.2 Quietly allowlist an accomplice's IP | Insider SOC Analyst | SF-4.2 Per-operator audit trail & RBAC for cscli | `cscli` acts with whatever OS rights the user has and writes directly to the database; we found no per-operator identity or role separation | **GAP** (Issue #6 to verify) |
 | 3 | MC-4.3 Activate a broken config that blinds detection | Insider SOC Analyst | SF-4.3 Validate config (`crowdsec -t`); simulation mode | `crowdsec -t` tests configuration without starting; `cscli simulation` runs scenarios without issuing decisions | implemented |
 
-![UC-4 use/misuse case diagram](resources/static/issue3-4/uc4-use-misuse.png)
+![UC-4 use/misuse case diagram](../resources/static/issue3-4/uc4-use-misuse.png)
 
 *Figure 4 — UC-4 final use/misuse case diagram.*
 
@@ -165,7 +165,7 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 | 3 | MC-5.3 Impersonate CAPI / tamper with the blocklist feed | Upstream Traffic Interceptor | SF-5.3 TLS to CAPI with per-instance credentials | CAPI is reached over HTTPS using `online_api_credentials.yaml` | implemented |
 | 4 | MC-5.4 Harvest internal data from shared signals | Signal-Data Harvester | SF-5.4 Minimal sharing; context off by default | `console.yaml` defaults in [`pkg/csconfig/console.go`](https://github.com/crowdsecurity/crowdsec/blob/v1.5.3/pkg/csconfig/console.go): `share_context` and `share_manual_decisions` off; `share_custom` and `share_tainted` on | implemented (partially — custom/tainted sharing is on by default) |
 
-![UC-5 use/misuse case diagram](resources/static/issue3-4/uc5-use-misuse.png)
+![UC-5 use/misuse case diagram](../resources/static/issue3-4/uc5-use-misuse.png)
 
 *Figure 5 — UC-5 final use/misuse case diagram.*
 
@@ -255,7 +255,7 @@ We also gave the AI our earlier Issue #3/#4 draft and asked it to critique the d
 
 Figure 6 is the consolidated view of all five interactions. Figures 1–5 are the final per-use-case diagrams, showing every round. All six are pages in [`CrowdSec_Use_Misuse_Cases.drawio`](resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio).
 
-![Consolidated use/misuse case diagram](resources/static/issue3-4/overview-use-misuse.png)
+![Consolidated use/misuse case diagram](../resources/static/issue3-4/overview-use-misuse.png)
 
 *Figure 6 — Consolidated use/misuse case view (round 1 of each use case).*
 
