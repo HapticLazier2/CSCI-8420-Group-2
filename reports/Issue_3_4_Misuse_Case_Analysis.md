@@ -77,7 +77,7 @@ The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. P
 
 *Figure 1 — UC-1 final use/misuse case diagram.*
 
-#### Derived requirements
+#### Derived requirements for UC-1
 
 - **SR-1.1** CrowdSec shall extract security-relevant fields (source IP, user, target) only from log lines that fully match an installed parser, and shall discard non-matching lines without raising alerts.
 - **SR-1.2** CrowdSec shall suppress alerts and decisions for IPs/ranges on operator-defined allowlists and shall log every suppression.
@@ -99,7 +99,7 @@ An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec compon
 
 *Figure 2 — UC-2 final use/misuse case diagram.*
 
-#### Derived requirements
+#### Derived requirements for UC-2
 
 - **SR-2.1** AppSec shall evaluate the URI, headers, and body of every forwarded request against the enabled rule sets before the bouncer allows it.
 - **SR-2.2** AppSec shall read and inspect request bodies for every supported framing (`Content-Length`, `Transfer-Encoding: chunked`, HTTP/2 without `content-length`), with a negative test for each framing.
@@ -121,7 +121,7 @@ Remediation components authenticate to the Local API (LAPI), pull decisions, and
 
 *Figure 3 — UC-3 final use/misuse case diagram.*
 
-#### Derived requirements
+#### Derived requirements for UC-3
 
 - **SR-3.1** LAPI shall issue a unique credential per bouncer and allow each credential to be revoked individually.
 - **SR-3.2** Bouncer credentials shall only permit reading decisions; creating, changing, or deleting alerts and decisions shall require machine credentials.
@@ -144,7 +144,7 @@ The SOC Administrator uses `cscli` and configuration files to install Hub conten
 
 *Figure 4 — UC-4 final use/misuse case diagram.*
 
-#### Derived requirements
+#### Derived requirements for UC-4
 
 - **SR-4.1** Hub content shall pass automated Hub tests and maintainer review before publication.
 - **SR-4.2** `cscli` shall detect and report Hub items whose local content differs from the published version, and shall not overwrite them silently.
@@ -167,7 +167,7 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 
 *Figure 5 — UC-5 final use/misuse case diagram.*
 
-#### Derived requirements
+#### Derived requirements for UC-5
 
 - **SR-5.1** A community-blocklist entry shall require reports from multiple independent, trusted sources before distribution. *(service-side)*
 - **SR-5.2** Local allowlists shall be applied to blocklist pulls before any decision is stored.
