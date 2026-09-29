@@ -425,3 +425,11 @@ The biggest lesson was that the AI states things confidently even when they are 
 - Console sharing defaults — <https://github.com/crowdsecurity/crowdsec/blob/v1.5.3/pkg/csconfig/console.go>
 - Security advisories: GHSA-rh69-4vqj-9gj8, GHSA-g2x2-jgfg-pg7g, GHSA-rw47-hm26-6wr7, GHSA-273h-gvwr-c3qj — <https://github.com/crowdsecurity/crowdsec/security/advisories>
 - G. Sindre and A. L. Opdahl, "Eliciting security requirements with misuse cases," *Requirements Engineering*, 10(1), 2005.
+
+#### Kowshik's Reflection
+
+From this assignment, I learned how to turn a list of threats into concrete security requirements through misuse case analysis. Working on Issues #3 and #4, I identified misusers for each of CrowdSec's five external interactions and went back and forth between use cases and misuse cases. I learned that the first round always finds the obvious attack, and the real insight comes from asking what an attacker would do next once a defense is in place. This iteration led to findings that were not in our proposal, such as data exposure through shared threat signals and certificate revocation checks being skipped when the CRL file has expired.
+
+The most useful part for me was grounding every mitigation in CrowdSec's actual features, documentation, and security advisories instead of generic security controls. This showed me where CrowdSec is strong, such as per-bouncer API keys and machine validation, and where it has gaps, such as no per-operator audit trail for cscli. I also found it useful to use AI to check for missed misuse cases, but I learned that AI output must be verified, because some of its claims sounded correct but were not true for our team.
+
+I also gained more experience with GitHub by fixing automated markdown lint errors until the checks passed. Overall, this assignment helped me understand how security requirements are derived systematically and how important it is to verify every claim against the project's documentation.
