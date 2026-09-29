@@ -1,6 +1,6 @@
 # Requirements for Software Security Engineering
 
-**CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (Multi-server LAPI)**
+CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (Multi-server LAPI)
 
 ## Essential Interactions with Operation Environment
 
@@ -89,10 +89,12 @@ The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. P
 **Description:** The enterprise log source sends log lines to CrowdSec. The engine parses them into structured events (source IP, user, target) and feeds them to behavior scenarios. When a scenario's threshold is crossed, CrowdSec raises an alert that can lead to a decision.
 
 **Preconditions:**
+
 - The datasource is configured (file, syslog, HTTP, Kubernetes audit).
 - The relevant parsers and scenarios are installed from the Hub.
 
 **Main flow:**
+
 1. The log source delivers log lines to an acquisition datasource.
 2. Network datasources authenticate the sender and enforce size and timeout limits.
 3. Parsers match each line and extract security-relevant fields. Non-matching lines are discarded.
@@ -101,8 +103,9 @@ The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. P
 6. On overflow, CrowdSec raises an alert.
 
 **Postcondition:** Malicious behavior is turned into alerts, while legitimate, allowlisted, and unparseable traffic raises none.
- 
+
 **Threatened by:**
+
 - MC-1.1: Forge log entries to frame a trusted IP
 - MC-1.2: Send oversized / gzip-bomb payload to a log datasource
 - MC-1.3: Spread attack across many IPs below thresholds
@@ -134,14 +137,16 @@ An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec compon
 **Primary actor:** Web App / Reverse Proxy (AppSec-enabled bouncer)
 
 **CrowdSec feature:** AppSec component (WAF with CRS and virtual-patching rules)
- 
+
 **Description:** The AppSec-enabled bouncer forwards each incoming HTTP request to CrowdSec's AppSec component. AppSec evaluates the URI, headers, and body against the enabled WAF rules and returns an allow or deny verdict that the bouncer enforces.
- 
+
 **Preconditions:**
+
 - AppSec is enabled, and rule sets (CRS, virtual patching) are installed.
 - The bouncer is configured with the AppSec endpoint, timeouts, and failure action.
 
 **Main flow:**
+
 1. A client request reaches the web app or reverse proxy.
 2. The bouncer forwards the request to AppSec.
 3. AppSec reads the body for every framing (`Content-Length`, chunked, HTTP/2) and evaluates it against the rules.
@@ -151,6 +156,7 @@ An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec compon
 **Postcondition:** Known-bad requests (SQLi, XSS, CVE exploits) are blocked before reaching the application.
 
 **Threatened by:**
+
 - MC-2.1: Send SQLi / XSS / CVE exploit payload
 - MC-2.2: Hide payload with chunked / HTTP-2 body framing
 - MC-2.3: Overload AppSec so requests fail open
@@ -181,14 +187,16 @@ Remediation components authenticate to the Local API (LAPI), pull decisions, and
 **Primary actor:** Remediation Component (firewall or reverse-proxy bouncer)
 
 **CrowdSec feature:** LAPI decisions API
- 
+
 **Description:** A remediation component authenticates to the Local API, pulls the current decisions (banned IPs and so on), and enforces them by dropping, banning, or issuing a captcha. In the multi-server enterprise setup, LAPI listens on the internal network so many bouncers and agents can reach it.
- 
+
 **Preconditions:**
+
 - The bouncer is registered with its own API key (`cscli bouncers add`).
 - LAPI is reachable, ideally over TLS or mutual TLS.
 
 **Main flow:**
+
 1. The bouncer authenticates to LAPI with its API key (or client certificate).
 2. LAPI verifies the credential and grants read-only access.
 3. The bouncer pulls new and expired decisions.
@@ -196,8 +204,9 @@ Remediation components authenticate to the Local API (LAPI), pull decisions, and
 5. LAPI records the bouncer's source IP and last-pull time.
 
 **Postcondition:** The enforcement point blocks the addresses that CrowdSec has decided to remediate.
- 
+
 **Threatened by:**
+
 - MC-3.1: Query decisions with a stolen bouncer API key
 - MC-3.2: Intercept or strip decisions in transit
 - MC-3.3: Register rogue agent to push fake alerts
@@ -236,9 +245,11 @@ The SOC Administrator uses `cscli` and configuration files to install Hub conten
 **Description:** The SOC administrator installs and updates Hub content (parsers, scenarios, collections), manages decisions and allowlists, and configures profiles. This use case defines what CrowdSec detects and what it acts on.
 
 **Preconditions:**
+
 - The administrator has shell access to the LAPI host and OS rights to run `cscli`.
 
 **Main flow:**
+
 1. The administrator installs or upgrades Hub items with `cscli`.
 2. `cscli` flags locally modified items as tainted and won't overwrite them without `--force`.
 3. The administrator edits allowlists, decisions, or configuration.
@@ -247,8 +258,9 @@ The SOC Administrator uses `cscli` and configuration files to install Hub conten
 6. CrowdSec activates the new configuration.
 
 **Postcondition:** Detection content and policy are updated, validated, and active.
- 
+
 **Threatened by:**
+
 - MC-4.1: Get a poisoned scenario/parser installed from the Hub
 - MC-4.2: Quietly allowlist an accomplice's IP
 - MC-4.3: Activate a broken config that blinds detection
@@ -284,10 +296,12 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 **Description:** The engine sends signals about local attacks to CrowdSec's Central API and pulls back the community blocklist, so that IPs seen attacking elsewhere can be blocked locally.
 
 **Preconditions:**
+
 - The instance is enrolled with CAPI, with credentials in `online_api_credentials.yaml`.
 - Sharing preferences are set in `console.yaml`.
 
 **Main flow:**
+
 1. LAPI connects to CAPI over HTTPS with its per-instance credentials.
 2. LAPI shares signals about local attacks, according to the sharing settings.
 3. LAPI pulls the community blocklist.
@@ -295,8 +309,9 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 5. Bouncers enforce the resulting decisions (see UC-3).
 
 **Postcondition:** Local defenses benefit from community intelligence, and local detection keeps working if CAPI is unreachable.
- 
+
 **Threatened by:**
+
 - MC-5.1: Report fake signals to blocklist a victim IP
 - MC-5.2: Poisoned entry blocks a partner IP locally
 - MC-5.3: Impersonate CAPI / tamper with the blocklist feed
