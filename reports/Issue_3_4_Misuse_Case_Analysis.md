@@ -1,6 +1,6 @@
 # Requirements for Software Security Engineering — Issues #3 & #4
 
-**CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (multi-server LAPI)**
+CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (multi-server LAPI)
 
 This section continues the five interactions identified in Issue #1 and diagrammed in Issue #2. Issue #3 performs the misuse case analysis and derives security requirements; Issue #4 documents how we used an AI assistant to iterate on the use/misuse cases and presents the final diagrams.
 
@@ -77,7 +77,7 @@ The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. P
 
 *Figure 1 — UC-1 final use/misuse case diagram.*
 
-**Derived requirements**
+####Derived requirements
 
 - **SR-1.1** CrowdSec shall extract security-relevant fields (source IP, user, target) only from log lines that fully match an installed parser, and shall discard non-matching lines without raising alerts.
 - **SR-1.2** CrowdSec shall suppress alerts and decisions for IPs/ranges on operator-defined allowlists and shall log every suppression.
@@ -99,7 +99,7 @@ An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec compon
 
 *Figure 2 — UC-2 final use/misuse case diagram.*
 
-**Derived requirements**
+####Derived requirements
 
 - **SR-2.1** AppSec shall evaluate the URI, headers, and body of every forwarded request against the enabled rule sets before the bouncer allows it.
 - **SR-2.2** AppSec shall read and inspect request bodies for every supported framing (`Content-Length`, `Transfer-Encoding: chunked`, HTTP/2 without `content-length`), with a negative test for each framing.
@@ -121,7 +121,7 @@ Remediation components authenticate to the Local API (LAPI), pull decisions, and
 
 *Figure 3 — UC-3 final use/misuse case diagram.*
 
-**Derived requirements**
+####Derived requirements
 
 - **SR-3.1** LAPI shall issue a unique credential per bouncer and allow each credential to be revoked individually.
 - **SR-3.2** Bouncer credentials shall only permit reading decisions; creating, changing, or deleting alerts and decisions shall require machine credentials.
@@ -144,7 +144,7 @@ The SOC Administrator uses `cscli` and configuration files to install Hub conten
 
 *Figure 4 — UC-4 final use/misuse case diagram.*
 
-**Derived requirements**
+####Derived requirements
 
 - **SR-4.1** Hub content shall pass automated Hub tests and maintainer review before publication.
 - **SR-4.2** `cscli` shall detect and report Hub items whose local content differs from the published version, and shall not overwrite them silently.
@@ -167,7 +167,7 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 
 *Figure 5 — UC-5 final use/misuse case diagram.*
 
-**Derived requirements**
+####Derived requirements
 
 - **SR-5.1** A community-blocklist entry shall require reports from multiple independent, trusted sources before distribution. *(service-side)*
 - **SR-5.2** Local allowlists shall be applied to blocklist pulls before any decision is stored.
@@ -268,12 +268,12 @@ The biggest lesson was that the AI states things confidently even when they are 
 
 ### References
 
-- CrowdSec Local API authentication — https://docs.crowdsec.net/docs/local_api/intro
-- TLS authentication — https://docs.crowdsec.net/docs/local_api/tls_auth
-- Multi-server setup (machine validation, auto-registration) — https://docs.crowdsec.net/u/user_guides/multiserver_setup/
-- Centralized allowlists — https://docs.crowdsec.net/docs/local_api/centralized_allowlists
-- `cscli hub upgrade` (tainted items) — https://docs.crowdsec.net/docs/cscli/cscli_hub_upgrade
-- OpenResty/Nginx bouncer AppSec options — https://docs.crowdsec.net/u/bouncers/openresty
-- Console sharing defaults — https://github.com/crowdsecurity/crowdsec/blob/v1.5.3/pkg/csconfig/console.go
-- Security advisories: GHSA-rh69-4vqj-9gj8, GHSA-g2x2-jgfg-pg7g, GHSA-rw47-hm26-6wr7, GHSA-273h-gvwr-c3qj — https://github.com/crowdsecurity/crowdsec/security/advisories
+- CrowdSec Local API authentication — <https://docs.crowdsec.net/docs/local_api/intro>
+- TLS authentication — <https://docs.crowdsec.net/docs/local_api/tls_auth>
+- Multi-server setup (machine validation, auto-registration) — <https://docs.crowdsec.net/u/user_guides/multiserver_setup/>
+- Centralized allowlists — <https://docs.crowdsec.net/docs/local_api/centralized_allowlists>
+- `cscli hub upgrade` (tainted items) — <https://docs.crowdsec.net/docs/cscli/cscli_hub_upgrade>
+- OpenResty/Nginx bouncer AppSec options — <https://docs.crowdsec.net/u/bouncers/openresty>
+- Console sharing defaults — <https://github.com/crowdsecurity/crowdsec/blob/v1.5.3/pkg/csconfig/console.go>
+- Security advisories: GHSA-rh69-4vqj-9gj8, GHSA-g2x2-jgfg-pg7g, GHSA-rw47-hm26-6wr7, GHSA-273h-gvwr-c3qj — <https://github.com/crowdsecurity/crowdsec/security/advisories>
 - G. Sindre and A. L. Opdahl, "Eliciting security requirements with misuse cases," *Requirements Engineering*, 10(1), 2005.
