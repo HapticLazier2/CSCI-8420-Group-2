@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" version="24.0.0" type="device">
+
+  <!-- ===================================================== -->
+  <!-- 01 - ANALYZE SECURITY EVENTS                         -->
+  <!-- ===================================================== -->
+
+  <diagram id="crowdsec-use-01" name="01 - Analyze Security Events">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10"
+      guides="1" tooltips="1" connect="1" arrows="1"
+      fold="1" page="1" pageScale="1" pageWidth="1200"
+      pageHeight="850" math="0" shadow="0">
+
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ENTERPRISE ENVIRONMENT -->
+        <mxCell id="enterprise01"
+          value="ENTERPRISE ENVIRONMENT"
+          style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;strokeColor=#666666;fillColor=#ffffff;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="220" y="70" width="850" height="650" as="geometry"/>
+        </mxCell>
+
+        <!-- CROWDSec SYSTEM -->
+        <mxCell id="system01"
+          value="CrowdSec System"
+          style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#17365d;fillColor=#f5f5f5;fontStyle=1;verticalAlign=top;align=center;spacingTop=35;"
+          vertex="1" parent="1">
+          <mxGeometry x="430" y="180" width="430" height="410" as="geometry"/>
+        </mxCell>
+
+        <!-- USE CASE -->
+        <mxCell id="use01"
+          value="Analyze Security Events"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#2e7d32;strokeWidth=2;"
+          vertex="1" parent="1">
+          <mxGeometry x="525" y="315" width="240" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- EXTERNAL INTERACTOR -->
+        <mxCell id="actor01"
+          value="Splunk Enterprise&#10;(SIEM / Log Management)"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSER -->
+        <mxCell id="misuser01"
+          value="Attacker /&#10;Compromised Host"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#b71c1c;"
+          vertex="1" parent="1">
+          <mxGeometry x="1120" y="310" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSE -->
+        <mxCell id="misuse01"
+          value="&lt;&lt;misuse&gt;&gt;&#10;Poison Detection Input"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b71c1c;strokeWidth=2;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="505" y="475" width="280" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- NORMAL INTERACTION -->
+        <mxCell id="edge01a"
+          value="security events"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;"
+          edge="1" parent="1" source="actor01" target="use01">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSE -->
+        <mxCell id="edge01b"
+          value="inject / manipulate"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=none;"
+          edge="1" parent="1" source="misuser01" target="misuse01">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- THREAT -->
+        <mxCell id="edge01c"
+          value="&lt;&lt;threatens&gt;&gt;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=block;endFill=0;"
+          edge="1" parent="1" source="misuse01" target="use01">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ===================================================== -->
+  <!-- 02 - MANAGE SECURITY CONFIGURATION                   -->
+  <!-- ===================================================== -->
+
+  <diagram id="crowdsec-use-02" name="02 - Manage Security Configuration">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10"
+      guides="1" tooltips="1" connect="1" arrows="1"
+      fold="1" page="1" pageScale="1" pageWidth="1200"
+      pageHeight="850" math="0" shadow="0">
+
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ENTERPRISE -->
+        <mxCell id="enterprise02"
+          value="ENTERPRISE ENVIRONMENT"
+          style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;strokeColor=#666666;fillColor=#ffffff;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="220" y="70" width="850" height="650" as="geometry"/>
+        </mxCell>
+
+        <!-- SYSTEM -->
+        <mxCell id="system02"
+          value="CrowdSec System"
+          style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#17365d;fillColor=#f5f5f5;fontStyle=1;verticalAlign=top;align=center;spacingTop=35;"
+          vertex="1" parent="1">
+          <mxGeometry x="430" y="180" width="430" height="410" as="geometry"/>
+        </mxCell>
+
+        <!-- USE CASE -->
+        <mxCell id="use02"
+          value="Manage Security Configuration"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#2e7d32;strokeWidth=2;"
+          vertex="1" parent="1">
+          <mxGeometry x="490" y="315" width="310" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ACTOR -->
+        <mxCell id="actor02"
+          value="Enterprise Security&#10;Administrator / SOC"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSER -->
+        <mxCell id="misuser02"
+          value="Attacker with&#10;Compromised Credentials"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#b71c1c;"
+          vertex="1" parent="1">
+          <mxGeometry x="1120" y="300" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSE -->
+        <mxCell id="misuse02"
+          value="&lt;&lt;misuse&gt;&gt;&#10;Alter Security Policy"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b71c1c;strokeWidth=2;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="525" y="475" width="240" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- EDGES -->
+        <mxCell id="edge02a"
+          value="configuration"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;"
+          edge="1" parent="1" source="actor02" target="use02">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge02b"
+          value="unauthorized change"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=none;"
+          edge="1" parent="1" source="misuser02" target="misuse02">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge02c"
+          value="&lt;&lt;threatens&gt;&gt;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=block;endFill=0;"
+          edge="1" parent="1" source="misuse02" target="use02">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ===================================================== -->
+  <!-- 03 - ENFORCE SECURITY DECISIONS                     -->
+  <!-- ===================================================== -->
+
+  <diagram id="crowdsec-use-03" name="03 - Enforce Security Decisions">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10"
+      guides="1" tooltips="1" connect="1" arrows="1"
+      fold="1" page="1" pageScale="1" pageWidth="1200"
+      pageHeight="850" math="0" shadow="0">
+
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ENTERPRISE -->
+        <mxCell id="enterprise03"
+          value="ENTERPRISE ENVIRONMENT"
+          style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;strokeColor=#666666;fillColor=#ffffff;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="220" y="70" width="850" height="650" as="geometry"/>
+        </mxCell>
+
+        <!-- SYSTEM -->
+        <mxCell id="system03"
+          value="CrowdSec System"
+          style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#17365d;fillColor=#f5f5f5;fontStyle=1;verticalAlign=top;align=center;spacingTop=35;"
+          vertex="1" parent="1">
+          <mxGeometry x="430" y="180" width="430" height="410" as="geometry"/>
+        </mxCell>
+
+        <!-- USE CASE -->
+        <mxCell id="use03"
+          value="Enforce Security Decisions"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#2e7d32;strokeWidth=2;"
+          vertex="1" parent="1">
+          <mxGeometry x="495" y="315" width="300" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ACTOR -->
+        <mxCell id="actor03"
+          value="Enterprise Firewall / WAF&#10;Example: Palo Alto Networks"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="30" y="300" width="110" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSER -->
+        <mxCell id="misuser03"
+          value="Attacker /&#10;Compromised Component"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#b71c1c;"
+          vertex="1" parent="1">
+          <mxGeometry x="1120" y="300" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSE -->
+        <mxCell id="misuse03"
+          value="&lt;&lt;misuse&gt;&gt;&#10;Tamper With Security Decision"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b71c1c;strokeWidth=2;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="475" y="475" width="340" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- EDGES -->
+        <mxCell id="edge03a"
+          value="block / allow decision"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;"
+          edge="1" parent="1" source="actor03" target="use03">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge03b"
+          value="spoof / bypass"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=none;"
+          edge="1" parent="1" source="misuser03" target="misuse03">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge03c"
+          value="&lt;&lt;threatens&gt;&gt;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=block;endFill=0;"
+          edge="1" parent="1" source="misuse03" target="use03">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ===================================================== -->
+  <!-- 04 - PROVIDE SECURITY INFORMATION                    -->
+  <!-- ===================================================== -->
+
+  <diagram id="crowdsec-use-04" name="04 - Provide Security Information">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10"
+      guides="1" tooltips="1" connect="1" arrows="1"
+      fold="1" page="1" pageScale="1" pageWidth="1200"
+      pageHeight="850" math="0" shadow="0">
+
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ENTERPRISE -->
+        <mxCell id="enterprise04"
+          value="ENTERPRISE ENVIRONMENT"
+          style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;strokeColor=#666666;fillColor=#ffffff;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="220" y="70" width="850" height="650" as="geometry"/>
+        </mxCell>
+
+        <!-- SYSTEM -->
+        <mxCell id="system04"
+          value="CrowdSec System"
+          style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#17365d;fillColor=#f5f5f5;fontStyle=1;verticalAlign=top;align=center;spacingTop=35;"
+          vertex="1" parent="1">
+          <mxGeometry x="430" y="180" width="430" height="410" as="geometry"/>
+        </mxCell>
+
+        <!-- USE CASE -->
+        <mxCell id="use04"
+          value="Provide Security Information"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#2e7d32;strokeWidth=2;"
+          vertex="1" parent="1">
+          <mxGeometry x="490" y="315" width="310" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ACTOR -->
+        <mxCell id="actor04"
+          value="Splunk Enterprise&#10;(SIEM)"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSER -->
+        <mxCell id="misuser04"
+          value="Unauthorized&#10;API Client"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#b71c1c;"
+          vertex="1" parent="1">
+          <mxGeometry x="1120" y="310" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSE -->
+        <mxCell id="misuse04"
+          value="&lt;&lt;misuse&gt;&gt;&#10;Unauthorized Security Information Access"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b71c1c;strokeWidth=2;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="455" y="475" width="380" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- EDGES -->
+        <mxCell id="edge04a"
+          value="security information"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;"
+          edge="1" parent="1" source="actor04" target="use04">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge04b"
+          value="unauthorized request"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=none;"
+          edge="1" parent="1" source="misuser04" target="misuse04">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge04c"
+          value="&lt;&lt;threatens&gt;&gt;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=block;endFill=0;"
+          edge="1" parent="1" source="misuse04" target="use04">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ===================================================== -->
+  <!-- 05 - EXCHANGE THREAT INTELLIGENCE                    -->
+  <!-- ===================================================== -->
+
+  <diagram id="crowdsec-use-05" name="05 - Exchange Threat Intelligence">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10"
+      guides="1" tooltips="1" connect="1" arrows="1"
+      fold="1" page="1" pageScale="1" pageWidth="1200"
+      pageHeight="850" math="0" shadow="0">
+
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ENTERPRISE -->
+        <mxCell id="enterprise05"
+          value="ENTERPRISE ENVIRONMENT"
+          style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;strokeColor=#666666;fillColor=#ffffff;fontStyle=1;verticalAlign=top;align=center;spacingTop=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="220" y="70" width="850" height="650" as="geometry"/>
+        </mxCell>
+
+        <!-- SYSTEM -->
+        <mxCell id="system05"
+          value="CrowdSec System"
+          style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#17365d;fillColor=#f5f5f5;fontStyle=1;verticalAlign=top;align=center;spacingTop=35;"
+          vertex="1" parent="1">
+          <mxGeometry x="430" y="180" width="430" height="410" as="geometry"/>
+        </mxCell>
+
+        <!-- USE CASE -->
+        <mxCell id="use05"
+          value="Exchange Threat Intelligence"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#2e7d32;strokeWidth=2;"
+          vertex="1" parent="1">
+          <mxGeometry x="485" y="315" width="320" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- ACTOR -->
+        <mxCell id="actor05"
+          value="CrowdSec Central Network&#10;/ Threat Intelligence"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="30" y="300" width="110" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSER -->
+        <mxCell id="misuser05"
+          value="Malicious / Compromised&#10;Intelligence Source"
+          style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#b71c1c;"
+          vertex="1" parent="1">
+          <mxGeometry x="1120" y="300" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- MISUSE -->
+        <mxCell id="misuse05"
+          value="&lt;&lt;misuse&gt;&gt;&#10;Poison Threat Intelligence"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b71c1c;strokeWidth=2;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="495" y="475" width="300" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- EDGES -->
+        <mxCell id="edge05a"
+          value="threat intelligence"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;"
+          edge="1" parent="1" source="actor05" target="use05">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge05b"
+          value="false / manipulated intelligence"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=none;"
+          edge="1" parent="1" source="misuser05" target="misuse05">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge05c"
+          value="&lt;&lt;threatens&gt;&gt;"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#b71c1c;endArrow=block;endFill=0;"
+          edge="1" parent="1" source="misuse05" target="use05">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>
