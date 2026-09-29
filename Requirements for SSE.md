@@ -19,7 +19,7 @@ Each interaction contains:
 - Security requirements derived from the misuse analysis.
 - Software-assurance concerns such as authentication, authorization, input validation, trust boundaries, secure failure, availability, integrity, traceability, testing, and defense in depth.
 
-The editable source for every diagram is [`CrowdSec_Use_Misuse_Cases.drawio`](resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio) (one page per use case plus a page with the complete final diagram). Open it in [app.diagrams.net](https://app.diagrams.net) with *File → Open from → Device*.
+The editable source for every diagram is [`CrowdSec_Use_Misuse_Cases.drawio`](../resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio) (one page per use case plus a page with the complete final diagram). Open it in [app.diagrams.net](https://app.diagrams.net) with *File → Open from → Device*.
 
 | # | External actor | Use case (CrowdSec feature) |
 |---|---|---|
@@ -41,7 +41,7 @@ We used standard use/misuse case notation (Sindre & Opdahl):
 
 For each use case we iterated in **rounds**. Round 1 starts from the most obvious misuse of the feature. We then added a security function that CrowdSec itself implements, asked *"once this control exists, what can an attacker still do?"*, and added the answer as the next round's misuse case. We stopped when the remaining misuse would require a control outside CrowdSec. In each diagram, rounds read top to bottom.
 
-Following the instructor's guidance, we preferred mitigations **implemented by the OSS project**. Each security function carries a status tag:
+Following the guidance, we preferred mitigations **implemented by the OSS project**. Each security function carries a status tag:
 
 | Tag | Meaning |
 |---|---|
@@ -119,7 +119,7 @@ The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. P
 
 *Figure 1 — UC-1 final use/misuse case diagram.*
 
-**Derived requirements**
+#### Derived requirements for UC-1
 
 - **SR-1.1** CrowdSec shall extract security-relevant fields (source IP, user, target) only from log lines that fully match an installed parser, and shall discard non-matching lines without raising alerts.
 - **SR-1.2** CrowdSec shall suppress alerts and decisions for IPs/ranges on operator-defined allowlists and shall log every suppression.
@@ -167,7 +167,7 @@ An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec compon
 
 *Figure 2 — UC-2 final use/misuse case diagram.*
 
-**Derived requirements**
+#### Derived requirements for UC-2
 
 - **SR-2.1** AppSec shall evaluate the URI, headers, and body of every forwarded request against the enabled rule sets before the bouncer allows it.
 - **SR-2.2** AppSec shall read and inspect request bodies for every supported framing (`Content-Length`, `Transfer-Encoding: chunked`, HTTP/2 without `content-length`), with a negative test for each framing.
@@ -216,7 +216,7 @@ Remediation components authenticate to the Local API (LAPI), pull decisions, and
 
 *Figure 3 — UC-3 final use/misuse case diagram.*
 
-**Derived requirements**
+#### Derived requirements for UC-3
 
 - **SR-3.1** LAPI shall issue a unique credential per bouncer and allow each credential to be revoked individually.
 - **SR-3.2** Bouncer credentials shall only permit reading decisions; creating, changing, or deleting alerts and decisions shall require machine credentials.
@@ -265,7 +265,7 @@ The SOC Administrator uses `cscli` and configuration files to install Hub conten
 
 *Figure 4 — UC-4 final use/misuse case diagram.*
 
-**Derived requirements**
+#### Derived requirements for UC-4
 
 - **SR-4.1** Hub content shall pass automated Hub tests and maintainer review before publication.
 - **SR-4.2** `cscli` shall detect and report Hub items whose local content differs from the published version, and shall not overwrite them silently.
@@ -315,7 +315,7 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 
 *Figure 5 — UC-5 final use/misuse case diagram.*
 
-**Derived requirements**
+#### Derived requirements for UC-5
 
 - **SR-5.1** A community-blocklist entry shall require reports from multiple independent, trusted sources before distribution. *(service-side)*
 - **SR-5.2** Local allowlists shall be applied to blocklist pulls before any decision is stored.
@@ -398,7 +398,7 @@ We also gave the AI our initial use/misuse cases and asked it to critique them a
 
 ### 4.3 Final diagram
 
-Figure 6 is the finished diagram after the last round of iteration. It combines all five interactions, 17 misuse cases, and 17 security functions inside one CrowdSec system boundary. Each band is the same as the matching Figure 1–5, which are easier to read at full size. All six are pages in [`CrowdSec_Use_Misuse_Cases.drawio`](resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio).
+Figure 6 is the finished diagram after the last round of iteration. It combines all five interactions, 17 misuse cases, and 17 security functions inside one CrowdSec system boundary. Each band is the same as the matching Figure 1–5, which are easier to read at full size. All six are pages in [`CrowdSec_Use_Misuse_Cases.drawio`](../resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio).
 
 ![Final use/misuse case diagram](/resources/static/issue3-4/final-use-misuse.png)
 
@@ -408,7 +408,7 @@ Figure 6 is the finished diagram after the last round of iteration. It combines 
 
 We ran these prompts with Claude (Anthropic). The AI was most useful as a critic. Adding one rule to the instructor's sample prompt (every countermeasure must be a named CrowdSec feature, or be labeled GAP) stopped it from suggesting generic controls like MFA or disk encryption. It also sent us back to CrowdSec's documentation and advisories, which is where we found the auto-registration warning, the `passthrough` default for AppSec, and the signal-sharing defaults in `console.go`.
 
-The follow-up prompt ("assume the last countermeasure exists — what remains?") was the most valuable part. It made the back-and-forth iteration concrete, and it surfaced things we had not listed in our proposal: data exposure through shared signals (MC-5.4) and the fact that CrowdSec skips certificate revocation checks when the CRL file is invalid or expired.
+The follow-up prompt ("assume the last countermeasure exists — what remains?") was the most valuable part. It made the back-and-forth iteration concrete, and it surfaced things we had not listed in our proposal, data exposure through shared signals (MC-5.4) and the fact that CrowdSec skips certificate revocation checks when the CRL file is invalid or expired.
 
 The biggest lesson was that the AI states things confidently even when they are not true. When it helped assemble this report, it described our notation as the one "used in class" without having seen our class materials, added notes assigning follow-up work to another teammate's issue, and at first labeled a round-1 summary as our "final" diagram. We caught each of these while reviewing and had them corrected. We now treat AI output as a first draft to verify against the documentation and the assignment, not as a finished answer.
 
@@ -416,12 +416,12 @@ The biggest lesson was that the AI states things confidently even when they are 
 
 ### References
 
-- CrowdSec Local API authentication — https://docs.crowdsec.net/docs/local_api/intro
-- TLS authentication — https://docs.crowdsec.net/docs/local_api/tls_auth
-- Multi-server setup (machine validation, auto-registration) — https://docs.crowdsec.net/u/user_guides/multiserver_setup/
-- Centralized allowlists — https://docs.crowdsec.net/docs/local_api/centralized_allowlists
-- `cscli hub upgrade` (tainted items) — https://docs.crowdsec.net/docs/cscli/cscli_hub_upgrade
-- OpenResty/Nginx bouncer AppSec options — https://docs.crowdsec.net/u/bouncers/openresty
-- Console sharing defaults — https://github.com/crowdsecurity/crowdsec/blob/v1.5.3/pkg/csconfig/console.go
-- Security advisories: GHSA-rh69-4vqj-9gj8, GHSA-g2x2-jgfg-pg7g, GHSA-rw47-hm26-6wr7, GHSA-273h-gvwr-c3qj — https://github.com/crowdsecurity/crowdsec/security/advisories
+- CrowdSec Local API authentication — <https://docs.crowdsec.net/docs/local_api/intro>
+- TLS authentication — <https://docs.crowdsec.net/docs/local_api/tls_auth>
+- Multi-server setup (machine validation, auto-registration) — <https://docs.crowdsec.net/u/user_guides/multiserver_setup/>
+- Centralized allowlists — <https://docs.crowdsec.net/docs/local_api/centralized_allowlists>
+- `cscli hub upgrade` (tainted items) — <https://docs.crowdsec.net/docs/cscli/cscli_hub_upgrade>
+- OpenResty/Nginx bouncer AppSec options — <https://docs.crowdsec.net/u/bouncers/openresty>
+- Console sharing defaults — <https://github.com/crowdsecurity/crowdsec/blob/v1.5.3/pkg/csconfig/console.go>
+- Security advisories: GHSA-rh69-4vqj-9gj8, GHSA-g2x2-jgfg-pg7g, GHSA-rw47-hm26-6wr7, GHSA-273h-gvwr-c3qj — <https://github.com/crowdsecurity/crowdsec/security/advisories>
 - G. Sindre and A. L. Opdahl, "Eliciting security requirements with misuse cases," *Requirements Engineering*, 10(1), 2005.
