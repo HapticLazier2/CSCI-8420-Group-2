@@ -178,7 +178,6 @@ CrowdSec discloses vulnerabilities through a private email newsletter to stakeho
 * **Multi-Node / Multi-Cloud Protection:** When an IP attacks a public host or Kubernetes ingress node, the LAPI instantly distributes a ban to internal database nodes and reverse proxies across distinct clouds.
 * **Lateral Movement Prevention:** Prevents an attacker who triggered a defense rule on one external service from probing secondary web properties or internal APIs on the same network.
 
-
 ## 5. License, Contribution Procedures, and Contributor Agreements
 
 ### License
@@ -308,7 +307,7 @@ I also gained experience using GitHub branches, pull requests, commits, and revi
 
 Although this milestone of the project was challenging in terms of getting introduced to a completely new product, exploring its design and architecture, and finding security issues especially in operating environment to system, computer networks and technology infrastructure, I learned about CrowdSec as its intrusion detection and prevention features. Throughout this milestone I learned about the different layers and boundaries that CrowSed agents and bouncers could be deployed. CrowdSec features and possible threats that could be in some cases considered a compromise. CrowdSec has great features, and one that stood out to me is that it is an obvious, transparent platform.It is not just secured, but that it takes security from a vendor-provided box or software product to a community-supported open-source platform. Outside of the scope and to learn more I designed a Docker container environment to explore some of the CrowSec features. Thanks to everyone on my team who are motivated to learn and explore CrowdSec from a Software Assurance and Software Security perspective. I am excited to learn more about this project and happy to contribute to the project with my team.
 
-#### Leonard 
+#### Leonard
 
 I was able to learn about CrowdSec, a program I hadn't heard about until now, and actually integrate it into my own firewall rather than just read about it. I installed it on my home OPNsense box (a repurposed WatchGuard Firebox M400) and got to see, firsthand, what deploying an open-source intrusion detection and prevention system in a real environment actually looks like.
 
@@ -324,6 +323,6 @@ My section was Issue #7, license and contribution procedures. Going in I assumed
 
 ### 8. Team reflection (compiled)
 
-Across all five reflections, the clearest pattern is that the team learned CrowdSec by actually operating on it rather than by reading about it. Leonard deployed CrowdSec on his own firewall and lived with the results. Mujib built a Docker environment specifically to explore agent and bouncer behavior beyond what the assignment required, Trung used GitHub directly to look up CVEs and build pipelines rather than taking documentation at face value, and Hrudhay found that the real substance of the license and contribution sections only became clear once the actual files, not the surrounding write-ups, were opened. 
+Across all five reflections, the clearest pattern is that the team learned CrowdSec by actually operating on it rather than by reading about it. Leonard deployed CrowdSec on his own firewall and lived with the results. Mujib built a Docker environment specifically to explore agent and bouncer behavior beyond what the assignment required, Trung used GitHub directly to look up CVEs and build pipelines rather than taking documentation at face value, and Hrudhay found that the real substance of the license and contribution sections only became clear once the actual files, not the surrounding write-ups, were opened.
 
 The team also grew substantially in GitHub literacy over the course of this assignment. Branches, pull requests, code review, and CI/CD pipelines were all practiced, and coordinating that infrastructure was itself part of the team lead's learning. The one real process issue the team hit surfaced early: nobody was initially clear on what the finished deliverable was supposed to look like, which made it hard to scope individual sections, consistent with the rest of the team's hands-on approach. Section scoping and pacing improved noticeably for the rest of the assignment once that happened.
