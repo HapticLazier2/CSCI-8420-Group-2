@@ -19,7 +19,7 @@ Each interaction contains:
 - Security requirements derived from the misuse analysis.
 - Software-assurance concerns such as authentication, authorization, input validation, trust boundaries, secure failure, availability, integrity, traceability, testing, and defense in depth.
 
-The editable source for every diagram is [`CrowdSec_Use_Misuse_Cases.drawio`](../resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio) (one page per use case plus a page with the complete final diagram). Open it in [app.diagrams.net](https://app.diagrams.net) with *File → Open from → Device*.
+The editable source for every diagram is [`CrowdSec_Use_Misuse_Cases.drawio`](resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio) (one page per use case plus a page with the complete final diagram). Open it in [app.diagrams.net](https://app.diagrams.net) with *File → Open from → Device*.
 
 | # | External actor | Use case (CrowdSec feature) |
 |---|---|---|
@@ -115,7 +115,7 @@ The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. P
 | 2 | MC-1.2 Send oversized / gzip-bomb payload to a log datasource | Credentialed Log-Pusher | SF-1.2 Authenticate log sources; cap body size | [GHSA-g2x2-jgfg-pg7g](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-g2x2-jgfg-pg7g) (HTTP datasource, CVE-2026-44982) and [GHSA-rh69-4vqj-9gj8](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rh69-4vqj-9gj8) (k8s-audit, fixed 1.8.0) | fixed after advisory |
 | 3 | MC-1.3 Spread attack across many IPs below thresholds | Low-and-Slow Botnet Operator | SF-1.3 Slow/distributed scenarios + community blocklist | Hub ships slow-brute-force scenarios (e.g. `crowdsecurity/ssh-slow-bf`) and the community blocklist blocks IPs seen attacking elsewhere | implemented (coverage depends on installed collections) |
 
-![UC-1 use/misuse case diagram](/resources/static/issue3-4/uc1-use-misuse.png)
+![UC-1 use/misuse case diagram](resources/static/issue3-4/uc1-use-misuse.png)
 
 *Figure 1 — UC-1 final use/misuse case diagram.*
 
@@ -163,7 +163,7 @@ An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec compon
 | 2 | MC-2.2 Hide payload with chunked / HTTP-2 body framing | WAF-Evasion Specialist | SF-2.2 Read & inspect body for every framing | [GHSA-rw47-hm26-6wr7](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rw47-hm26-6wr7) (CVE-2026-44982): versions 1.5.0–1.7.7 skipped the body when `Content-Length` was not positive | fixed after advisory (v1.7.8) |
 | 3 | MC-2.3 Overload AppSec so requests fail open | WAF-Evasion Specialist | SF-2.3 Enforce timeouts; fail-closed failure action | Bouncer options `APPSEC_CONNECT_TIMEOUT`, `APPSEC_SEND_TIMEOUT`, `APPSEC_PROCESS_TIMEOUT` and `APPSEC_FAILURE_ACTION=passthrough\|deny`; [default is `passthrough`](https://docs.crowdsec.net/u/bouncers/openresty) | opt-in |
 
-![UC-2 use/misuse case diagram](/resources/static/issue3-4/uc2-use-misuse.png)
+![UC-2 use/misuse case diagram](resources/static/issue3-4/uc2-use-misuse.png)
 
 *Figure 2 — UC-2 final use/misuse case diagram.*
 
@@ -212,7 +212,7 @@ Remediation components authenticate to the Local API (LAPI), pull decisions, and
 | 3 | MC-3.3 Register rogue agent to push fake alerts | Rogue-Agent Registrant | SF-3.3 Machine validation; token + `allowed_ranges` | [Multi-server guide](https://docs.crowdsec.net/u/user_guides/multiserver_setup/): machines must be validated, or auto-register with a token **and** allowed IP ranges | implemented |
 | 4 | MC-3.4 Flood login endpoint with gzip bombs | Pre-Auth LAPI Flooder | SF-3.4 Loopback default; cap decompressed size | [GHSA-273h-gvwr-c3qj](https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-273h-gvwr-c3qj) (CVE-2026-44981); LAPI listens on loopback by default | fixed after advisory |
 
-![UC-3 use/misuse case diagram](/resources/static/issue3-4/uc3-use-misuse.png)
+![UC-3 use/misuse case diagram](resources/static/issue3-4/uc3-use-misuse.png)
 
 *Figure 3 — UC-3 final use/misuse case diagram.*
 
@@ -261,7 +261,7 @@ The SOC Administrator uses `cscli` and configuration files to install Hub conten
 | 2 | MC-4.2 Quietly allowlist an accomplice's IP | Insider SOC Analyst | SF-4.2 Per-operator audit trail & RBAC for cscli | `cscli` acts with whatever OS rights the user has and writes directly to the database; we found no per-operator identity or role separation in the documentation we reviewed | **GAP** |
 | 3 | MC-4.3 Activate a broken config that blinds detection | Insider SOC Analyst | SF-4.3 Validate config (`crowdsec -t`); simulation mode | `crowdsec -t` tests configuration without starting; `cscli simulation` runs scenarios without issuing decisions | implemented |
 
-![UC-4 use/misuse case diagram](/resources/static/issue3-4/uc4-use-misuse.png)
+![UC-4 use/misuse case diagram](resources/static/issue3-4/uc4-use-misuse.png)
 
 *Figure 4 — UC-4 final use/misuse case diagram.*
 
@@ -311,7 +311,7 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 | 3 | MC-5.3 Impersonate CAPI / tamper with the blocklist feed | Upstream Traffic Interceptor | SF-5.3 TLS to CAPI with per-instance credentials | CAPI is reached over HTTPS using `online_api_credentials.yaml` | implemented |
 | 4 | MC-5.4 Harvest internal data from shared signals | Signal-Data Harvester | SF-5.4 Minimal sharing; context off by default | `console.yaml` defaults in [`pkg/csconfig/console.go`](https://github.com/crowdsecurity/crowdsec/blob/v1.5.3/pkg/csconfig/console.go): `share_context` and `share_manual_decisions` off; `share_custom` and `share_tainted` on | implemented (partially — custom/tainted sharing is on by default) |
 
-![UC-5 use/misuse case diagram](/resources/static/issue3-4/uc5-use-misuse.png)
+![UC-5 use/misuse case diagram](resources/static/issue3-4/uc5-use-misuse.png)
 
 *Figure 5 — UC-5 final use/misuse case diagram.*
 
@@ -398,9 +398,9 @@ We also gave the AI our initial use/misuse cases and asked it to critique them a
 
 ### 4.3 Final diagram
 
-Figure 6 is the finished diagram after the last round of iteration. It combines all five interactions, 17 misuse cases, and 17 security functions inside one CrowdSec system boundary. Each band is the same as the matching Figure 1–5, which are easier to read at full size. All six are pages in [`CrowdSec_Use_Misuse_Cases.drawio`](../resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio).
+Figure 6 is the finished diagram after the last round of iteration. It combines all five interactions, 17 misuse cases, and 17 security functions inside one CrowdSec system boundary. Each band is the same as the matching Figure 1–5, which are easier to read at full size. All six are pages in [`CrowdSec_Use_Misuse_Cases.drawio`](resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio).
 
-![Final use/misuse case diagram](/resources/static/issue3-4/final-use-misuse.png)
+![Final use/misuse case diagram](resources/static/issue3-4/final-use-misuse.png)
 
 *Figure 6 — Final use/misuse case diagram: all five interactions after the last round.*
 
@@ -425,3 +425,11 @@ The biggest lesson was that the AI states things confidently even when they are 
 - Console sharing defaults — <https://github.com/crowdsecurity/crowdsec/blob/v1.5.3/pkg/csconfig/console.go>
 - Security advisories: GHSA-rh69-4vqj-9gj8, GHSA-g2x2-jgfg-pg7g, GHSA-rw47-hm26-6wr7, GHSA-273h-gvwr-c3qj — <https://github.com/crowdsecurity/crowdsec/security/advisories>
 - G. Sindre and A. L. Opdahl, "Eliciting security requirements with misuse cases," *Requirements Engineering*, 10(1), 2005.
+
+#### Kowshik's Reflection
+
+From this assignment, I learned how to turn a list of threats into concrete security requirements through misuse case analysis. Working on Issues #3 and #4, I identified misusers for each of CrowdSec's five external interactions and went back and forth between use cases and misuse cases. I learned that the first round always finds the obvious attack, and the real insight comes from asking what an attacker would do next once a defense is in place. This iteration led to findings that were not in our proposal, such as data exposure through shared threat signals and certificate revocation checks being skipped when the CRL file has expired.
+
+The most useful part for me was grounding every mitigation in CrowdSec's actual features, documentation, and security advisories instead of generic security controls. This showed me where CrowdSec is strong, such as per-bouncer API keys and machine validation, and where it has gaps, such as no per-operator audit trail for cscli. I also found it useful to use AI to check for missed misuse cases, but I learned that AI output must be verified, because some of its claims sounded correct but were not true for our team.
+
+I also gained more experience with GitHub by fixing automated markdown lint errors until the checks passed. Overall, this assignment helped me understand how security requirements are derived systematically and how important it is to verify every claim against the project's documentation.
