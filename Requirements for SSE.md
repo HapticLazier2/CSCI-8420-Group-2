@@ -448,3 +448,7 @@ From this assignment, I learned how to turn a list of threats into concrete secu
 The most useful part for me was grounding every mitigation in CrowdSec's actual features, documentation, and security advisories instead of generic security controls. This showed me where CrowdSec is strong, such as per-bouncer API keys and machine validation, and where it has gaps, such as no per-operator audit trail for cscli. I also found it useful to use AI to check for missed misuse cases, but I learned that AI output must be verified, because some of its claims sounded correct but were not true for our team.
 
 I also gained more experience with GitHub by fixing automated markdown lint errors until the checks passed. Overall, this assignment helped me understand how security requirements are derived systematically and how important it is to verify every claim against the project's documentation.
+
+#### Trung's Reflection
+
+I was assigned to work on the security requirements for the use and misuse cases of CrowdSec, and I learned how important it is to have those requirements in place within an organization. Moreover, I was able to realize that implementing new security software requires an extensive amount of research and an understanding of the ecosystem just to establish these requirements. With the misuse cases, I also had to think about failsafes for the components of CrowdSec to prevent such situations from happening, which I found super interesting. It really makes you think realistically, rather than just in a perfectionist kind of way.
