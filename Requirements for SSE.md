@@ -1,8 +1,23 @@
-# Requirements for Software Security Engineering — Issues #3 & #4
+# Requirements for Software Security Engineering
 
-**CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (multi-server LAPI)**
+**CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (Multi-server LAPI)**
 
-This section continues the five interactions identified in Issue #1 and diagrammed in Issue #2. Issue #3 performs the misuse case analysis and derives security requirements; Issue #4 documents how we used an AI assistant to iterate on the use/misuse cases and presents the final diagrams.
+## Essential Interactions with Operation Environment
+
+The **CrowdSec System** is treated as the system-of-interest. Only interactions crossing the boundary between the CrowdSec System and an external human or enterprise system are modeled.
+
+CrowdSec internal components such as LAPI, CAPI, agents, parsers, detection scenarios, and bouncers are treated as features/components of the **CrowdSec System**, not as external actors.
+
+The external environment is an enterprise security environment containing systems such as Splunk, enterprise firewalls, web applications, reverse proxies, administrators/SOC personnel, and the CrowdSec community threat intelligence network.
+
+Each interaction contains:
+
+- An external actor/system.
+- A CrowdSec feature that supports the interaction.
+- A legitimate use case.
+- A contextualized misuse case.
+- Security requirements derived from the misuse analysis.
+- Software-assurance concerns such as authentication, authorization, input validation, trust boundaries, secure failure, availability, integrity, traceability, testing, and defense in depth.
 
 The editable source for every diagram is [`CrowdSec_Use_Misuse_Cases.drawio`](resources/static/issue3-4/CrowdSec_Use_Misuse_Cases.drawio) (one page per use case plus a page with the complete final diagram). Open it in [app.diagrams.net](https://app.diagrams.net) with *File → Open from → Device*.
 
@@ -16,9 +31,7 @@ The editable source for every diagram is [`CrowdSec_Use_Misuse_Cases.drawio`](re
 
 ---
 
-## Issue #3 — Misuse Case Analysis and Derived Security Requirements
-
-### 3.1 Method and notation
+### 1. Method and notation
 
 We used standard use/misuse case notation (Sindre & Opdahl):
 
@@ -38,7 +51,7 @@ Following the instructor's guidance, we preferred mitigations **implemented by t
 | **service-side** | Performed by CrowdSec SAS's hosted service, so not verifiable in the OSS repo. Drawn dashed. |
 | **GAP** | Not implemented; required by our analysis. Drawn dashed. |
 
-### 3.2 Misuser catalog
+### 2. Misuser catalog
 
 Misuser names are chosen to tell the reader the motive, the access, and the attack. Threat IDs refer to the threat list in our proposal: **T1** LAPI/agent compromise, **T2** stolen credentials/API keys, **T3** malicious logs and crafted HTTP, **T4** poisoned detection content, **T5** bouncer compromise/spoofing, **T6** dependency vulnerabilities, **T7** denial of service.
 
@@ -63,9 +76,38 @@ T6 (dependency vulnerabilities) is not an interaction with an external actor, so
 
 ---
 
-### 3.3 UC-1 — Ingest & Analyze Logs
+## 3. Use/Misuse Cases
+
+### UC-1 — Ingest & Analyze Logs
 
 The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. Parsers extract fields; scenarios (leaky buckets) decide whether behavior is malicious and raise alerts.
+
+**Primary actor:** Enterprise Log Source (servers, syslog, SIEM forwarder)
+
+**CrowdSec feature:** Acquisition datasources, parsers, scenarios (leaky buckets)
+
+**Description:** The enterprise log source sends log lines to CrowdSec. The engine parses them into structured events (source IP, user, target) and feeds them to behavior scenarios. When a scenario's threshold is crossed, CrowdSec raises an alert that can lead to a decision.
+
+**Preconditions:**
+- The datasource is configured (file, syslog, HTTP, Kubernetes audit).
+- The relevant parsers and scenarios are installed from the Hub.
+
+**Main flow:**
+1. The log source delivers log lines to an acquisition datasource.
+2. Network datasources authenticate the sender and enforce size and timeout limits.
+3. Parsers match each line and extract security-relevant fields. Non-matching lines are discarded.
+4. Events go through the allowlist check, and allowlisted IPs are dropped and logged.
+5. Scenarios evaluate the events over time and across sources.
+6. On overflow, CrowdSec raises an alert.
+
+**Postcondition:** Malicious behavior is turned into alerts, while legitimate, allowlisted, and unparseable traffic raises none.
+ 
+**Threatened by:**
+- MC-1.1: Forge log entries to frame a trusted IP
+- MC-1.2: Send oversized / gzip-bomb payload to a log datasource
+- MC-1.3: Spread attack across many IPs below thresholds
+
+**Requirements:** SR-1.1 to SR-1.5
 
 | Round | Misuse case | Misuser | Security function | CrowdSec evidence | Status |
 |---|---|---|---|---|---|
@@ -85,9 +127,35 @@ The Enterprise Log Source feeds log lines to CrowdSec acquisition datasources. P
 - **SR-1.4** Every network datasource shall enforce a configurable maximum raw and decompressed body size and a read timeout, rejecting oversize input without terminating the engine.
 - **SR-1.5** CrowdSec shall provide scenarios that correlate low-rate activity over long windows and across many source IPs targeting the same account or resource.
 
-### 3.4 UC-2 — Inspect HTTP Request (AppSec)
+### UC-2 — Inspect HTTP Request (AppSec)
 
 An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec component, which evaluates it against WAF rules and returns allow/deny.
+
+**Primary actor:** Web App / Reverse Proxy (AppSec-enabled bouncer)
+
+**CrowdSec feature:** AppSec component (WAF with CRS and virtual-patching rules)
+ 
+**Description:** The AppSec-enabled bouncer forwards each incoming HTTP request to CrowdSec's AppSec component. AppSec evaluates the URI, headers, and body against the enabled WAF rules and returns an allow or deny verdict that the bouncer enforces.
+ 
+**Preconditions:**
+- AppSec is enabled, and rule sets (CRS, virtual patching) are installed.
+- The bouncer is configured with the AppSec endpoint, timeouts, and failure action.
+
+**Main flow:**
+1. A client request reaches the web app or reverse proxy.
+2. The bouncer forwards the request to AppSec.
+3. AppSec reads the body for every framing (`Content-Length`, chunked, HTTP/2) and evaluates it against the rules.
+4. AppSec returns allow or deny.
+5. The bouncer allows or blocks the request accordingly.
+
+**Postcondition:** Known-bad requests (SQLi, XSS, CVE exploits) are blocked before reaching the application.
+
+**Threatened by:**
+- MC-2.1: Send SQLi / XSS / CVE exploit payload
+- MC-2.2: Hide payload with chunked / HTTP-2 body framing
+- MC-2.3: Overload AppSec so requests fail open
+
+**Requirements:** SR-2.1 to SR-2.4
 
 | Round | Misuse case | Misuser | Security function | CrowdSec evidence | Status |
 |---|---|---|---|---|---|
@@ -106,9 +174,36 @@ An AppSec-enabled bouncer forwards each HTTP request to CrowdSec's AppSec compon
 - **SR-2.3** The AppSec-enabled bouncer shall enforce connect, send, and processing timeouts toward AppSec.
 - **SR-2.4** The bouncer shall offer a fail-closed mode (deny when AppSec is unavailable), and every fail-open event shall be logged.
 
-### 3.5 UC-3 — Retrieve & Enforce Decisions
+### UC-3 — Retrieve & Enforce Decisions
 
 Remediation components authenticate to the Local API (LAPI), pull decisions, and enforce them (drop, ban, captcha). In our enterprise environment LAPI listens on the internal network so many bouncers and agents can reach it.
+
+**Primary actor:** Remediation Component (firewall or reverse-proxy bouncer)
+
+**CrowdSec feature:** LAPI decisions API
+ 
+**Description:** A remediation component authenticates to the Local API, pulls the current decisions (banned IPs and so on), and enforces them by dropping, banning, or issuing a captcha. In the multi-server enterprise setup, LAPI listens on the internal network so many bouncers and agents can reach it.
+ 
+**Preconditions:**
+- The bouncer is registered with its own API key (`cscli bouncers add`).
+- LAPI is reachable, ideally over TLS or mutual TLS.
+
+**Main flow:**
+1. The bouncer authenticates to LAPI with its API key (or client certificate).
+2. LAPI verifies the credential and grants read-only access.
+3. The bouncer pulls new and expired decisions.
+4. The bouncer enforces the decisions on live traffic.
+5. LAPI records the bouncer's source IP and last-pull time.
+
+**Postcondition:** The enforcement point blocks the addresses that CrowdSec has decided to remediate.
+ 
+**Threatened by:**
+- MC-3.1: Query decisions with a stolen bouncer API key
+- MC-3.2: Intercept or strip decisions in transit
+- MC-3.3: Register rogue agent to push fake alerts
+- MC-3.4: Flood login endpoint with gzip bombs
+
+**Requirements:** SR-3.1 to SR-3.6
 
 | Round | Misuse case | Misuser | Security function | CrowdSec evidence | Status |
 |---|---|---|---|---|---|
@@ -130,9 +225,35 @@ Remediation components authenticate to the Local API (LAPI), pull decisions, and
 - **SR-3.5** A newly registered machine shall not be able to push alerts until an administrator validates it, or until it registers with a secret token from an allowed IP range.
 - **SR-3.6** LAPI shall bind to loopback by default and shall bound the decompressed size of every request, including unauthenticated endpoints.
 
-### 3.6 UC-4 — Manage Policy & Detection Content
+### UC-4 — Manage Policy & Detection Content
 
 The SOC Administrator uses `cscli` and configuration files to install Hub content, manage decisions and allowlists, and configure profiles.
+
+**Primary actor:** SOC Administrator (`cscli`, config files)
+
+**CrowdSec feature:** `cscli`, Hub, allowlists, profiles, simulation mode
+
+**Description:** The SOC administrator installs and updates Hub content (parsers, scenarios, collections), manages decisions and allowlists, and configures profiles. This use case defines what CrowdSec detects and what it acts on.
+
+**Preconditions:**
+- The administrator has shell access to the LAPI host and OS rights to run `cscli`.
+
+**Main flow:**
+1. The administrator installs or upgrades Hub items with `cscli`.
+2. `cscli` flags locally modified items as tainted and won't overwrite them without `--force`.
+3. The administrator edits allowlists, decisions, or configuration.
+4. The configuration is validated with `crowdsec -t`.
+5. New scenarios are optionally run in simulation mode before issuing decisions.
+6. CrowdSec activates the new configuration.
+
+**Postcondition:** Detection content and policy are updated, validated, and active.
+ 
+**Threatened by:**
+- MC-4.1: Get a poisoned scenario/parser installed from the Hub
+- MC-4.2: Quietly allowlist an accomplice's IP
+- MC-4.3: Activate a broken config that blinds detection
+
+**Requirements:** SR-4.1 to SR-4.5. SR-4.3 and SR-4.4 are gaps: there is no per-operator attribution or role separation in `cscli`.
 
 | Round | Misuse case | Misuser | Security function | CrowdSec evidence | Status |
 |---|---|---|---|---|---|
@@ -152,9 +273,36 @@ The SOC Administrator uses `cscli` and configuration files to install Hub conten
 - **SR-4.4** `cscli` shall support separating read-only analyst roles from administrator roles. *(gap)*
 - **SR-4.5** CrowdSec shall reject invalid configuration before activation, and shall let new scenarios run in simulation mode before they issue decisions.
 
-### 3.7 UC-5 — Exchange Threat Intelligence
+### UC-5 — Exchange Threat Intelligence
 
 The engine sends signals about local attacks to CrowdSec's Central API and pulls the community blocklist back.
+
+**Primary actor:** CrowdSec Central API (CAPI)
+
+**CrowdSec feature:** Signal sharing and community blocklist
+
+**Description:** The engine sends signals about local attacks to CrowdSec's Central API and pulls back the community blocklist, so that IPs seen attacking elsewhere can be blocked locally.
+
+**Preconditions:**
+- The instance is enrolled with CAPI, with credentials in `online_api_credentials.yaml`.
+- Sharing preferences are set in `console.yaml`.
+
+**Main flow:**
+1. LAPI connects to CAPI over HTTPS with its per-instance credentials.
+2. LAPI shares signals about local attacks, according to the sharing settings.
+3. LAPI pulls the community blocklist.
+4. Local allowlists are applied before decisions are stored.
+5. Bouncers enforce the resulting decisions (see UC-3).
+
+**Postcondition:** Local defenses benefit from community intelligence, and local detection keeps working if CAPI is unreachable.
+ 
+**Threatened by:**
+- MC-5.1: Report fake signals to blocklist a victim IP
+- MC-5.2: Poisoned entry blocks a partner IP locally
+- MC-5.3: Impersonate CAPI / tamper with the blocklist feed
+- MC-5.4: Harvest internal data from shared signals
+
+**Requirements:** SR-5.1 to SR-5.6
 
 | Round | Misuse case | Misuser | Security function | CrowdSec evidence | Status |
 |---|---|---|---|---|---|
@@ -176,13 +324,13 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 - **SR-5.5** Local detection and already-pulled decisions shall keep working when CAPI is unreachable.
 - **SR-5.6** Signals shared upstream shall exclude alert context and manual decisions unless the operator opts in.
 
-### 3.8 Coverage check
+## Coverage check
 
 - **Every misuse case is mitigated.** Each of the 17 misuse cases has exactly one `«mitigates»` edge. Two of those security functions are not in the OSS code (SF-4.2 GAP, SF-5.1 service-side) and are drawn dashed so the reader can see them.
 - **Every proposal threat is covered.** T1 → MC-3.2, 3.3, 3.4, 4.2 · T2 → MC-3.1, 3.3 · T3 → MC-1.1, 1.2, 1.3, 2.1, 2.2 · T4 → MC-4.1, 5.1, 5.2, 5.3 · T5 → MC-3.1, 3.2 · T6 → out of scope (not an actor interaction) · T7 → MC-1.2, 2.3, 3.4.
 - **Iteration found a new threat.** MC-5.4 (data exposure through shared signals) was not in our proposal's threat list; it appeared only once we asked what remains after the blocklist feed is authenticated.
 
-### 3.9 Summary of derived requirements
+### Summary of derived requirements
 
 | Status | Requirements |
 |---|---|
