@@ -491,9 +491,6 @@ The biggest lesson was that the AI states things confidently even when they are 
 - Security advisories: GHSA-rh69-4vqj-9gj8, GHSA-g2x2-jgfg-pg7g, GHSA-rw47-hm26-6wr7, GHSA-273h-gvwr-c3qj — <https://github.com/crowdsecurity/crowdsec/security/advisories>
 - G. Sindre and A. L. Opdahl, "Eliciting security requirements with misuse cases," *Requirements Engineering*, 10(1), 2005.
 
-### Mujib's Reflection
-For this milestone of the project, I reviewed the system architecture to identify they key external interactions the CrowdSec Systems makes across multiple trust boundaries.
-
 #### Kowshik's Reflection
 
 From this assignment, I learned how to turn a list of threats into concrete security requirements through misuse case analysis. Working on Issues #3 and #4, I identified misusers for each of CrowdSec's five external interactions and went back and forth between use cases and misuse cases. I learned that the first round always finds the obvious attack, and the real insight comes from asking what an attacker would do next once a defense is in place. This iteration led to findings that were not in our proposal, such as data exposure through shared threat signals and certificate revocation checks being skipped when the CRL file has expired.
@@ -513,6 +510,9 @@ As team leader, I broke the assignment into GitHub issues that each matched one 
 My biggest technical lesson came from resolving merge conflicts. With several people editing the same markdown report, our changes often overlapped, and fixing them took longer than I expected. I learned to have the team pull before editing, work on separate branches, and split work by section so fewer people were changing the same lines at once. That time also showed me how easily a careless merge can quietly undo a teammate's work, so I started reviewing each merged file instead of assuming it came through intact.
 
 The most useful part for me was the final requirements check. I traced each assignment requirement to the part of the report that meets it, which is the same idea as our misuse case analysis: every threat has to trace to a security requirement, and every requirement to evidence. Doing that check showed me that leading a project is less about writing the most content and more about making sure nothing falls through the gaps between everyone's pieces.
+
+### Mujib's Reflection
+For this milestone of the project I was assigned to complete issues #1 and #2, I reviewed the system architecture to identify they key external interactions the CrowdSec Systems makes across multiple trust boundaries.I modeled the primary interactions, actors, use cases, and misuse cases that great team members turned five most important to concrete use cases and misuse cases, and enhanced the initially provided related diagrams. I focused on the CrowdSec system component interactions with its environment and how those interactions impact its environment. My focus was to extract cases that show both legitimate operation and realistic methods and approaches an attacker, compromised component, or insider could abuse the interactions and turn them into misuse cases. I also helped in the preliminary analysis of the misuse cases and derived security requirements based on what we learned from the class lectures and related materials. It is mentionable that I used AI frontier models such as Claude, GPT, and Gemini for assistance throughout, for summarization, illustration, and writing the drawio XML code. Thanks to all active and motivated team members who drafted a great Markdown report.
 
 #### Hrudhay's Reflection
 
