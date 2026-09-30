@@ -275,3 +275,9 @@ We plan to contribute in three tracks:
 - We reviewed documentation source and code; we didn't test a running deployment. The findings that depend on runtime behavior come from reading the code and should be confirmed by testing: DR-2 (CAPI scope), DR-3 (OCSP), DR-4, DR-6 (oversized bodies) and DR-9.
 - We reviewed the v1.8 documentation and v1.8.1 code. Every versioned page we cite is identical in the unreleased `docs/` tree, so none of these findings has been fixed there yet. Later engine releases may still change the code-side behavior.
 - We haven't yet searched the issue trackers for existing reports of these findings.
+
+### Use of AI Citation
+
+ - AI was used to help search through possible attacks these results were then confirmed and added to the paper
+ - AI was used to help write a template for this file
+ - AI was used in editing, formatting, and mainly adding URL's to link knowledge and evidence.
