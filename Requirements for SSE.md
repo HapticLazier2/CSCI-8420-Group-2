@@ -1,4 +1,5 @@
 # Requirements for Software Security Engineering
+
 [Github Link](https://github.com/HapticLazier2/CSCI-8420-Group-2)
 
 [ProjectBoard Link](https://github.com/users/HapticLazier2/projects/1)
@@ -510,6 +511,9 @@ As team leader, I broke the assignment into GitHub issues that each matched one 
 My biggest technical lesson came from resolving merge conflicts. With several people editing the same markdown report, our changes often overlapped, and fixing them took longer than I expected. I learned to have the team pull before editing, work on separate branches, and split work by section so fewer people were changing the same lines at once. That time also showed me how easily a careless merge can quietly undo a teammate's work, so I started reviewing each merged file instead of assuming it came through intact.
 
 The most useful part for me was the final requirements check. I traced each assignment requirement to the part of the report that meets it, which is the same idea as our misuse case analysis: every threat has to trace to a security requirement, and every requirement to evidence. Doing that check showed me that leading a project is less about writing the most content and more about making sure nothing falls through the gaps between everyone's pieces.
+
+#### Mujib's Reflection
+For this milestone of the project I was assigned to complete issues #1 and #2, I reviewed the system architecture to identify they key external interactions the CrowdSec Systems makes across multiple trust boundaries.I modeled the primary interactions, actors, use cases, and misuse cases that great team members turned five most important to concrete use cases and misuse cases, and enhanced the initially provided related diagrams. I focused on the CrowdSec system component interactions with its environment and how those interactions impact its environment. My focus was to extract cases that show both legitimate operation and realistic methods and approaches an attacker, compromised component, or insider could abuse the interactions and turn them into misuse cases. I also helped in the preliminary analysis of the misuse cases and derived security requirements based on what we learned from the class lectures and related materials. It is mentionable that I used AI frontier models such as Claude, GPT, and Gemini for assistance throughout, for summarization, illustration, and writing the drawio XML code. Thanks to all active and motivated team members who drafted a great Markdown report.
 
 #### Hrudhay's Reflection
 
