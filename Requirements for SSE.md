@@ -345,18 +345,6 @@ The engine sends signals about local attacks to CrowdSec's Central API and pulls
 - **Every proposal threat is covered.** T1 → MC-3.2, 3.3, 3.4, 4.2 · T2 → MC-3.1, 3.3 · T3 → MC-1.1, 1.2, 1.3, 2.1, 2.2 · T4 → MC-4.1, 5.1, 5.2, 5.3 · T5 → MC-3.1, 3.2 · T6 → out of scope (not an actor interaction) · T7 → MC-1.2, 2.3, 3.4.
 - **Iteration found a new threat.** MC-5.4 (data exposure through shared signals) was not in our proposal's threat list; it appeared only once we asked what remains after the blocklist feed is authenticated.
 
-### Summary of derived requirements
-
-| Status | Requirements |
-|---|---|
-| Implemented (on by default) | SR-1.1, 1.2, 1.5, 2.1, 2.3, 3.1, 3.2, 3.3, 3.5, 4.1, 4.2, 4.5, 5.2, 5.3, 5.4, 5.5, 5.6 |
-| Implemented but opt-in / weaker default | SR-2.4, 3.4 |
-| Fixed after a published advisory | SR-1.3, 1.4, 2.2, 3.6 |
-| Service-side (not verifiable in OSS) | SR-5.1 |
-| **Gap** | SR-4.3, 4.4 |
-
-Statuses are based on CrowdSec's documentation, published security advisories, and the source files cited above.
-
 ---
 
 ## Derived requirements vs. CrowdSec's actual features
