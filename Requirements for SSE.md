@@ -502,3 +502,11 @@ I also gained more experience with GitHub by fixing automated markdown lint erro
 #### Trung's Reflection
 
 I was assigned to work on the security requirements for the use and misuse cases of CrowdSec, and I learned how important it is to have those requirements in place within an organization. Moreover, I was able to realize that implementing new security software requires an extensive amount of research and an understanding of the ecosystem just to establish these requirements. With the misuse cases, I also had to think about failsafes for the components of CrowdSec to prevent such situations from happening, which I found super interesting. It really makes you think realistically, rather than just in a perfectionist kind of way.
+
+#### Leonard's Reflection
+
+As team leader, I broke the assignment into GitHub issues that each matched one of its requirements, then checked our report against the assignment before we submitted. I learned that turning a long assignment into specific, trackable tasks makes working together as a team easier when everyone knows what needs to be done first. Each issue had to be clear enough that a teammate could finish it without guessing what "done" meant. 
+
+My biggest technical lesson came from resolving merge conflicts. With several people editing the same markdown report, our changes often overlapped, and fixing them took longer than I expected. I learned to have the team pull before editing, work on separate branches, and split work by section so fewer people were changing the same lines at once. That time also showed me how easily a careless merge can quietly undo a teammate's work, so I started reviewing each merged file instead of assuming it came through intact.
+
+The most useful part for me was the final requirements check. I traced each assignment requirement to the part of the report that meets it, which is the same idea as our misuse case analysis: every threat has to trace to a security requirement, and every requirement to evidence. Doing that check showed me that leading a project is less about writing the most content and more about making sure nothing falls through the gaps between everyone's pieces.
