@@ -1,381 +1,140 @@
 <mxfile host="app.diagrams.net">
   <diagram id="C1" name="C1 Log Ingestion">
-    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10"
-      page="1" pageWidth="1200" pageHeight="850">
+    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10" page="1" pageWidth="1200" pageHeight="850">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-
-        <mxCell id="c1" value="C1 — Log Ingestion&#xa;The ingestion pipeline maintains detection under forged, malformed, or oversized input."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;"
-          vertex="1" parent="1">
-          <mxGeometry x="350" y="30" width="500" height="80" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c11" value="C1.1 — Network log sources are authenticated."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r11" value="R1.1 — Compromised credentials or spoofed source identities may bypass authentication."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e11" value="E1.1 — Use case: authenticated log forwarding; misuse case: spoofed sender. Evidence: authentication test results, certificate-validation records, and negative spoofing-test report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c12" value="C1.2 — Oversized input cannot crash the agent."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r12" value="R1.2 — Unanticipated input sizes or parser defects may exhaust resources."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e12" value="E1.2 — Use case: normal log ingestion; misuse case: oversized log flood. Evidence: boundary-value test results, peak-memory measurements, and load-test report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c13" value="C1.3 — Forged logs cannot frame trusted IP addresses."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r13" value="R1.3 — Attacker-controlled log fields may misattribute malicious activity."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e13" value="E1.3 — Use case: accurate source attribution; misuse case: forged IP fields. Evidence: parser test corpus, source-attribution test results, and false-attribution measurements."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="a11" edge="1" parent="1" source="c1" target="c11" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a12" edge="1" parent="1" source="c1" target="c12" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a13" edge="1" parent="1" source="c1" target="c13" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="b11" value="R1.1" edge="1" parent="1" source="c11" target="r11" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b12" value="R1.2" edge="1" parent="1" source="c12" target="r12" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b13" value="R1.3" edge="1" parent="1" source="c13" target="r13" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="f11" edge="1" parent="1" source="r11" target="e11" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f12" edge="1" parent="1" source="r12" target="e12" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f13" edge="1" parent="1" source="r13" target="e13" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="c1" value="C1 — Log Ingestion&#xa;Detection remains effective against forged, malformed, or oversized input." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="350" y="20" width="500" height="65" as="geometry"/></mxCell>
+        <mxCell id="s11" value="Subclaim C1.1&#xa;Network log sources are authenticated." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="30" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r11" value="Rebuttal R1.1&#xa;Unless credentials are compromised or source identity can be spoofed, unauthorised sources should be rejected." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="30" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e11" value="Evidence E1.1&#xa;Authentication audit, certificate-validation results, and spoofed-source negative-test results." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="30" y="375" width="350" height="75" as="geometry"/></mxCell>
+        <mxCell id="s12" value="Subclaim C1.2&#xa;Oversized input cannot crash the agent." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="425" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r12" value="Rebuttal R1.2&#xa;Unless input limits or parser protections fail, oversized input should be rejected or handled safely." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="425" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e12" value="Evidence E1.2&#xa;Boundary-value tests, memory and CPU measurements, and load-test results showing whether the agent remains available." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="425" y="375" width="350" height="75" as="geometry"/></mxCell>
+        <mxCell id="s13" value="Subclaim C1.3&#xa;Forged logs cannot falsely attribute activity to trusted IP addresses." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="820" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r13" value="Rebuttal R1.3&#xa;Unless attacker-controlled fields are trusted without validation, forged entries may cause false attribution." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="820" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e13" value="Evidence E1.3&#xa;Parser test corpus, source-attribution test results, and measured false-attribution rate." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="820" y="375" width="350" height="75" as="geometry"/></mxCell>
+        <mxCell id="a11" edge="1" parent="1" source="c1" target="s11" style="endArrow=block;html=1;edgeStyle=orthogonalEdgeStyle;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a12" edge="1" parent="1" source="c1" target="s12" style="endArrow=block;html=1;edgeStyle=orthogonalEdgeStyle;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a13" edge="1" parent="1" source="c1" target="s13" style="endArrow=block;html=1;edgeStyle=orthogonalEdgeStyle;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b11" edge="1" parent="1" source="s11" target="r11" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b12" edge="1" parent="1" source="s12" target="r12" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b13" edge="1" parent="1" source="s13" target="r13" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f11" edge="1" parent="1" source="r11" target="e11" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f12" edge="1" parent="1" source="r12" target="e12" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f13" edge="1" parent="1" source="r13" target="e13" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
-
 <diagram id="C2" name="C2 AppSec Inspection">
-    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10"
-      page="1" pageWidth="1200" pageHeight="850">
+    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10" page="1" pageWidth="1200" pageHeight="850">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-
-        <mxCell id="c2" value="C2 — AppSec Inspection&#xa;The inspection component detects and blocks known attack payloads across supported request framings and operating loads."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;"
-          vertex="1" parent="1">
-          <mxGeometry x="350" y="30" width="500" height="80" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c21" value="C2.1 — Every supported request framing is inspected."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r21" value="R2.1 — Encoding differences or parser inconsistencies may bypass inspection."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e21" value="E2.1 — Use case: inspection of supported requests; misuse case: encoded or fragmented attack payload. Evidence: request-framing test matrix, payload corpus, and detection-coverage report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c22" value="C2.2 — Inspection failures follow a documented fail-safe policy."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r22" value="R2.2 — Fail-open behavior may permit malicious traffic during component failure."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e22" value="E2.2 — Use case: normal inspection; misuse case: inspection-engine crash or timeout. Evidence: failure-injection results, fail-open/fail-closed configuration review, and recovery test report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c23" value="C2.3 — High traffic cannot silently disable inspection."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r23" value="R2.3 — Resource exhaustion may cause dropped requests or reduced inspection coverage."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e23" value="E2.3 — Use case: inspection during peak traffic; misuse case: request flood. Evidence: throughput benchmarks, resource-utilization metrics, and overload-resilience test report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="a21" edge="1" parent="1" source="c2" target="c21" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a22" edge="1" parent="1" source="c2" target="c22" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a23" edge="1" parent="1" source="c2" target="c23" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="b21" value="R2.1" edge="1" parent="1" source="c21" target="r21" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b22" value="R2.2" edge="1" parent="1" source="c22" target="r22" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b23" value="R2.3" edge="1" parent="1" source="c23" target="r23" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="f21" edge="1" parent="1" source="r21" target="e21" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f22" edge="1" parent="1" source="r22" target="e22" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f23" edge="1" parent="1" source="r23" target="e23" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="c2" value="C2 — AppSec Inspection&#xa;The inspection component detects and blocks known attack payloads." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="350" y="20" width="500" height="65" as="geometry"/></mxCell>
+        <mxCell id="s21" value="Subclaim C2.1&#xa;All supported request framings are inspected." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="30" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r21" value="Rebuttal R2.1&#xa;Unless encoding differences or parser inconsistencies bypass inspection, supported payloads should be detected." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="30" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e21" value="Evidence E2.1&#xa;Request-framing test matrix, encoded-payload test results, and detection-coverage report." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="30" y="375" width="350" height="75" as="geometry"/></mxCell>
+        <mxCell id="s22" value="Subclaim C2.2&#xa;Inspection failures follow a documented fail-safe policy." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="425" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r22" value="Rebuttal R2.2&#xa;Unless fail-open behavior permits traffic during inspection failure, malicious requests should remain blocked according to policy." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="425" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e22" value="Evidence E2.2&#xa;Failure-injection tests, fail-open/fail-closed configuration audit, and recovery-test results." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="425" y="375" width="350" height="75" as="geometry"/></mxCell>
+        <mxCell id="s23" value="Subclaim C2.3&#xa;High traffic cannot silently disable inspection." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="820" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r23" value="Rebuttal R2.3&#xa;Unless resource exhaustion causes dropped requests or reduced inspection coverage, inspection should continue under load." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="820" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e23" value="Evidence E2.3&#xa;Throughput benchmarks, CPU and memory measurements, and overload-resilience test results." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="820" y="375" width="350" height="75" as="geometry"/></mxCell>
+        <mxCell id="a21" edge="1" parent="1" source="c2" target="s21" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a22" edge="1" parent="1" source="c2" target="s22" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a23" edge="1" parent="1" source="c2" target="s23" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b21" edge="1" parent="1" source="s21" target="r21" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b22" edge="1" parent="1" source="s22" target="r22" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b23" edge="1" parent="1" source="s23" target="r23" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f21" edge="1" parent="1" source="r21" target="e21" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f22" edge="1" parent="1" source="r22" target="e22" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f23" edge="1" parent="1" source="r23" target="e23" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
 
-<diagram id="C3" name="C3 Decision Channel">
-    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10"
-      page="1" pageWidth="1200" pageHeight="850">
+ <diagram id="C3" name="C3 Decision Channel">
+    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10" page="1" pageWidth="1200" pageHeight="850">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-
-        <mxCell id="c3" value="C3 — Decision Channel&#xa;Security decisions reach only authorized enforcement points and remain protected against alteration in transit."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;"
-          vertex="1" parent="1">
-          <mxGeometry x="350" y="30" width="500" height="80" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c31" value="C3.1 — Credentials are unique, revocable, and least-privileged."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r31" value="R3.1 — Stolen or overprivileged credentials may permit unauthorized decisions."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e31" value="E3.1 — Use case: authorized service authentication; misuse case: stolen credential reuse. Evidence: access-control matrix, credential-revocation test results, and authorization audit records."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c32" value="C3.2 — Decision traffic is protected in transit."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r32" value="R3.2 — A network attacker may intercept, replay, or alter decision messages."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e32" value="E3.2 — Use case: protected decision delivery; misuse case: message tampering or replay. Evidence: transport-security configuration, packet-capture analysis, and tampering/replay test results."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c33" value="C3.3 — Only validated machines can submit alerts or decisions."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r33" value="R3.3 — An unregistered or compromised machine may inject false alerts."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e33" value="E3.3 — Use case: alert submission by a registered machine; misuse case: unauthorized alert injection. Evidence: machine-identity validation tests, enrollment records, and rejected-request logs."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="a31" edge="1" parent="1" source="c3" target="c31" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a32" edge="1" parent="1" source="c3" target="c32" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a33" edge="1" parent="1" source="c3" target="c33" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="b31" value="R3.1" edge="1" parent="1" source="c31" target="r31" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b32" value="R3.2" edge="1" parent="1" source="c32" target="r32" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b33" value="R3.3" edge="1" parent="1" source="c33" target="r33" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="f31" edge="1" parent="1" source="r31" target="e31" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f32" edge="1" parent="1" source="r32" target="e32" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f33" edge="1" parent="1" source="r33" target="e33" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="c3" value="C3 — Enforcement Decision Channel&#xa;Enforcement decisions reach authorised enforcers only and are protected in transit." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="350" y="20" width="500" height="65" as="geometry"/></mxCell>
+        <mxCell id="s31" value="Subclaim C3.1&#xa;Traffic is protected at the transport layer." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="30" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r31" value="Rebuttal R3.1&#xa;Unless TLS is disabled, misconfigured, or downgraded, decision traffic should be protected against interception and alteration." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="30" y="245" width="350" height="90" as="geometry"/></mxCell>
+        <mxCell id="e31" value="Evidence E3.1&#xa;TLS configuration audit, protocol and cipher review, and connection tests confirming certificate validation and encrypted transport." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="30" y="380" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="s32" value="Subclaim C3.2&#xa;Certificate revocation status is checked." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="425" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r32" value="Rebuttal R3.2&#xa;Unless revocation-status checking fails, becomes unreachable, or the certificate cannot be validated, revoked credentials should be rejected." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="425" y="245" width="350" height="90" as="geometry"/></mxCell>
+        <mxCell id="e32" value="Evidence E3.2&#xa;Revocation tests for valid and revoked certificates, unreachable status responders, and unverifiable certificates. Record actual pass/fail results and whether failure is fail-open or fail-closed." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="425" y="380" width="350" height="100" as="geometry"/></mxCell>
+        <mxCell id="s33" value="Subclaim C3.3&#xa;Only authorised, validated machines can submit decisions." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="820" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r33" value="Rebuttal R3.3&#xa;Unless credentials are stolen or machine identity checks are bypassed, unauthorised machines should be rejected." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="820" y="245" width="350" height="90" as="geometry"/></mxCell>
+        <mxCell id="e33" value="Evidence E3.3&#xa;Machine-enrolment records, authorisation audit, and negative tests using unregistered or revoked machine credentials." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="820" y="380" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="a31" edge="1" parent="1" source="c3" target="s31" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a32" edge="1" parent="1" source="c3" target="s32" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a33" edge="1" parent="1" source="c3" target="s33" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b31" edge="1" parent="1" source="s31" target="r31" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b32" edge="1" parent="1" source="s32" target="r32" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b33" edge="1" parent="1" source="s33" target="r33" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f31" edge="1" parent="1" source="r31" target="e31" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f32" edge="1" parent="1" source="r32" target="e32" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f33" edge="1" parent="1" source="r33" target="e33" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
 
-<diagram id="C4" name="C4 Policy Management">
-    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10"
-      page="1" pageWidth="1200" pageHeight="850">
+
+  <diagram id="C4" name="C4 Policy Management">
+    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10" page="1" pageWidth="1200" pageHeight="850">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-
-        <mxCell id="c4" value="C4 — Policy Management&#xa;Policy changes are authorized, attributable, validated, and unable to silently disable required detection."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;"
-          vertex="1" parent="1">
-          <mxGeometry x="350" y="30" width="500" height="80" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c41" value="C4.1 — Hub content is vetted before use."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r41" value="R4.1 — Malicious or compromised content may introduce unsafe detection rules."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e41" value="E4.1 — Use case: approved parser or rule update; misuse case: malicious hub content. Evidence: content-signature verification results, rule-review checklist, and sandbox validation report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c42" value="C4.2 — Administrative policy changes are attributable."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r42" value="R4.2 — Shared accounts or incomplete audit records may conceal unauthorized changes."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e42" value="E4.2 — Use case: approved administrator update; misuse case: unauthorized policy modification. Evidence: immutable audit-log samples, role-assignment records, and change-attribution test results."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c43" value="C4.3 — Invalid configuration cannot be activated."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r43" value="R4.3 — Malformed or overly permissive configuration may disable detection."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e43" value="E4.3 — Use case: validated policy deployment; misuse case: invalid or detection-disabling configuration. Evidence: schema-validation test results, configuration rollback logs, and policy regression-test report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="a41" edge="1" parent="1" source="c4" target="c41" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a42" edge="1" parent="1" source="c4" target="c42" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a43" edge="1" parent="1" source="c4" target="c43" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="b41" value="R4.1" edge="1" parent="1" source="c41" target="r41" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b42" value="R4.2" edge="1" parent="1" source="c42" target="r42" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b43" value="R4.3" edge="1" parent="1" source="c43" target="r43" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="f41" edge="1" parent="1" source="r41" target="e41" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f42" edge="1" parent="1" source="r42" target="e42" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f43" edge="1" parent="1" source="r43" target="e43" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="c4" value="C4 — Policy Management&#xa;Policy changes are authorised, attributable, validated, and cannot silently disable detection." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="350" y="20" width="500" height="65" as="geometry"/></mxCell>
+        <mxCell id="s41" value="Subclaim C4.1&#xa;Hub content is verified before use." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="30" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r41" value="Rebuttal R4.1&#xa;Unless signatures, provenance, or content validation checks fail, untrusted content should not be activated." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="30" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e41" value="Evidence E4.1&#xa;Signature-verification results, content-review records, and sandbox tests for malicious or malformed rules." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="30" y="375" width="350" height="80" as="geometry"/></mxCell>
+        <mxCell id="s42" value="Subclaim C4.2&#xa;Administrative policy changes are attributable." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="425" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r42" value="Rebuttal R4.2&#xa;Unless shared accounts or incomplete audit logging obscure the actor, each change should be traceable to an authorised administrator." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="425" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e42" value="Evidence E4.2&#xa;Audit-log samples, administrator role assignments, and tests confirming actor, timestamp, and change details are recorded." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="425" y="375" width="350" height="80" as="geometry"/></mxCell>
+        <mxCell id="s43" value="Subclaim C4.3&#xa;Invalid configurations cannot be activated." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="820" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r43" value="Rebuttal R4.3&#xa;Unless schema validation, policy checks, or rollback protections fail, invalid or detection-disabling configurations should be rejected." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="820" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e43" value="Evidence E4.3&#xa;Schema-validation tests, detection regression results, rejected-configuration logs, and rollback test results." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="820" y="375" width="350" height="80" as="geometry"/></mxCell>
+        <mxCell id="a41" edge="1" parent="1" source="c4" target="s41" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a42" edge="1" parent="1" source="c4" target="s42" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a43" edge="1" parent="1" source="c4" target="s43" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b41" edge="1" parent="1" source="s41" target="r41" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b42" edge="1" parent="1" source="s42" target="r42" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b43" edge="1" parent="1" source="s43" target="r43" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f41" edge="1" parent="1" source="r41" target="e41" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f42" edge="1" parent="1" source="r42" target="e42" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f43" edge="1" parent="1" source="r43" target="e43" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
 
-<diagram id="C5" name="C5 Community Intelligence">
-    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10"
-      page="1" pageWidth="1200" pageHeight="850">
+
+ <diagram id="C5" name="C5 Community Intelligence">
+    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10" page="1" pageWidth="1200" pageHeight="850">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-
-        <mxCell id="c5" value="C5 — Community Intelligence&#xa;Community intelligence does not cause sustained blocking of legitimate IP addresses or undermine local detection."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;"
-          vertex="1" parent="1">
-          <mxGeometry x="350" y="30" width="500" height="80" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c51" value="C5.1 — Blocklist entries meet defined validation criteria."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r51" value="R5.1 — Poisoned or low-confidence reputation data may cause false blocking."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e51" value="E5.1 — Use case: validated threat-intelligence update; misuse case: poisoned reputation feed. Evidence: feed-validation rules, false-positive measurements, and blocklist acceptance-test report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="40" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c52" value="C5.2 — Local allowlists override community blocking data."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r52" value="R5.2 — Incorrect precedence or stale rules may block trusted services."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e52" value="E5.2 — Use case: protected business-critical IP; misuse case: community blocklist conflict. Evidence: rule-precedence test results, allowlist regression tests, and exception-handling records."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="445" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="c53" value="C5.3 — Community feed origin and integrity are verified."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="160" width="310" height="60" as="geometry"/>
-        </mxCell>
-        <mxCell id="r53" value="R5.3 — Feed tampering, replay, or source compromise may corrupt intelligence."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="270" width="310" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="e53" value="E5.3 — Use case: trusted feed update; misuse case: forged or replayed feed data. Evidence: signature-verification results, feed-provenance records, and tampering/replay test report."
-          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;"
-          vertex="1" parent="1">
-          <mxGeometry x="850" y="390" width="310" height="110" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="a51" edge="1" parent="1" source="c5" target="c51" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a52" edge="1" parent="1" source="c5" target="c52" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="a53" edge="1" parent="1" source="c5" target="c53" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="b51" value="R5.1" edge="1" parent="1" source="c51" target="r51" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b52" value="R5.2" edge="1" parent="1" source="c52" target="r52" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="b53" value="R5.3" edge="1" parent="1" source="c53" target="r53" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="f51" edge="1" parent="1" source="r51" target="e51" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f52" edge="1" parent="1" source="r52" target="e52" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f53" edge="1" parent="1" source="r53" target="e53" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="c5" value="C5 — Community Intelligence&#xa;Community intelligence does not cause sustained blocking of legitimate IP addresses or undermine local detection." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="350" y="20" width="500" height="65" as="geometry"/></mxCell>
+        <mxCell id="s51" value="Subclaim C5.1&#xa;Blocklist entries meet defined validation criteria." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="30" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r51" value="Rebuttal R5.1&#xa;Unless poisoned or low-confidence reputation data passes validation, blocklist entries should meet the required confidence threshold." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="30" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e51" value="Evidence E5.1&#xa;Feed-validation rules, acceptance-test results, and measured false-positive rates from known benign and malicious samples." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="30" y="375" width="350" height="80" as="geometry"/></mxCell>
+        <mxCell id="s52" value="Subclaim C5.2&#xa;Local allowlists override community blocking data." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="425" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r52" value="Rebuttal R5.2&#xa;Unless rule precedence or exception handling fails, explicitly trusted local addresses should not be blocked by community data." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="425" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e52" value="Evidence E5.2&#xa;Rule-precedence tests, allowlist regression results, and logs showing how conflicting rules are resolved." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="425" y="375" width="350" height="80" as="geometry"/></mxCell>
+        <mxCell id="s53" value="Subclaim C5.3&#xa;Community feed origin and integrity are verified." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="820" y="135" width="350" height="65" as="geometry"/></mxCell>
+        <mxCell id="r53" value="Rebuttal R5.3&#xa;Unless source authentication, signature verification, or freshness checks fail, altered or replayed feed data should be rejected." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="820" y="245" width="350" height="85" as="geometry"/></mxCell>
+        <mxCell id="e53" value="Evidence E5.3&#xa;Signature-verification results, feed-provenance records, and tampering and replay test results, including rejection outcomes." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="820" y="375" width="350" height="80" as="geometry"/></mxCell>
+        <mxCell id="a51" edge="1" parent="1" source="c5" target="s51" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a52" edge="1" parent="1" source="c5" target="s52" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="a53" edge="1" parent="1" source="c5" target="s53" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b51" edge="1" parent="1" source="s51" target="r51" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b52" edge="1" parent="1" source="s52" target="r52" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b53" edge="1" parent="1" source="s53" target="r53" style="endArrow=open;dashed=1;strokeColor=#b85450;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f51" edge="1" parent="1" source="r51" target="e51" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f52" edge="1" parent="1" source="r52" target="e52" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="f53" edge="1" parent="1" source="r53" target="e53" style="endArrow=block;html=1;"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
 </mxfile>
+
+
+
