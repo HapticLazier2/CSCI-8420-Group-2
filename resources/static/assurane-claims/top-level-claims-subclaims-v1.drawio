@@ -1,0 +1,141 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="C1" name="C1 - Log Ingestion">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" page="1" pageWidth="1000" pageHeight="700">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title1" value="&lt;b&gt;C1 — Log Ingestion Assurance&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E78;fontColor=#FFFFFF;strokeColor=#163A5A;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="30" width="400" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1" value="&lt;b&gt;C1&lt;/b&gt; — CrowdSec log ingestion reliably processes untrusted input without losing detection integrity or availability." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DEEBF7;strokeColor=#1F4E78;strokeWidth=2;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="500" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="c11" value="&lt;b&gt;C1.1&lt;/b&gt; — Log sources are authenticated and authorized before ingestion." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="30" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c12" value="&lt;b&gt;C1.2&lt;/b&gt; — Oversized or malformed input cannot crash or exhaust the agent." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="360" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c13" value="&lt;b&gt;C1.3&lt;/b&gt; — Forged log entries cannot falsely attribute malicious activity to trusted IP addresses." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="690" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="c1" target="c11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="c1" target="c12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="c1" target="c13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e01" edge="1" parent="1" source="title1" target="c1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#1F4E78;"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="C2" name="C2 - AppSec Inspection">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" page="1" pageWidth="1000" pageHeight="700">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title2" value="&lt;b&gt;C2 — AppSec Inspection Assurance&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E78;fontColor=#FFFFFF;strokeColor=#163A5A;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="30" width="400" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="&lt;b&gt;C2&lt;/b&gt; — CrowdSec AppSec inspection reliably identifies and blocks supported attack payloads across expected request formats and operating loads." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DEEBF7;strokeColor=#1F4E78;strokeWidth=2;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="500" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="c21" value="&lt;b&gt;C2.1&lt;/b&gt; — All supported request framings and encodings are subject to inspection." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="30" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c22" value="&lt;b&gt;C2.2&lt;/b&gt; — Inspection errors fail safely according to documented enforcement policy." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="360" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c23" value="&lt;b&gt;C2.3&lt;/b&gt; — High request volumes cannot silently disable inspection or exhaust critical resources." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="690" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="c2" target="c21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e22" edge="1" parent="1" source="c2" target="c22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e23" edge="1" parent="1" source="c2" target="c23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e02" edge="1" parent="1" source="title2" target="c2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#1F4E78;"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="C3" name="C3 - Decision Channel">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" page="1" pageWidth="1000" pageHeight="700">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title3" value="&lt;b&gt;C3 — Decision Channel Assurance&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E78;fontColor=#FFFFFF;strokeColor=#163A5A;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="30" width="400" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3" value="&lt;b&gt;C3&lt;/b&gt; — CrowdSec security decisions are delivered only to authorized enforcement points and are protected against unauthorized modification." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DEEBF7;strokeColor=#1F4E78;strokeWidth=2;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="500" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="c31" value="&lt;b&gt;C3.1&lt;/b&gt; — Service credentials are unique, revocable, and limited to the required privileges." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="30" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c32" value="&lt;b&gt;C3.2&lt;/b&gt; — Decision traffic is protected in transit against interception and tampering." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="360" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c33" value="&lt;b&gt;C3.3&lt;/b&gt; — Only authenticated and authorized machines can submit enforcement decisions or alerts." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="690" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="e31" edge="1" parent="1" source="c3" target="c31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e32" edge="1" parent="1" source="c3" target="c32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e33" edge="1" parent="1" source="c3" target="c33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e03" edge="1" parent="1" source="title3" target="c3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#1F4E78;"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="C4" name="C4 - Policy Management">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" page="1" pageWidth="1000" pageHeight="700">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title4" value="&lt;b&gt;C4 — Policy Management Assurance&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E78;fontColor=#FFFFFF;strokeColor=#163A5A;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="30" width="400" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="c4" value="&lt;b&gt;C4&lt;/b&gt; — CrowdSec policy and configuration management prevents unauthorized or invalid changes from silently weakening security detection." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DEEBF7;strokeColor=#1F4E78;strokeWidth=2;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="500" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="c41" value="&lt;b&gt;C4.1&lt;/b&gt; — Community hub content is validated and vetted before deployment." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="30" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c42" value="&lt;b&gt;C4.2&lt;/b&gt; — Administrative changes are attributable to authenticated individual accounts." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="360" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c43" value="&lt;b&gt;C4.3&lt;/b&gt; — Invalid or unauthorized configurations cannot become active." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="690" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="e41" edge="1" parent="1" source="c4" target="c41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e42" edge="1" parent="1" source="c4" target="c42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e43" edge="1" parent="1" source="c4" target="c43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e04" edge="1" parent="1" source="title4" target="c4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#1F4E78;"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="C5" name="C5 - Community Intelligence">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" page="1" pageWidth="1000" pageHeight="700">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title5" value="&lt;b&gt;C5 — Community Intelligence Assurance&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E78;fontColor=#FFFFFF;strokeColor=#163A5A;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="30" width="400" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="c5" value="&lt;b&gt;C5&lt;/b&gt; — CrowdSec community intelligence cannot independently cause sustained blocking of legitimate traffic or materially degrade local detection." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DEEBF7;strokeColor=#1F4E78;strokeWidth=2;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="500" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="c51" value="&lt;b&gt;C5.1&lt;/b&gt; — Blocklist entries meet defined reputation and corroboration thresholds." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="30" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c52" value="&lt;b&gt;C5.2&lt;/b&gt; — Approved local allowlists and exceptions take precedence over community blocking data." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="360" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="c53" value="&lt;b&gt;C5.3&lt;/b&gt; — Community intelligence feeds are authenticated, integrity-checked, and subject to freshness controls." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="690" y="290" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="e51" edge="1" parent="1" source="c5" target="c51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e52" edge="1" parent="1" source="c5" target="c52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e53" edge="1" parent="1" source="c5" target="c53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#5B9BD5;"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e05" edge="1" parent="1" source="title5" target="c5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#1F4E78;"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
