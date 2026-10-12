@@ -32,7 +32,7 @@ R5.3 asks whether an Upstream Traffic Interceptor could get altered or replayed 
 
 R5.4 asks whether feed deletions or bulk inserts could erase or slow down local decisions. E5.4 answers with a code review and a load test. The code review shows that CAPI deletions only expire decisions whose origin is CAPI, so the feed cannot erase local detections. The load test of the local API during blocklist insertion is planned, not yet run. C5.4 is largely supported.
 
-### Reflection on the AI prompt's usefulness
+## Top-Level Claim C2 — AppSec
 
 For C5, the AI prompts caught a missing branch and method-style sub-claims, but they also invented thresholds and assumed features CrowdSec doesn’t have, so we checked every suggestion against the source before using it.
 
@@ -53,12 +53,13 @@ For C5, the AI prompts caught a missing branch and method-style sub-claims, but 
 
 #### Kowshik's Reflection
 
-#### Trung's Reflection
+**Attackers I worry about:** Remote Web Exploiter, WAF-Evasion Specialist
 
-#### Leonard's Reflection
+**Comes from:** UC-2 and requirements SR-2.1 to SR-2.4 in our team's last report
 
-#### Mujib's Reflection
+### C2 assurance case diagram
 
+![C2 AppSec assurance case](resources/static/assurance/c2-appsec-assurance-case.png)
 
 #### Hrudhay's Reflection
 I owned claim C5. I researched it against the CrowdSec v1.8.1 source code, wrote its narrative from
