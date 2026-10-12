@@ -104,7 +104,7 @@ Before and after:
 
 | | Statement | Why |
 | --- | --- | --- |
-| Before | AppSec enforces timeouts and a fail-closed failure action | It talks about the tool, not the result. It says two things at once. It also names the wrong part: the bouncer does this, not AppSec. |
+| Before | AppSec enforces timeouts and a fail-closed failure action | It talks about the tool, not the result. It says two things at once. It also names the wrong part, the bouncer does this, not AppSec. |
 | After | Every production bouncer denies requests when AppSec times out or returns an error (C2.4.1) | It names one thing (the bouncers), one property (what happens to an unchecked request) and one value (denied, on every bouncer). |
 
 #### Prompt 2: rebuttals
