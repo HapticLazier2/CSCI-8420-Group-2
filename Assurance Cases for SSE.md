@@ -39,14 +39,14 @@ We have a good reason to check this claim carefully (J2). Both ways to beat the 
 
 To build the argument, we asked one question again and again: "What could make this claim false?" Each answer is a doubt. For each doubt, we wrote a smaller claim that removes it. We found four main doubts.
 
-1. **The request never goes through AppSec (R2.1).** Maybe there is a side door to the application. Our answer (C2.1): every network path to the applications goes through a bouncer with AppSec turned on. We show this with a review of the reverse-proxy settings and a network scan that looks for side doors.
-2. **The rules do not catch the attack (R2.2).** Our answer (C2.2): the rules that are turned on stop known SQL injection, XSS and CVE attacks. Two smaller doubts are left. The rules may only write a log and not block (in CrowdSec, the CRS rules are optional and only watch when you add them). Or the rules may be old. We remove these with attack test results, a list of the blocking rules, update logs and a version check.
-3. **The attack hides in the request body (R2.3).** This is the first trick of the WAF-Evasion Specialist. The body can get lost in two places, so we split the doubt in two. The AppSec engine may skip the body (C2.3.1), or the bouncer may send the request without the body (C2.3.2). The tests for each body type are the most important evidence here. So we also doubted the tests themselves (the blue note UM2.3.1): "What if the tests ran on a different version than the one we use?" A list of the test build and settings removes that doubt.
+1. **The request never goes through AppSec (R2.1).** Maybe there is a side door to the application. Our answer (C2.1), every network path to the applications goes through a bouncer with AppSec turned on. We show this with a review of the reverse-proxy settings and a network scan that looks for side doors.
+2. **The rules do not catch the attack (R2.2).** Our answer (C2.2), the rules that are turned on stop known SQL injection, XSS and CVE attacks. Two smaller doubts are left. The rules may only write a log and not block (in CrowdSec, the CRS rules are optional and only watch when you add them). Or the rules may be old. We remove these with attack test results, a list of the blocking rules, update logs and a version check.
+3. **The attack hides in the request body (R2.3).** This is the first trick of the WAF-Evasion Specialist. The body can get lost in two places, so we split the doubt in two. The AppSec engine may skip the body (C2.3.1), or the bouncer may send the request without the body (C2.3.2). The tests for each body type are the most important evidence here. So we also doubted the tests themselves (the blue note UM2.3.1), "What if the tests ran on a different version than the one we use?" A list of the test build and settings removes that doubt.
 4. **AppSec is too busy and lets requests through (R2.4).** This is the second trick of the WAF-Evasion Specialist. Our answer has two parts. Every bouncer must say "no" when AppSec is slow or broken (C2.4.1). And if a request still gets through without a check, the SOC team must get an alert (C2.4.2).
 
 Every branch ends in evidence that a reviewer can ask to see. In total, the diagram has ten yellow doubts, one blue doubt and thirteen pieces of evidence. If we collect all thirteen, no doubt that we found is left open. Today, most of this evidence does not exist yet. The next table shows what is missing.
 
-### C2 evidence alignment and gaps (Part 2)
+### Part 2 -- C2 evidence alignment and gaps
 
 We sorted each piece of evidence into one of four groups:
 
