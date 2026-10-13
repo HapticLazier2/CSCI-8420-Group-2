@@ -1,72 +1,63 @@
 <mxfile host="app.diagrams.net">
   <diagram name="GSN Assurance Case - Log Ingestion" id="gsn-assurance-case">
-    <mxGraphModel dx="1450" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1420" pageHeight="610" math="0" shadow="0">
+    <mxGraphModel dx="1353" dy="1068" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1420" pageHeight="610" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        
-        <!-- Context (Rounded box with C) -->
-        <mxCell id="Context1" value="[C] Context:&#xa;CrowdSec engine version, specified acquisition topologies, registered parsers, and enterprise threat model." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;fontColor=#333333;align=left;spacingLeft=10;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="50" y="20" width="390" height="90" as="geometry"/>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Context1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;fontColor=#333333;align=left;spacingLeft=10;fontSize=14;" value="[C] Context:&#xa;CrowdSec engine version, specified acquisition topologies, registered parsers, and enterprise threat model." vertex="1">
+          <mxGeometry height="90" width="390" x="50" y="20" as="geometry" />
         </mxCell>
-
-        <!-- Top-Level Claim (Rectangle) -->
-        <mxCell id="C1" value="Top Level Claim (C1):&#xa;The log-ingestion pipeline sustains detection under forged, malformed and oversized input, with a low residual risk of agent crash or detection loss." style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;fontStyle=1;align=left;spacingLeft=10;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="470" y="20" width="494" height="90" as="geometry"/>
+        <mxCell id="C1" parent="1" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;fontStyle=1;align=left;spacingLeft=10;fontSize=14;" value="Top Level Claim (C1):&#xa;The log-ingestion pipeline sustains detection under forged, malformed and oversized input, with a low residual risk of agent crash or detection loss." vertex="1">
+          <mxGeometry height="90" width="494" x="470" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="e_ctx_c1" edge="1" source="Context1" target="C1" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e_ctx_c1" edge="1" parent="1" source="Context1" target="C1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        
-        <!-- Strategy (Parallelogram) -->
-        <mxCell id="Strategy1" value="Strategy: Argument decomposed by eliminative induction addressing authentication, oversized-input resilience, and source attribution integrity." style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;align=center;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="417" y="140" width="600" height="70" as="geometry"/>
+        <mxCell id="Strategy1" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;align=center;fontSize=14;" value="Strategy: Argument decomposed by eliminative induction addressing authentication, oversized-input resilience, and source attribution integrity." vertex="1">
+          <mxGeometry height="70" width="613" x="417" y="140" as="geometry" />
         </mxCell>
-        <mxCell id="e_c1_strat" edge="1" source="C1" target="Strategy1" parent="1">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e_c1_strat" edge="1" parent="1" source="C1" target="Strategy1">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- Sub Claims (Rectangles) -->
-        <mxCell id="SC11" value="Sub Claim 1.1:&#xa;Pipeline accepts log submissions only from authorized network sources.&#xa;(Eliminates auth &amp; credential doubts)" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;align=left;spacingLeft=10;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="50" y="240" width="416" height="90" as="geometry"/>
+        <mxCell id="SC11" parent="1" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;align=left;spacingLeft=10;fontSize=14;" value="Sub Claim 1.1:&#xa;Pipeline accepts log submissions only from authorized network sources.&#xa;(Eliminates auth &amp; credential doubts)" vertex="1">
+          <mxGeometry height="90" width="416" x="50" y="240" as="geometry" />
         </mxCell>
-        
-        <mxCell id="SC12" value="Sub Claim 1.2:&#xa;Pipeline remains available and processes valid events under oversized/resource-intensive inputs.&#xa;(Eliminates resource exhaustion doubts)" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;align=left;spacingLeft=10;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="499" y="240" width="416" height="90" as="geometry"/>
+        <mxCell id="SC12" parent="1" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;align=left;spacingLeft=10;fontSize=14;" value="Sub Claim 1.2:&#xa;Pipeline remains available and processes valid events under oversized/resource-intensive inputs.&#xa;(Eliminates resource exhaustion doubts)" vertex="1">
+          <mxGeometry height="90" width="416" x="499" y="240" as="geometry" />
         </mxCell>
-        
-        <mxCell id="SC13" value="Sub Claim 1.3:&#xa;Pipeline preserves correctness of event source attribution from trusted logging environment.&#xa;(Eliminates forgery &amp; injection doubts)" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;align=left;spacingLeft=10;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="948" y="240" width="416" height="90" as="geometry"/>
+        <mxCell id="SC13" parent="1" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;align=left;spacingLeft=10;fontSize=14;" value="Sub Claim 1.3:&#xa;Pipeline preserves correctness of event source attribution from trusted logging environment.&#xa;(Eliminates forgery &amp; injection doubts)" vertex="1">
+          <mxGeometry height="90" width="416" x="948" y="240" as="geometry" />
         </mxCell>
-        
-        <!-- Edges from Strategy to Sub Claims -->
-        <mxCell id="e_strat_sc11" edge="1" source="Strategy1" target="SC11" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_strat_sc12" edge="1" source="Strategy1" target="SC12" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_strat_sc13" edge="1" source="Strategy1" target="SC13" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <!-- Solutions / Evidence (Ellipses / Circles) -->
-        <mxCell id="E11" value="Solution E 1.1:&#xa;• Auth configs &amp; audit records&#xa;• Certificate validation tests&#xa;• Negative-test rejection results&#xa;• Network access-control verification" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;align=center;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="50" y="370" width="416" height="130" as="geometry"/>
+        <mxCell id="e_strat_sc11" edge="1" parent="1" source="Strategy1" target="SC11">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <mxCell id="E12" value="Solution E 1.2:&#xa;• Boundary &amp; oversized input tests&#xa;• Decompression-heavy test results&#xa;• CPU, memory &amp; latency metrics&#xa;• Engine availability records &amp; acceptance criteria" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;align=center;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="499" y="370" width="416" height="130" as="geometry"/>
+        <mxCell id="e_strat_sc12" edge="1" parent="1" source="Strategy1" target="SC12">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <mxCell id="E13" value="Solution E 1.3:&#xa;• Parser validation results&#xa;• Log-injection &amp; attribution tests&#xa;• Upstream trustworthiness verification&#xa;• Measured false-attribution rates" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;align=center;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="948" y="370" width="416" height="130" as="geometry"/>
+        <mxCell id="e_strat_sc13" edge="1" parent="1" source="Strategy1" target="SC13">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- Edges from Sub Claims to Solutions -->
-        <mxCell id="e_sc11_e11" edge="1" source="SC11" target="E11" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_sc12_e12" edge="1" source="SC12" target="E12" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e_sc13_e13" edge="1" source="SC13" target="E13" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <!-- Legend / Descriptive Key Box at Bottom -->
-        <mxCell id="LegendBox" value="GSN Notation Key:  [Rectangle] Top Level / Sub Claim  |  [Parallelogram] Strategy  |  [Ellipse] Solution / Evidence  |  [Rounded Box] Context" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#999999;strokeWidth=2;fontColor=#444444;align=center;fontSize=13;fontStyle=0;" vertex="1" parent="1">
-          <mxGeometry x="313" y="530" width="788" height="40" as="geometry"/>
+        <mxCell id="E11" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;align=center;fontSize=14;" value="Evidence E 1.1:&#xa;• Auth configs &amp; audit records&#xa;• Certificate validation tests&#xa;• Negative-test rejection results&#xa;• Network access-control verification" vertex="1">
+          <mxGeometry height="130" width="416" x="50" y="370" as="geometry" />
         </mxCell>
-
+        <mxCell id="E12" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;align=center;fontSize=14;" value="Evidence E 1.2:&#xa;• Boundary &amp; oversized input tests&#xa;• Decompression-heavy test results&#xa;• CPU, memory &amp; latency metrics&#xa;• Engine availability records &amp; acceptance criteria" vertex="1">
+          <mxGeometry height="130" width="416" x="499" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="E13" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;align=center;fontSize=14;" value="Evidence E 1.3:&#xa;• Parser validation results&#xa;• Log-injection &amp; attribution tests&#xa;• Upstream trustworthiness verification&#xa;• Measured false-attribution rates" vertex="1">
+          <mxGeometry height="130" width="416" x="948" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sc11_e11" edge="1" parent="1" source="SC11" target="E11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sc12_e12" edge="1" parent="1" source="SC12" target="E12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sc13_e13" edge="1" parent="1" source="SC13" target="E13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LegendBox" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#999999;strokeWidth=2;fontColor=#444444;align=center;fontSize=13;fontStyle=0;" value="GSN Notation Key:  [Rectangle] Top Level / Sub Claim  |  [Parallelogram] Strategy  |  [Ellipse] Evidence  |  [Rounded Box] Context" vertex="1">
+          <mxGeometry height="40" width="788" x="313" y="530" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
