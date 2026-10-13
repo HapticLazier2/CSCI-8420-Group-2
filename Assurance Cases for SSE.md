@@ -30,7 +30,9 @@ The CrowdSec Log Ingestion Pipeline accepts log submissions only from network so
 ### R 1.1 — Unauthorized Log Submission
 
 **R 1.1.1** Unless network sources lack adequate authentication
+
 **R 1.1.2** Unless authentication controls are misconfigured or bypassed
+
 **R 1.1.3** Unless valid credentials are compromised
 
 ### E 1.1 — Authentication Verification Records
@@ -52,8 +54,11 @@ The CrowdSec Log Ingestion Pipeline remains available and continues processing v
 Here are short, intuitive rebutting defeaters for the statement, structured using eliminative induction for a readable diagram:
 
 **R 1.2.1** Unless memory exhausted by oversized payload
+
 **R 1.2.2** Unless CPU overwhelmed by decompression bomb
+
 **R 1.2.3** Unless parser process crashes on failure
+
 **R 1.2.4** Unless valid event queue experiences timeout or bottleneck
 
 ### E 1.2 — Input Resilience Test Results
@@ -74,7 +79,9 @@ The CrowdSec Log Ingestion Pipeline preserves the correctness of security-event 
 ### R 1.3 — False Source Attribution
 
 **R 1.3.1**  Unless attacker-controlled log fields bypass validation
+
 **R 1.3.2**  Unless upstream logging systems are compromised
+ 
 **R 1.3.3**  Unless source information is forged prior to pipeline ingestion
 
 ### E 1.3 — Source Attribution Verification Records
