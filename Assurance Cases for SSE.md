@@ -34,10 +34,12 @@ You are an expert software security engineer.
 
 ## References
 
-- CrowdSec AppSec general setup — <https://docs.crowdsec.net/docs/appsec/quickstart/general_setup>
-- CVE-2026-44982 advisory (GHSA-rw47-hm26-6wr7) — <https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rw47-hm26-6wr7>
-- NGINX bouncer AppSec options — <https://docs.crowdsec.net/u/bouncers/nginx>
-
+1. CrowdSec. (n.d.). *CrowdSec Console*. https://app.crowdsec.net/
+2. CrowdSec. (n.d.). *CrowdSec: Open-source cybersecurity engine*. GitHub. https://github.com/crowdsecurity/crowdsec
+3. CrowdSec. (n.d.). *CrowdSec Documentation*. https://docs.crowdsec.net/
+4. CrowdSec. (n.d.). *CrowdSec Parsers Documentation*. https://docs.crowdsec.net/docs/parsers/intro/
+5. Cloud Security Alliance. (2025, January 17). *DoD Secure and Cyber Resilient Engineering (SCRE): Overarching Properties for Determining Assurance Claims*. https://circle.cloudsecurityalliance.org/discussion/dod-secure-cyber-resilient-engineering-scre-overarching-properties-for-determining-assurance-claims
+6. Hale, M. L. (2017). *Systems Security Engineering* [Lecture slides]. https://mlhale.github.io/swa/slides/lecture-2/assurance-case.html
 
 ## Top-Level Claim C2 — AppSec
 
