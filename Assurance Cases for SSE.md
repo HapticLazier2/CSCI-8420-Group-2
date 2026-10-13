@@ -344,16 +344,16 @@ My lesson: the AI is good for a first list, but I must check every item against 
 #### C3: Remediation components enforce only authentic, unaltered LAPI decisions and receive new decisions within one polling interval.
 #### Contributor: Leonard Meredith
 #### Assurance Case Diagram:
-![Claim 3](./assurance_cases/Claim_Leonard.svg)
+![Claim 3](./resources/Claim_Leonard.svg)
 
 <details>
 <summary>Branch views (easier to read at full size)</summary>
 
-- [R3.1 — Rogue or unvalidated machines](./assurance_cases/Claim_Leonard_R3_1.svg)
-- [R3.2 — Tampering in transit](./assurance_cases/Claim_Leonard_R3_2.svg)
-- [R3.3 — Unauthorized decision deletion](./assurance_cases/Claim_Leonard_R3_3.svg)
-- [R3.4 — Decisions stop reaching bouncers](./assurance_cases/Claim_Leonard_R3_4.svg)
-- [R3.5 — Stolen bouncer keys](./assurance_cases/Claim_Leonard_R3_5.svg)
+- [R3.1 — Rogue or unvalidated machines](./resources/Claim_Leonard_R3_1.svg)
+- [R3.2 — Tampering in transit](./resources/Claim_Leonard_R3_2.svg)
+- [R3.3 — Unauthorized decision deletion](./resources/Claim_Leonard_R3_3.svg)
+- [R3.4 — Decisions stop reaching bouncers](./resources/Claim_Leonard_R3_4.svg)
+- [R3.5 — Stolen bouncer keys](./resources/Claim_Leonard_R3_5.svg)
 
 </details>
 
