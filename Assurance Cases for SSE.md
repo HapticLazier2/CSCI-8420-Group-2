@@ -340,73 +340,160 @@ My lesson: the AI is good for a first list, but I must check every item against 
 - NGINX bouncer AppSec options — <https://docs.crowdsec.net/u/bouncers/nginx>
 
 
-### **3. Top-Level Claim 3**
-#### C3: Remediation components enforce only authentic, unaltered LAPI decisions and receive new decisions within one polling interval.
-#### Contributor: Leonard Meredith
-#### Assurance Case Diagram:
-![Claim 3](./resources/Claim_Leonard.svg)
+## Top-Level Claim C3 — Decision Integrity
+
+**Contributor:** Leonard Meredith
+
+**Claim C3:** Remediation components receive only authentic, unaltered LAPI decisions, and new decisions reach them within one polling interval.
+
+**Misusers addressed:** Rogue-Agent Registrant, Network-Positioned Interceptor, Pre-Auth LAPI Flooder, Bouncer-Key Thief
+
+**Comes from:** UC-3 (Retrieve & Enforce Decisions) and requirements SR-3.1 to SR-3.6 in our team's last report
+
+### C3 assurance case diagram
+
+![C3 Decision Integrity assurance case](resources/static/assurance/Claim_Leonard.svg)
+
+*Figure — Assurance case for claim C3. The editable file is `C3_Decision_Integrity_Assurance_Case.drawio` (one page for the full argument, one page per branch).*
 
 <details>
 <summary>Branch views (easier to read at full size)</summary>
 
-- [R3.1 — Rogue or unvalidated machines](./resources/Claim_Leonard_R3_1.svg)
-- [R3.2 — Tampering in transit](./resources/Claim_Leonard_R3_2.svg)
-- [R3.3 — Unauthorized decision deletion](./resources/Claim_Leonard_R3_3.svg)
-- [R3.4 — Decisions stop reaching bouncers](./resources/Claim_Leonard_R3_4.svg)
-- [R3.5 — Stolen bouncer keys](./resources/Claim_Leonard_R3_5.svg)
+- [R3.1 — Rogue or unvalidated machines](resources/static/assurance/Claim_Leonard_R3_1.svg)
+- [R3.2 — Tampering in transit](resources/static/assurance/Claim_Leonard_R3_2.svg)
+- [R3.3 — Unauthorized decision deletion](resources/static/assurance/Claim_Leonard_R3_3.svg)
+- [R3.4 — Decisions stop reaching bouncers](resources/static/assurance/Claim_Leonard_R3_4.svg)
+- [R3.5 — Stolen bouncer keys](resources/static/assurance/Claim_Leonard_R3_5.svg)
 
 </details>
 
-C3 covers UC-3 (Retrieve & Enforce Decisions) and its requirements SR-3.1 to SR-3.6. Every firewall and reverse-proxy bouncer in our enterprise acts on whatever LAPI tells it, so a forged decision can lock out partners, a stripped or deleted decision lets an attacker through, and a stalled LAPI means new attacks are never blocked. The five top-level rebuttals answer the misusers we found against UC-3: the Rogue-Agent Registrant (R3.1), the Network-Positioned Interceptor (R3.2), a validated machine misused to remove bans (R3.3), the Pre-Auth LAPI Flooder (R3.4) and the Bouncer-Key Thief (R3.5).
+### C3 narrative
 
-#### Usefulness of AI Prompt:
-I used the instructor's claim-phrasing prompt on my first draft of the claim:
+Every firewall and reverse-proxy bouncer in our enterprise acts on whatever LAPI tells it. A forged decision can lock out partners, a stripped or deleted decision lets an attacker through, and a stalled LAPI means new attacks are never blocked. C3 therefore argues that the decisions bouncers receive are genuine, unchanged and current.
 
-<details>
+The argument uses eliminative induction. Five rebutting defeaters attack C3 directly, and each is answered by a sub-claim. Every sub-claim faces its own defeaters, and every branch ends in evidence.
 
-You are an expert software security engineer. Your job is to suggest corrections or improvements in the phrasing of assurance claims. Claims concern critical properties that are risk-related. High confidence is needed in their realization. A claim is always worded with a predicate. Avoid claims about the supporting method/techniques.
-Bad claim: "The system uses AES encryption." Why? Because it is not interesting; just the technology is just a means to an end, but does not provide assurance that it can actually keep the information confidential.
-Claim should be a reasonable goal (outcome). Good claim: "The system minimizes information disclosure during communication"
-Good Claim Checklist: 1. Includes an entity relevant to the argument, 2. a critical property of the entity, 3. a value for the property and related uncertainty.
-Use this statement as a potential claim for analysis. Explain why or why not this statement is a good claim.
-"""
-Remediation components enforce only authentic, unaltered LAPI decisions and receive new decisions within one polling interval.
-"""
+| Defeater on C3 | Sub-claim that answers it | Source |
+| --- | --- | --- |
+| R3.1 Unless a decision is pushed by a rogue or unvalidated machine | C3.1 Only validated machines inside approved address ranges can create decisions | MC-3.3, SR-3.5, DR-4 |
+| R3.2 Unless decisions are altered or stripped in transit | C3.2 Every agent and bouncer connection to LAPI uses mutually authenticated, verified TLS | MC-3.2, SR-3.4, DR-1, DR-2, DR-3, DR-5 |
+| R3.3 Unless a validated machine deletes legitimate decisions | C3.3 Only designated administrator hosts can delete decisions | DR-7 |
+| R3.4 Unless bouncers stop receiving new decisions | C3.4 LAPI delivers new decisions to every bouncer within one polling interval | MC-3.4, SR-3.6, DR-11 |
+| R3.5 Unless a stolen bouncer key cannot be revoked without disabling other bouncers | C3.5 Each bouncer holds a unique, individually revocable API key | MC-3.1, SR-3.1, SR-3.2, DR-8 |
 
-</details>
+**Scope.** C3 covers decisions up to the point a bouncer receives them. Whether a bouncer then applies each decision correctly (failing open on errors, unsupported decision types, firewall rules not installed) is outside this claim; see the AI reflection below. C3 also assumes the LAPI host itself is not compromised; an insider on that host is covered by C4.
 
-> The prompt confirmed the claim passes the checklist: it names an entity (remediation components), a critical property (decision integrity), and a measurable value (only authentic, unaltered decisions, delivered within one polling interval). It also pointed out that the claim combines two properties, integrity and timeliness, which makes it harder to defeat in one argument. I kept both because a bouncer that stops receiving decisions fails just as badly as one that receives forged ones, but I gave timeliness its own branch (R3.4) so the two arguments stay separate. The prompt was most useful for checking wording; it could not tell me which defeaters were real for CrowdSec, so those came from our misuse cases and documentation review.
+**Residual doubt.** R3.3.1 stays partly open. In v1.8.1, `trusted_ips` does not guard decision deletion, so any validated machine can delete decisions. Until CrowdSec changes this, C3.3 rests on network placement (E3.3.2, E3.3.3), not on LAPI itself.
 
----
+### C3 evidence alignment and gaps (Part 2)
 
-#### Alignment of Evidence and Identified Gap: Leonard Meredith
-
-**Evidence either Available or Requiring Minimal Effort.** CrowdSec already provides the feature behind these items; the effort is configuring it correctly and recording the result.
+**Evidence available or requiring minimal effort.** CrowdSec already provides the control; the effort is configuring it and recording the result.
 
 - **E3.1.1 Unvalidated-machine alert-push test results:** New machines are created unvalidated and cannot push alerts until `cscli machines validate` (SR-3.5). A short test against a fresh registration produces this evidence.
-- **E3.1.3 `allowed_ranges` configuration review:** LAPI refuses to start with auto-registration enabled and no `allowed_ranges`, so the setting always exists. The review checks that the ranges are narrow; the Kubernetes install page's example allows every private range (DR-12).
-- **E3.4.1 Decompressed body-limit test results:** Since the fix for CVE-2026-44981, LAPI caps decompressed bodies at 2 MiB unauthenticated and 50 MiB authenticated. A gzip-bomb test against `/v1/watchers/login` confirms the cap holds.
-- **E3.5.1 Bouncer key inventory (`cscli bouncers list`):** LAPI records each bouncer with its IP and last-pull time (SR-3.3). Gap: the multi-server guide encourages sharing one key across bouncers (DR-8); the documentation should recommend one key per bouncer.
+- **E3.1.3 `allowed_ranges` configuration review:** LAPI refuses to start with auto-registration enabled and no `allowed_ranges`. The review checks that the ranges are narrow; the Kubernetes install page's example allows every private range (DR-12).
+- **E3.3.2 LAPI network access control list:** An enterprise firewall control, available from the network team.
+- **E3.4.1 Decompressed body-limit test results:** Since the fix for CVE-2026-44981, LAPI caps decompressed bodies at 2 MiB unauthenticated and 50 MiB authenticated. A gzip-bomb test against `/v1/watchers/login` confirms the cap.
+- **E3.5.1 Bouncer key inventory (`cscli bouncers list`):** LAPI records each bouncer with its IP and last-pull time (SR-3.3). Gap: the multi-server guide encourages sharing one key across bouncers (DR-8).
 - **E3.5.2 Key revocation test results:** `cscli bouncers delete` revokes a single key (SR-3.1). The test confirms a deleted key is refused while other bouncers keep working.
-- **E3.3.2 LAPI network access control list:** An enterprise firewall control rather than a CrowdSec feature, so it is available from the network team.
 
-**Evidence Requiring Additional Effort.** These items need a running deployment, a dedicated test, or a fix in CrowdSec or its documentation before they can be produced.
+**Evidence requiring additional effort.** These need a running deployment, a dedicated test, or a fix in CrowdSec or its documentation.
 
-- **E3.1.2 Auto-registration token generation record:** The documentation's token example is a literal placeholder string with no generation command (DR-8). Gap: add `openssl rand -hex 32` to the multi-server guide, as the bot-detection page already does.
-- **E3.1.4 `trusted_proxies` configuration audit** and **E3.1.5 X-Forwarded-For spoofing test results:** `trusted_proxies` is undocumented, and if it is left out while forwarded headers are on, LAPI trusts every client's `X-Forwarded-For` (DR-4). That lets a client choose the IP checked against `allowed_ranges`. Gap: document the setting and its default; until then, the audit must confirm it lists only the real proxy, and the test must show a spoofed header is ignored.
-- **E3.2.1 LAPI and bouncer TLS configuration audit** and **E3.2.2 Packet capture of bouncer-to-LAPI traffic:** TLS is supported but off by default, and the documentation says it is unnecessary on a LAN (DR-1). Gap: remove that advice and make TLS the default in the multi-server guide.
-- **E3.2.3 Audit of `insecure_skip_verify` and `SSL_VERIFY` settings** and **E3.2.4 Man-in-the-middle test results with an untrusted certificate:** The documentation tells readers to enable `insecure_skip_verify` for self-signed certificates, and in code that flag also disables verification toward CAPI (DR-2). The NGINX bouncer's `SSL_VERIFY` also covers LAPI calls, which its documentation omits (DR-5). Gap: replace the advice with a `ca_cert_path` example and document the scope of both settings.
+- **E3.1.2 Auto-registration token generation record:** The documentation's token example is a placeholder string with no generation command (DR-8). Gap: add `openssl rand -hex 32` to the multi-server guide.
+- **E3.1.4 `trusted_proxies` configuration audit** and **E3.1.5 X-Forwarded-For spoofing test results:** If `trusted_proxies` is left out while forwarded headers are on, LAPI trusts every client's `X-Forwarded-For` (DR-4), so a client can choose the IP checked against `allowed_ranges`. Gap: document the setting and its default.
+- **E3.2.1 LAPI and bouncer TLS configuration audit** and **E3.2.2 Packet capture of bouncer-to-LAPI traffic:** TLS is off by default, and the documentation says it is unnecessary on a LAN (DR-1). Gap: make TLS the default in the multi-server guide.
+- **E3.2.3 Audit of `insecure_skip_verify` and `SSL_VERIFY` settings** and **E3.2.4 Man-in-the-middle test results with an untrusted certificate:** The documentation tells readers to enable `insecure_skip_verify` for self-signed certificates, and that flag also disables verification toward CAPI (DR-2). The NGINX bouncer's `SSL_VERIFY` also covers LAPI calls, which its documentation omits (DR-5). Gap: replace the advice with a `ca_cert_path` example.
 - **E3.2.5 CRL deployment record (`crl_path`):** CRL checking happens only when `crl_path` is set, and the documentation describes its failure behavior incorrectly (DR-3). Gap: rewrite the revocation section from the code.
-- **E3.2.6 Revoked-certificate test results with the OCSP responder unreachable:** From our code reading, OCSP fails open: a revoked certificate is accepted when the responder cannot be reached, while the log says the opposite (DR-3). This test would currently fail. Gap: report privately to `security@crowdsec.net`; until fixed, rely on CRL checking.
-- **E3.3.1 Decision-deletion authorization test results:** `trusted_ips` guards only alert deletion; any validated machine can delete decisions from any address (DR-7). This test would currently fail, so R3.3.1 stays partly open and C3.3 rests on network placement (E3.3.2, E3.3.3). Gap: ask the maintainers whether decision deletion should also respect `trusted_ips`, and document which routes it protects.
-- **E3.3.3 LAPI exposure scan results:** Requires scanning the network from untrusted segments to confirm LAPI is unreachable from them.
-- **E3.4.2 `listen_uri` and published-port configuration record:** Packages bind LAPI to loopback, but the official Docker image binds to `0.0.0.0` and the image README publishes the port on every interface (DR-11). Gap: bind the README examples to `127.0.0.1`.
-- **E3.4.3 Load test results at peak alert volume** and **E3.4.4 Rate-limiting proxy configuration:** LAPI has no rate limiting, so capacity has to be measured and protected by a proxy in front of it. Gap: no built-in rate limiting in CrowdSec.
-- **E3.4.5 Bouncer polling-interval configuration audit** and **E3.4.6 End-to-end decision propagation test results:** Requires a test that creates a decision and times its arrival at each bouncer type in the deployment.
-- **E3.5.3 Bouncer configuration file permission audit:** Only the HAProxy SPOA page explains how to protect the file that holds a bouncer's API key (DR-8). Gap: add the same guidance to the other bouncer pages.
+- **E3.2.6 Revoked-certificate test results with the OCSP responder unreachable:** From our code reading, OCSP fails open: a revoked certificate is accepted when the responder cannot be reached (DR-3). This test would currently fail. Gap: report privately to `security@crowdsec.net`; until fixed, rely on CRL checking.
+- **E3.3.1 Decision-deletion authorization test results:** `trusted_ips` guards only alert deletion (DR-7). This test would currently fail. Gap: ask the maintainers whether decision deletion should also respect `trusted_ips`.
+- **E3.3.3 LAPI exposure scan results:** A scan from untrusted network segments confirming LAPI is unreachable from them.
+- **E3.4.2 `listen_uri` and published-port configuration record:** Packages bind LAPI to loopback, but the official Docker image binds to `0.0.0.0` (DR-11). Gap: bind the README examples to `127.0.0.1`.
+- **E3.4.3 Load test results at peak alert volume** and **E3.4.4 Rate-limiting proxy configuration:** LAPI has no rate limiting, so capacity has to be measured and protected by a proxy. Gap: no built-in rate limiting.
+- **E3.4.5 Bouncer polling-interval configuration audit** and **E3.4.6 End-to-end decision propagation test results:** A test that creates a decision and times its arrival at each bouncer type.
+- **E3.5.3 Bouncer configuration file permission audit:** Only the HAProxy SPOA page explains how to protect a bouncer's key file (DR-8). Gap: add the same guidance to the other bouncer pages.
 
-**Summary.** Of 23 evidence items, 6 can be produced with little effort because CrowdSec already provides the control. The other 17 need testing or configuration work, and three areas (E3.1.4/E3.1.5, E3.2.6, E3.3.1) are expected to fail on a default v1.8.1 deployment. Those three areas are the strongest contribution candidates: two are documentation fixes, and the OCSP fail-open and decision-deletion scope should go to the maintainers first.
+**Summary.** Of 23 evidence items, 6 can be produced with little effort and 17 need testing or configuration work. Three areas are expected to fail on a default v1.8.1 deployment: `trusted_proxies` spoofing (E3.1.4, E3.1.5), OCSP fail-open (E3.2.6) and decision deletion (E3.3.1). They are also our strongest contribution candidates.
 
+### C3 — Usefulness of AI Prompt
+
+I used Claude Opus 5.5 with both of the instructor's prompts.
+
+#### Prompt 1: claim wording
+
+<details>
+<summary>Prompt</summary>
+
+```text
+You are an expert software security engineer. Your job is to suggest corrections or
+improvements in the phrasing of assurance claims. Claims concern critical properties that
+are risk-related. High confidence is needed in their realization. A claim is always worded
+with a predicate. Avoid claims about the supporting method/techniques.
+Bad claim: "The system uses AES encryption." Why? Because it is not interesting; just the
+technology is just a means to an end, but does not provide assurance that it can actually
+keep the information confidential.
+Claim should be a reasonable goal (outcome). Good claim: "The system minimizes information
+disclosure during communication"
+Good Claim Checklist: 1. Includes an entity relevant to the argument, 2. a critical property
+of the entity, 3. a value for the property and related uncertainty.
+Use this statement as a potential claim for analysis. Explain why or why not this statement
+is a good claim.
+"""
+Bouncers use TLS and API keys to get decisions from LAPI
+"""
+```
+
+</details>
+
+| | Statement |
+| --- | --- |
+| Before | Bouncers use TLS and API keys to get decisions from LAPI |
+| After | Remediation components receive only authentic, unaltered LAPI decisions, and new decisions reach them within one polling interval. |
+
+**Take away.** My first draft was a design description, which is the same mistake as the "uses AES" example. It named the tools (TLS and API keys) instead of the result I actually needed. The AI pointed out that the risk is in the decisions moving between LAPI and the bouncers, not in the bouncer itself, so I rewrote the claim around the decisions being genuine, unchanged and on time. It also noted that TLS between bouncers and LAPI is optional in CrowdSec, so my draft was not even true for a default install, which matched what we found in our documentation review (DR-1). It suggested splitting the claim into three separate claims. I kept one claim because each of us owns one, and I covered access control inside it as branches R3.1 and R3.5. TLS and API keys moved down into evidence (E3.2.x and E3.5.x), which is where they belong.
+
+#### Prompt 2: rebuttals
+
+<details>
+<summary>Prompt</summary>
+
+```text
+You are an expert software security engineer. Your job is to suggest rebutting defeater for
+a given assurance claim using the concept of eliminative induction where support/assurance
+increases as reasons for doubt are eliminated. Here is an example claim for which rebutting
+defeaters are identified.
+Claim: The bulb will glow when switched on
+Rebuttal 1: Unless switch not connected to light
+Rebuttal 2: Unless no power
+Rebuttal 3: Unless dead light bulb
+Use this statement as a potential claim for analysis. Keep the rebuttals short and intuitive
+for including in a readable diagram.
+"""
+Remediation components enforce only authentic, unaltered LAPI decisions and receive new
+decisions within one polling interval.
+"""
+```
+
+</details>
+
+I ran this on my earlier wording of C3, which said "enforce". The AI gave 14 rebuttals, and I compared them with my diagram.
+
+| # | AI rebuttal | In my diagram? |
+| --- | --- | --- |
+| 1 | Unless TLS is disabled or not verified | Yes, R3.2.1 and R3.2.2 |
+| 2 | Unless the bouncer points to a spoofed LAPI | Yes, R3.2.2 |
+| 3 | Unless the bouncer API key is leaked | Yes, R3.5 and R3.5.3 |
+| 4 | Unless the LAPI itself is compromised | No. Outside the claim; C3 assumes a trusted LAPI host |
+| 5 | Unless decisions are modified in transit | Yes, R3.2 |
+| 6 | Unless the LAPI database is tampered with | No. An insider on the LAPI host, covered by C4 |
+| 7 | Unless the bouncer host or config is tampered with | Partly, R3.5.3 |
+| 8 | Unless the LAPI is unreachable or down | Yes, R3.4.1 to R3.4.3 |
+| 9 | Unless the bouncer has stopped running | No. Led to narrowing the claim (see below) |
+| 10 | Unless the polling interval is misconfigured | Yes, R3.4.4 |
+| 11 | Unless a large decision batch delays processing | Partly, R3.4.3 |
+| 12 | Unless the bouncer fails open on errors | No. Led to narrowing the claim |
+| 13 | Unless the decision type or scope is unsupported | No. Led to narrowing the claim |
+| 14 | Unless the firewall or ipset rule isn't applied | No. Led to narrowing the claim |
+
+**Take away.** Six of the AI's rebuttals matched mine and two partly matched. Its most useful catch was rebuttals 9 and 12 to 14, which all attack the word "enforce". None of my branches argued what a bouncer does after it gets a decision, so my claim promised more than my diagram supported. Instead of adding a sixth branch, I narrowed the claim from "enforce" to "receive" and noted enforcement as out of scope. It also helped to see where the AI fell short. It missed four of my rebuttals: rogue machine registration (R3.1), X-Forwarded-For spoofing (R3.1.3), OCSP failing open (R3.2.3) and decision deletion by a validated machine (R3.3). The AI read "authentic" as "really from LAPI", but our code review showed the bigger risk is LAPI accepting decisions from the wrong source. Two of its rebuttals (4 and 6) were outside my claim because they assume the LAPI host is already compromised. Overall, the AI was good for a quick, broad list and for checking that my claim matched my argument, but the CrowdSec-specific doubts came from reading the source code.
 
 ## C4: Changes to detection content and policy are authorized, attributable to an individual, and cannot silently disable detection
 
@@ -495,5 +582,11 @@ I also learned to use AI with care. It helped me with wording and with a first l
 I owned claim C5. I researched it against the CrowdSec v1.8.1 source code, wrote its narrative from
 Mujib’s diagram. The main issues were that my claim’s scope changed midway, from supply chain to
 community intelligence, and that the diagram and my text drifted apart, which left gaps we found
+
+#### Leonard's Reflection
+
+I built the assurance case for C3, which argues that the decisions CrowdSec's bouncers receive from LAPI are genuine, unchanged and on time. The hardest part was the evidence. A claim is easy to write, but every branch has to end in something you can actually hand to a reviewer, like a test result or a configuration audit, not another claim. Writing the evidence list showed me that CrowdSec has most of the controls it needs, such as per-bouncer keys and machine validation, but many of them are off by default or fail open, like TLS and OCSP checking. I also learned that a rebuttal you cannot defeat should stay open in the diagram rather than be hidden. Decision deletion (R3.3.1) is one I could not fully close.
+
+As team leader, I split the assignment so each of us owned one claim tied to one use case, then merged everyone's sections into one report. The merge showed me that we never agreed on conventions up front. Each section used different headings and ID styles, and two claims ended up with colliding IDs. Next time I would set a template and naming scheme before anyone starts writing, the same way we would agree on a claim before building its argument.
 late. Next time, I’d confirm claim wording and conventions before starting and check in with the team
 earlier.
