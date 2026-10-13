@@ -6,31 +6,163 @@
 
 CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (Multi-server LAPI)
 
-## Top-Level Claim C1 — Log Ingestion
+## Claim - Log Ingestion Resilience and Integrity
 
-### C1 assurance case diagram
+## Narrative
 
+The CrowdSec log ingestion pipeline receives and processes security logs that support the detection of suspicious activity and potential threats. In the assumed enterprise environment, forged, malformed, and oversized log inputs may threaten the pipeline's availability and its ability to process valid security events. The assurance argument addresses whether the pipeline can sustain detection under these adversarial conditions while maintaining a low residual risk of agent crash or detection loss. The argument is supported by subclaims covering network log-source authentication, resilience to oversized inputs, and the integrity of source attribution. Planned evidence includes configuration reviews, adversarial testing, resource measurements, and detection-continuity results.
 
-### C1 narrative
+## C1 — Top-Level Claim
 
+The log-ingestion pipeline sustains detection under forged, malformed and oversized input, with a low residual risk of agent crash or detection loss.
 
-### C1 evidence alignment and gaps (Part 2)
+### C2 assurance case diagram
+![C1 Assurance To Level Claim](resources/static/assurance/final-top-level-C1.png)
 
+*Figure — Assurance case for claim C1. The editable file is `final-top-level-C1.drawio`.*
+
+---
+
+## SC 1.1 — Network Log Source Authentication
+
+The CrowdSec Log Ingestion Pipeline accepts log submissions only from network sources authorized under the defined security policy.
+
+### R 1.1 — Unauthorized Log Submission
+
+**R 1.1.1** Unless network sources lack adequate authentication
+**R 1.1.2** Unless authentication controls are misconfigured or bypassed
+**R 1.1.3** Unless valid credentials are compromised
+
+### E 1.1 — Authentication Verification Records
+
+- Network log-source authorization requirements.
+- Datasource authentication configurations and audit records.
+- Authentication and certificate-validation test results, where applicable.
+- Negative-test results demonstrating rejection of unauthorized submissions.
+- Network access-control verification results for sources without native authentication.
+
+---
+
+## SC 1.2 — Oversized Input Resilience
+
+The CrowdSec Log Ingestion Pipeline remains available and continues processing valid security events when exposed to oversized or resource-intensive log inputs under defined operational conditions.
+
+### R 1.2 — Resource Exhaustion and Processing Disruption
+
+Here are short, intuitive rebutting defeaters for the statement, structured using eliminative induction for a readable diagram:
+
+**R 1.2.1** Unless memory exhausted by oversized payload
+**R 1.2.2** Unless CPU overwhelmed by decompression bomb
+**R 1.2.3** Unless parser process crashes on failure
+**R 1.2.4** Unless valid event queue experiences timeout or bottleneck
+
+### E 1.2 — Input Resilience Test Results
+
+- Boundary-value and oversized-input test results.
+- Decompression-heavy input test results, where applicable.
+- CPU, memory, and processing-latency measurements.
+- Load-test results and engine availability records.
+- Verification results demonstrating continued processing of valid events.
+- Test results evaluated against predefined resource and availability acceptance criteria.
+
+---
+
+## SC 1.3 — Log Source Attribution Integrity
+
+The CrowdSec Log Ingestion Pipeline preserves the correctness of security-event source attribution when processing log entries from the configured and trusted logging environment.
+
+### R 1.3 — False Source Attribution
+
+**R 1.3.1**  Unless attacker-controlled log fields bypass validation
+**R 1.3.2**  Unless upstream logging systems are compromised
+**R 1.3.3**  Unless source information is forged prior to pipeline ingestion
+
+### E 1.3 — Source Attribution Verification Records
+
+- Parser validation results for valid, malformed, and forged log entries.
+- Log-injection and source-attribution test results.
+- Verification results for the trustworthiness of upstream source information.
+- Tests covering trusted and untrusted source addresses.
+- Measured false-attribution rates evaluated against predefined acceptance criteria.
+- Verification results for allowlist handling and suppression logging, where applicable.
+
+---
+
+### Assurance Scope and Assumptions
+
+- The claims apply to the specified CrowdSec version, configured acquisition sources, installed parsers, and detection scenarios in the assumed enterprise environment.
+- Authorization and input-resilience requirements are evaluated separately for each in-scope acquisition method.
+- Successful parsing does not, by itself, establish the authenticity of a source IP address or other log field.
+- Detection effectiveness is evaluated against a defined set of malicious-event test cases and operational acceptance criteria.
+- Evidence listed above is planned evidence until the corresponding tests and reviews have been completed.
+- Each claim is considered supported only when the collected evidence meets its acceptance criteria and the identified rebuttals have been adequately addressed.
 
 #### Prompt 1: claim wording
-
+I prompted Claude Sonnet 5.5 Model with the following prompt:
 ```text
-You are an expert software security engineer.
+You are an expert software security engineer. Your job is to suggest corrections or
+improvements in the phrasing of assurance claims. Claims concern critical properties that
+are risk-related. High confidence is needed in their realization. A claim is always worded
+with a predicate. Avoid claims about the supporting method/techniques.
+Bad claim: "The system uses AES encryption." Why? Because it is not interesting; just the
+technology is just a means to an end, but does not provide assurance that it can actually
+keep the information confidential.
+Claim should be a reasonable goal (outcome). Good claim: "The system minimizes information
+disclosure during communication"
+Good Claim Checklist: 1. Includes an entity relevant to the argument, 2. a critical property of the entity, 3. a value for the property and related uncertainty.
+Use this statement as a potential claim for analysis. Explain why or why not this statement
+is a good claim.
+"""
+CrowdSec handles forged, malformed, and oversized logs without congestion or causing a system failure
 """
 ```
+
+##### Before
+CrowdSec handles forged, malformed, and oversized logs without congestion or causing a system failure
+
+##### After
+The CrowdSec log ingestion pipeline sustains detection under forged, malformed and oversized input, with a low residual risk of agent crash or detection loss.
+
+#### Take Away
+The response was very helpful in correcting my top level claim. Claude responded that my claim was vague for using "handles", unmeasurable for "congestion" and broad for "system failure.
 
 #### Prompt 2: rebuttals
-
+I prompted Gemini 3.5 Flash-Lite with the following prompt:
 ```text
-You are an expert software security engineer. 
+You are an expert software security engineer. Your job is to suggest rebutting defeater for
+a given assurance claim using the concept of eliminative induction where support/assurance
+increases as reasons for doubt are eliminated. Here is an example claim for which rebutting
+defeaters are identified.
+Claim: The bulb will glow when switched on
+Rebuttal 1: Unless switch not connected to light
+Rebuttal 2: Unless no power
+Rebuttal 3: Unless dead light bulb
+Use this statement as a potential claim for analysis. Keep the rebuttals short and intuitive
+for including in a readable diagram.
+"""
+unless oversized or decompression-heavy inputs consume excessive resources, cause process failure, or delay the processing of valid security events beyond acceptable operational limits.
 """
 ```
-#### What I think about the AI prompts
+##### Before
+Unless oversized or decompression-heavy inputs consume excessive resources, cause process failure, or delay the processing of valid security events beyond acceptable operational limits.
+
+##### After
+**R 1.2.1** Unless memory exhausted by oversized payload
+**R 1.2.2** Unless CPU overwhelmed by decompression bomb
+**R 1.2.3** Unless parser process crashes on failure
+**R 1.2.4** Unless valid event queue experiences timeout or bottleneck
+
+#### Take Away
+The response was very helpful in correcting rebuttals. Gemini responded that the initial rebuttal was a compound statement, it mixed different domains and describing an exception more than a claim.
+
+## Assurance Theoretical Scope and Assumptions
+
+**Scope & Boundaries:** Applies strictly to specific CrowdSec versions, topologies, and parsers within the defined enterprise threat model.
+**Orthogonal Verticals:** Authentication, input resilience, and source attribution are evaluated independently per acquisition method. 
+**Syntactic vs. Semantic Limits:** Successful parsing does not prove the authenticity of source IPs or log field values.
+**Acceptance Criteria:** Continuity, availability, and residual risk are judged against predefined operational thresholds.
+**Provisional Evidence:** All listed evidence remains planned until empirical tests and reviews are finalized.
+**Soundness Condition:** The top-level claim is supported only when evidence proves sustained detection efficacy and acceptably low risk of failure.
 
 ## References
 
