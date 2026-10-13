@@ -6,6 +6,39 @@
 
 CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (Multi-server LAPI)
 
+## Top-Level Claim C1 — Log Ingestion
+
+### C1 assurance case diagram
+
+
+### C1 narrative
+
+
+### C1 evidence alignment and gaps (Part 2)
+
+
+#### Prompt 1: claim wording
+
+```text
+You are an expert software security engineer.
+"""
+```
+
+#### Prompt 2: rebuttals
+
+```text
+You are an expert software security engineer. 
+"""
+```
+#### What I think about the AI prompts
+
+## References
+
+- CrowdSec AppSec general setup — <https://docs.crowdsec.net/docs/appsec/quickstart/general_setup>
+- CVE-2026-44982 advisory (GHSA-rw47-hm26-6wr7) — <https://github.com/crowdsecurity/crowdsec/security/advisories/GHSA-rw47-hm26-6wr7>
+- NGINX bouncer AppSec options — <https://docs.crowdsec.net/u/bouncers/nginx>
+
+
 ## Top-Level Claim C2 — AppSec
 
 **Contributor:** Kowshik
