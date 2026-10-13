@@ -16,14 +16,14 @@ The CrowdSec log ingestion pipeline receives and processes security logs that su
 
 The log-ingestion pipeline sustains detection under forged, malformed and oversized input, with a low residual risk of agent crash or detection loss.
 
-### C2 assurance case diagram
+### C1 assurance case diagram
 ![C1 Assurance To Level Claim](resources/static/assurance/final-top-level-C1.png)
 
 *Figure — Assurance case for claim C1. The editable file is `final-top-level-C1.drawio`.*
 
 ---
 
-## SC 1.1 — Network Log Source Authentication
+### SC 1.1 — Network Log Source Authentication
 
 The CrowdSec Log Ingestion Pipeline accepts log submissions only from network sources authorized under the defined security policy.
 
@@ -45,7 +45,7 @@ The CrowdSec Log Ingestion Pipeline accepts log submissions only from network so
 
 ---
 
-## SC 1.2 — Oversized Input Resilience
+### SC 1.2 — Oversized Input Resilience
 
 The CrowdSec Log Ingestion Pipeline remains available and continues processing valid security events when exposed to oversized or resource-intensive log inputs under defined operational conditions.
 
@@ -72,7 +72,7 @@ Here are short, intuitive rebutting defeaters for the statement, structured usin
 
 ---
 
-## SC 1.3 — Log Source Attribution Integrity
+### SC 1.3 — Log Source Attribution Integrity
 
 The CrowdSec Log Ingestion Pipeline preserves the correctness of security-event source attribution when processing log entries from the configured and trusted logging environment.
 
@@ -124,7 +124,7 @@ CrowdSec handles forged, malformed, and oversized logs without congestion or cau
 """
 ```
 
-##### Before
+##### Before 
 CrowdSec handles forged, malformed, and oversized logs without congestion or causing a system failure
 
 ##### After
