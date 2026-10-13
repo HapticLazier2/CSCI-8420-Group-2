@@ -81,7 +81,7 @@ The CrowdSec Log Ingestion Pipeline preserves the correctness of security-event 
 **R 1.3.1**  Unless attacker-controlled log fields bypass validation
 
 **R 1.3.2**  Unless upstream logging systems are compromised
- 
+
 **R 1.3.3**  Unless source information is forged prior to pipeline ingestion
 
 ### E 1.3 — Source Attribution Verification Records
@@ -155,8 +155,11 @@ Unless oversized or decompression-heavy inputs consume excessive resources, caus
 
 ##### After
 **R 1.2.1** Unless memory exhausted by oversized payload
+
 **R 1.2.2** Unless CPU overwhelmed by decompression bomb
+
 **R 1.2.3** Unless parser process crashes on failure
+
 **R 1.2.4** Unless valid event queue experiences timeout or bottleneck
 
 #### Take Away
