@@ -6,6 +6,8 @@
 
 CSCI-8420 Group 2 · System of interest: CrowdSec Security Engine (v1.8.x) · Environment: enterprise network (Multi-server LAPI)
 
+# Part 1: Top-level Claims
+
 ## Claim - Log Ingestion Resilience and Integrity
 
 ## Narrative
@@ -561,7 +563,176 @@ R5.4 asks whether feed deletions or bulk inserts could erase or slow down local 
 - [CrowdSec docs – Community Blocklist](https://docs.crowdsec.net/docs/central_api/community_blocklist)
 - [CrowdSec docs – Local API configuration](https://docs.crowdsec.net/docs/local_api/configuration)
 
-### Reflections
+# Part 2: Evidence Alignment Observations
+
+To evaluate how well the planned evidence in our assurance case diagrams aligns with what the CrowdSec v1.8.1 open-source project provides, every evidence node across Claims **C1–C5** is classified into one of four categories:
+
+- **Easy to get** = CrowdSec already implements the security control and provides a built-in CLI command (`cscli`), configuration file, log output, or verifiable code path that produces the evidence with minimal configuration effort.
+- **Partly there** = The mechanism, test suite, or log partially exists in the CrowdSec engine or Hub repository, but requires additional configuration, custom test cases, or enterprise log forwarding to fully satisfy the sub-claim.
+- **Company work** = The evidence depends on the enterprise deployment topology, network controls, operational load profiles, or internal change-management processes that the open-source project cannot supply.
+- **Gap** = The CrowdSec open-source project lacks the required security control, ships with an insecure or fail-open default, omits critical regression tests, or implements the mechanism inside a proprietary hosted service (CAPI) that cannot be audited from the open-source repository.
+
+---
+
+## C1 — Log Ingestion Resilience and Integrity (Evidence Alignment & Gaps)
+
+Claim C1 argues that the CrowdSec log-ingestion pipeline sustains detection under forged, malformed, and oversized input with a low residual risk of agent crash or detection loss (`UC-1`, `SR-1.1` to `SR-1.5`).
+
+| Evidence | Group | What was found |
+| --- | --- | --- |
+| E1.1.1 Network log-source authorization requirements | Company work | The enterprise must define which hosts, syslog relays, and SIEM forwarders are authorized to send logs for each acquisition method. |
+| E1.1.2 Datasource authentication configurations and audit records | Partly there / **Gap** | The HTTP acquisition module (`pkg/acquisition/modules/http/config.go` L103–126) enforces authentication and refuses to start without an `auth_type` (`basic_auth`, `headers`, or `mtls`). **Gap:** The Kubernetes-audit datasource (`pkg/acquisition/modules/kubernetesaudit/config.go`) has no authentication option at all in v1.8.1; the v1.8.0 fix for `GHSA-rh69-4vqj-9gj8` only added a body size cap, not authentication (`SR-1.3`). |
+| E1.1.3 Authentication and certificate-validation test results | Partly there | Basic HTTP datasource auth tests exist in the repository, but testing mTLS client-certificate validation and revocation handling against enterprise CAs requires custom test execution in the target environment. |
+| E1.1.4 Negative-test results demonstrating rejection of unauthorized submissions | Partly there | Can be collected for the HTTP datasource by sending unauthenticated requests and verifying rejection. **Gap:** Cannot be satisfied natively by CrowdSec for `kubernetes-audit` or unauthenticated syslog endpoints without external network controls. |
+| E1.1.5 Network access-control verification results for sources without native authentication | Company work | Because `kubernetes-audit` and standard syslog datasources lack native authentication in CrowdSec, the enterprise network team must configure and audit firewall ACLs or ingress policies restricting access to those ports. |
+| E1.2.1 Boundary-value and oversized-input test results | Partly there | Following `GHSA-g2x2-jgfg-pg7g` (CVE-2026-44982) and `GHSA-rh69-4vqj-9gj8`, both the HTTP and Kubernetes-audit datasources enforce a configurable 10 MB default body cap (`pkg/acquisition/modules/http/run.go` L219). **Gap:** Read timeouts are incomplete—the HTTP module only enforces a read timeout if `timeout` is manually set, and the Kubernetes-audit module has no read timeout at all (`SR-1.4`). |
+| E1.2.2 Decompression-heavy input test results | Partly there | The 10 MB limit caps decompressed payloads on network datasources after `GHSA-g2x2-jgfg-pg7g`, requiring only a short verification test with a gzip bomb against the acquisition endpoint. |
+| E1.2.3 CPU, memory, and processing-latency measurements | Company work | CrowdSec exposes Prometheus metrics (and `pprof` on the metrics port), but measuring resource consumption under adversarial payloads requires running profiling tests in the enterprise staging environment. |
+| E1.2.4 Load-test results and engine availability records | Company work / **Gap** | Load testing must be performed by the enterprise. **Gap:** To rebut `R 1.2.3` ("Unless parser process crashes on failure"), code review shows that an unhandled panic in any component terminates the entire CrowdSec engine process—stopping all detection—until `systemd` restarts it. |
+| E1.2.5 Verification results demonstrating continued processing of valid events | Company work | Requires an enterprise integration test that injects malformed/oversized streams concurrently with valid attack logs and verifies that valid alerts still fire within acceptable latency bounds (`R 1.2.4`). |
+| E1.2.6 Test results evaluated against predefined resource and availability acceptance criteria | Company work | Operational thresholds for CPU, memory, and queue delay must be defined and evaluated by the enterprise SOC and platform teams. |
+| E1.3.1 Parser validation results for valid, malformed, and forged log entries | Partly there | Grok-based parsers (`pkg/parser/node.go` L181) discard lines that fail to match stage patterns (`SR-1.1`), and Hub CI tests valid/invalid log lines on pull requests. However, adversarial test cases for forged fields must be added by the enterprise. |
+| E1.3.2 Log-injection and source-attribution test results | Company work / **Gap** | Successful Grok parsing only guarantees syntactic structure, not semantic authenticity of an IP field. If an upstream web server logs an unvalidated `X-Forwarded-For` header, the parser will extract the spoofed IP unless custom enterprise tests and proxy-trust rules are verified. Furthermore, no official Hub brute-force scenario correlates distributed low-rate attacks across multiple source IPs targeting a single account (`SR-1.5`). |
+| E1.3.3 Verification results for the trustworthiness of upstream source information | Company work | Depends entirely on hardening upstream logging agents, reverse proxies, and syslog transport outside of CrowdSec (`R 1.3.2`, `R 1.3.3`). |
+| E1.3.4 Tests covering trusted and untrusted source addresses | Easy to get | Can be executed using `crowdsec -dsn` / replay mode with synthetic log lines containing allowlisted (trusted) and external (untrusted) IPs. |
+| E1.3.5 Measured false-attribution rates evaluated against predefined acceptance criteria | Company work | Requires enterprise baseline testing against production or staging log corpora. |
+| E1.3.6 Verification results for allowlist handling and suppression logging | Easy to get | CrowdSec suppresses alerts for allowlisted IPs/ranges and writes an `info`-level log line for every suppression (`pkg/apiserver/controllers/v1/alerts.go` L182, `SR-1.2`). **Gap:** Suppression logs do not record which operator added the allowlist entry (`SR-4.3`). |
+
+**Summary for C1:** Out of 17 evidence items, 2 are easy to get, 5 are partly there, 8 require company work, and 2 are direct gaps in the CrowdSec project (with 3 additional shared gaps).
+
+#### Highlighted Gaps for C1
+1. **No Native Authentication or Read Timeout in Kubernetes-Audit Datasource (`SR-1.3`, `SR-1.4`; E1.1.2, E1.2.1):** While the HTTP datasource requires `auth_type`, `kubernetesaudit/config.go` provides no authentication mechanism and no read timeout, leaving the endpoint exposed to unauthenticated submissions and slowloris-style connection exhaustion unless shielded by an external proxy or firewall.
+2. **Optional Read Timeout on HTTP Datasource (`SR-1.4`; E1.2.1):** The HTTP acquisition module only sets a read timeout if `timeout` is explicitly configured in the datasource YAML.
+3. **Lack of Fault Isolation on Component Panic (`R 1.2.3`; E1.2.4):** A panic in any acquisition or parser routine crashes the entire CrowdSec process rather than isolating the failing worker, blinding detection until the OS service manager restarts the daemon.
+4. **Absence of Cross-IP Account-Targeted Scenarios in the Hub (`SR-1.5`; E1.3.2):** Although the leaky-bucket engine supports grouping by target user, official Hub slow-brute-force scenarios (such as `crowdsecurity/ssh-slow-bf`) group strictly by source IP, leaving distributed botnet sprays across many IPs unmitigated out of the box.
+
+---
+
+## C2 — AppSec (Evidence Alignment & Gaps)
+
+Claim C2 argues that AppSec blocks known-malicious HTTP requests before they reach enterprise web applications, whatever the body framing or AppSec load (`UC-2`, `SR-2.1` to `SR-2.4`).
+
+| Evidence | Group | What was found |
+| --- | --- | --- |
+| E2.1.1 Reverse-proxy configuration audit report | Company work | Only the company knows how its network and reverse proxies are set up. |
+| E2.1.2 Network scan results for direct paths to application origins | Company work | The company's network team must run this scan to confirm no side doors bypass the NGINX bouncers (`R2.1`). |
+| E2.2.1 Attack-payload regression test results | Partly there | The CrowdSec Hub tests its AppSec rules on every pull request. The company still needs to run the tests (including encoded payloads) on its own setup. |
+| E2.2.2 In-band rule inventory for each AppSec configuration | Easy to get | It can be read from the AppSec config files. **Gap in defaults:** CRS rules are not in the default setup, and when added they only watch (out-of-band) and do not block (`R2.2.1`). |
+| E2.2.3 Hub upgrade job logs | Easy to get | It needs a scheduled job that runs `cscli hub update` and `cscli hub upgrade` and saves the output. |
+| E2.2.4 Installed-versus-Hub rule version comparison report | Easy to get | `cscli hub list` shows if each item is up to date. |
+| E2.3.1 Negative test results for each body framing | **Gap** | The bug (`CVE-2026-44982` / `GHSA-rw47-hm26-6wr7`) was fixed in v1.7.8 (`pkg/appsec/request.go` L326), but v1.8.1 has no regression test for chunked or HTTP/2 bodies (`SR-2.2`). |
+| E2.3.2 Build and configuration manifest of the test environment | Easy to get | `cscli version` plus the config files in version control (`UM2.3.1`). |
+| E2.3.3 Unreadable-body test results for HTTP/2 and HTTP/3 | **Gap** | No such tests exist in the engine or `lua-cs-bouncer` repositories. They would have to be written. |
+| E2.3.4 Bouncer configuration baseline | Easy to get | **Gap in defaults:** In `lua-cs-bouncer` (`lib/plugins/crowdsec/config.lua` L23–29), `APPSEC_DROP_UNREADABLE_BODY` is off by default, so the bouncer sends these requests without the body (`SR-2.2`). |
+| E2.4.1 Fault-injection and peak-load test results | Company work | The company must run these tests in its own network, at its own busiest traffic level. |
+| E2.4.2 Failure-action and timeout configuration audit report | Easy to get | Timeouts are set by default (`100 ms`, `100 ms`, `500 ms`, `SR-2.3`). **Gap in defaults:** `APPSEC_FAILURE_ACTION` is `passthrough`, which lets requests through when AppSec fails or times out (`SR-2.4`). |
+| E2.4.3 Fail-open alert test records from the SIEM | **Gap** | Timeouts and errors are logged as errors. But a request sent without its body is logged only at `debug` level (`SR-2.4`), so nobody sees it. It needs a log level change and a SIEM alert rule. |
+
+**Summary for C2:** Out of 13 pieces of evidence, 6 are easy to get, 1 is partly there, 3 need company work, and 3 are gaps in the CrowdSec project. The biggest gaps are the missing body-framing tests, fail-open bouncer defaults, and quiet `debug`-level logging when a request is sent without its body.
+
+---
+
+## C3 — Decision Integrity (Evidence Alignment & Gaps)
+
+Claim C3 argues that remediation components receive only authentic, unaltered LAPI decisions, and new decisions reach them within one polling interval (`UC-3`, `SR-3.1` to `SR-3.6`).
+
+| Evidence | Group | What was found |
+| --- | --- | --- |
+| E3.1.1 Unvalidated-machine alert-push test results | Easy to get | New machines are created unvalidated (`pkg/database/machines.go` L140) and cannot push alerts until `cscli machines validate` (`SR-3.5`). A short test against a fresh registration produces this evidence. |
+| E3.1.2 Auto-registration token generation record | Partly there | The documentation's token example is a placeholder string with no generation command (`DR-8`). **Gap:** Add `openssl rand -hex 32` to the multi-server guide. |
+| E3.1.3 `allowed_ranges` configuration review | Easy to get | LAPI refuses to start with auto-registration enabled and no `allowed_ranges` (`pkg/csconfig/api.go` L546). The review checks that the ranges are narrow; the Kubernetes install page's example allows every private range (`DR-12`). |
+| E3.1.4 `trusted_proxies` configuration audit | **Gap** | If `trusted_proxies` is left out while forwarded headers are on, LAPI trusts every client's `X-Forwarded-For` (`DR-4`), so a client can choose the IP checked against `allowed_ranges`. **Gap:** Document the setting and its default. |
+| E3.1.5 `X-Forwarded-For` spoofing test results | **Gap** | Fails if forwarded headers are active without `trusted_proxies`; requires dedicated spoofing test execution. |
+| E3.2.1 LAPI and bouncer TLS configuration audit | Partly there | TLS and mTLS (`agents_allowed_ou`, `bouncers_allowed_ou`) are supported (`SR-3.4`) but off by default, and the documentation says TLS is unnecessary on a LAN (`DR-1`). |
+| E3.2.2 Packet capture of bouncer-to-LAPI traffic | Company work | Requires an enterprise network packet capture confirming encrypted traffic between bouncers and LAPI. |
+| E3.2.3 Audit of `insecure_skip_verify` and `SSL_VERIFY` settings | Partly there | The documentation tells readers to enable `insecure_skip_verify` for self-signed certificates, and that flag also disables verification toward CAPI (`DR-2`). The NGINX bouncer's `SSL_VERIFY` also covers LAPI calls, which its documentation omits (`DR-5`). |
+| E3.2.4 Man-in-the-middle test results with an untrusted certificate | Company work | Requires an enterprise test harness injecting an untrusted certificate on the bouncer-to-LAPI path. |
+| E3.2.5 CRL deployment record (`crl_path`) | Partly there | CRL checking (`pkg/apiserver/middlewares/v1/tls_auth.go` L51–65) happens only when `crl_path` is set, and the documentation describes its failure behavior incorrectly (`DR-3`, `SR-3.4`). |
+| E3.2.6 Revoked-certificate test results with OCSP responder unreachable | **Gap** | From our code reading of `tls_auth.go`, OCSP fails open: a revoked certificate is accepted when the responder cannot be reached or when the cert has no OCSP URL (`DR-3`, `SR-3.4`). This test currently fails. |
+| E3.3.1 Decision-deletion authorization test results | **Gap** | `trusted_ips` guards only alert deletion (`alerts.go` L343–354), not decision deletion (`decisions.go` L134–155, `DR-7`). Any validated machine can delete decisions (`R3.3.1`), so this test currently fails. |
+| E3.3.2 LAPI network access control list | Company work | An enterprise firewall control, available from the network team to compensate for `R3.3.1`. |
+| E3.3.3 LAPI exposure scan results | Company work | A scan from untrusted network segments confirming LAPI is unreachable from them. |
+| E3.4.1 Decompressed body-limit test results | Easy to get | Since the fix for `CVE-2026-44981` (`GHSA-273h-gvwr-c3qj`), `body_limit.go` (L12–13) caps decompressed bodies at 2 MiB unauthenticated and 50 MiB authenticated (`SR-3.6`). A gzip-bomb test against `/v1/watchers/login` confirms the cap. |
+| E3.4.2 `listen_uri` and published-port configuration record | Partly there | Packages bind LAPI to loopback (`127.0.0.1:8080`), but the official Docker image (`build/docker/config.yaml` L36) binds to `0.0.0.0:8080` (`DR-11`, `SR-3.6`). |
+| E3.4.3 Load test results at peak alert volume | Company work | Enterprise load testing at peak alert volume. |
+| E3.4.4 Rate-limiting proxy configuration | Company work / **Gap** | LAPI has no built-in rate limiting, so capacity has to be measured and protected by an external proxy. |
+| E3.4.5 Bouncer polling-interval configuration audit | Easy to get | Direct configuration review of each deployed bouncer. |
+| E3.4.6 End-to-end decision propagation test results | Company work | A test in the enterprise environment that creates a decision and times its arrival at each bouncer type. |
+| E3.5.1 Bouncer key inventory (`cscli bouncers list`) | Easy to get | LAPI records each bouncer with its IP and last-pull time (`pkg/database/bouncers.go` L132–146, `SR-3.3`). **Gap:** The multi-server guide encourages sharing one key across bouncers (`DR-8`). |
+| E3.5.2 Key revocation test results | Easy to get | `cscli bouncers delete` revokes a single key (`SR-3.1`). The test confirms a deleted key is refused while other bouncers keep working. |
+| E3.5.3 Bouncer configuration file permission audit | Partly there | Only the HAProxy SPOA page explains how to protect a bouncer's key file (`DR-8`). **Gap:** Add the same guidance to the other bouncer pages. |
+
+**Summary for C3:** Of 23 evidence items, 6 are easy to get, 6 are partly there, 7 require company work, and 4 are direct project gaps. Three areas fail on a default v1.8.1 deployment: `trusted_proxies` spoofing (E3.1.4, E3.1.5), OCSP fail-open (E3.2.6), and unrestricted decision deletion by validated machines (E3.3.1).
+
+---
+
+## C4 — Policy & Detection Content Management (Evidence Alignment & Gaps)
+
+Claim C4 argues that changes to detection content and policy are authorized, attributable to an individual, and cannot silently disable detection (`UC-4`, `SR-4.1` to `SR-4.5`).
+
+| Evidence | Group | What was found |
+| --- | --- | --- |
+| E1 Hub CI test results and maintainer review records | Partly there | The Hub repository runs configuration and AppSec-rule tests on pull requests (`.github/workflows`), and the workflows and review history are public on GitHub (`SR-4.1`). **Gap:** No written review policy was found, and downloaded Hub index/data files (`pkg/cwhub/download.go` L56–113) are unsigned. |
+| E2 Upgrade test results for locally modified Hub items | Easy to get | `cscli` marks a modified item as tainted and `cscli hub upgrade` does not overwrite it without `--force` (`pkg/cwhub/sync.go` L376–386, `SR-4.2`). The test is short and can be run on a test host: modify an installed item, run `cscli hub list`, then upgrade. |
+| E3 Documentation and configuration review: no role separation | **Gap** | The review is already done and is easy to repeat. The control it checks does not exist: `cscli` has no roles (`SR-4.4`), and anyone who can run it as root is a full administrator. The LAPI authentication docs define only bouncer and machine roles. Role separation exists only in the paid Console, which does not cover `cscli`. |
+| E4 Source and documentation review: no audit trail | **Gap** | Searching the docs and source for `"audit"`, `"audit trail"`, and `"activity log"` finds no audit log (`SR-4.3`). This evidence confirms the defeater (`R4`), so it shows the control is missing, not that it works. |
+| E5 Test results: no operator identity recorded | **Gap** | The test is easy to run, but its expected result is a failure. Manual decisions record the machine, not the person (`cmd/crowdsec-cli/clidecision/decisions.go` L298). Allowlist changes and machine or bouncer deletions record nothing (`SR-4.3`). |
+| E6 Validation test results for an invalid configuration | Easy to get | Strict parsing aborts startup on any error (`pkg/csconfig/config.go` L64), and the systemd unit runs `crowdsec -t` before every start and reload (`config/crowdsec.service` L8–12, `SR-4.5`). The test is to place a deliberate error in the configuration, run `crowdsec -t`, and then try to reload the service. |
+| E7 Simulation test results for a new scenario | Easy to get | `cscli simulation` (`cmd/crowdsec-cli/clisimulation/simulation.go`) runs a scenario without issuing live decisions (`SR-4.5`), so the test is a short run on a test host. Simulation is optional (step 5 of `UC-4` says "optionally"), so nothing forces a new scenario through it. Proof that the team follows this step is **Company work**: a change-control record per new scenario. |
+| E8 Log review of allowlist suppressions | Partly there | Every suppression path writes an `info`-level log line (`pkg/apiserver/controllers/v1/alerts.go` L182), so the log exists if the log level and retention are set correctly. Collecting it in a SIEM is **Company work**. **Gap:** The line does not say who added the allowlist entry. |
+
+**Summary for C4:** Of the 8 evidence items, 3 are easy to get (E2, E6, E7), 2 are partly there (E1, E8), and 3 are gaps in the CrowdSec project (E3, E4, E5). Because E3, E4, and E5 cannot produce passing evidence on a default v1.8.1 deployment, SC1 and SC2 remain unsupported and SC3 is only partly supported.
+
+#### Highlighted Gaps & Interim Enterprise Evidence for C4
+1. **No per-operator attribution (`SR-4.3`; E4, E5):** CrowdSec writes no audit log of `cscli` actions. An insider can add an allowlist entry, add a manual decision, or delete a machine or bouncer without a record that names them.
+2. **No role separation in `cscli` (`SR-4.4`; E3):** There is no read-only analyst role. Anyone with OS rights to run `cscli` can change any policy.
+3. **No written Hub review policy (`SR-4.1`; E1):** The automated tests exist, but without a documented review policy the maintainer review cannot be audited.
+4. **Optional simulation and weak log attribution (`SR-4.5`; E7, E8):** Simulation is not required before a scenario goes live, and suppression logs do not name the operator who created the entry.
+5. **Interim Compensating Evidence (Company Work):** Until the project closes gaps 1 and 2, the enterprise can collect OS-level `sudo` and `auditd` logs for `cscli` commands, Git version-control history for declarative YAML files, host access reviews restricting shell access to the LAPI server, and change-control tickets requiring `cscli simulation` before production deployment.
+
+---
+
+## C5 — Community Threat Intelligence (Evidence Alignment & Gaps)
+
+Claim C5 argues that community intelligence does not cause sustained blocking of legitimate IP addresses or undermine local detection (`UC-5`, `SR-5.1` to `SR-5.6`).
+
+| Evidence | Group | What was found |
+| --- | --- | --- |
+| E5.1.1 Feed-validation rules and CAPI consensus verification | **Gap** *(Service-side)* | CrowdSec's multi-source consensus and diversity-based trust scoring (`SF-5.1`, `SR-5.1`) run inside CrowdSec SAS's hosted CAPI service (`A5.1`). The documentation states that only signals from unmodified Hub scenarios count, but the consensus algorithm is closed-source and cannot be verified from the OSS repository. |
+| E5.1.2 Acceptance-test results and measured false-positive rates | Company work | Because CAPI consensus cannot be inspected in the OSS repo, the enterprise must measure false-positive rates empirically by checking pulled CAPI IPs (`cscli decisions list -o CAPI`) against its partner IP register and recent customer traffic. |
+| E5.2.1 Single-address allowlist precedence test results | Easy to get | During blocklist pulls (`pkg/apiserver/apic.go` L636–639, L813–848), LAPI updates local allowlists before processing decisions and filters out matching single IP addresses before database insertion (`SR-5.2`). |
+| E5.2.2 CIDR/range allowlist regression test results | **Gap** | Our source review of `pkg/apiserver/apic.go` (L813–848) found a bug: the pull-time allowlist filter only parses single IP addresses, so a blocklist range such as `203.0.113.0/24` is inserted even when a partner's IP address is inside it (`R5.2`). The range-aware clean-up (`apic.go` L678–686) runs only when CAPI sends allowlists in the same pull, or when an administrator runs `cscli allowlists add` or `import` (`cmd/crowdsec-cli/cliallowlists/allowlists.go` L508). |
+| E5.2.3 Allowlist suppression logs for community pulls | Easy to get | Suppression of allowlisted entries during CAPI pulls writes an `info`-level log line (`apic.go` L813–848, `SR-1.2`). |
+| E5.3.1 TLS configuration audit for LAPI-to-CAPI traffic | Partly there / **Gap** | CAPI is reached over HTTPS (`pkg/apiserver/apic.go` L232) with per-instance credentials (`SR-5.4`). **Gap:** Certificate checking toward CAPI follows a shared `insecure_skip_verify` flag (`pkg/csconfig/api.go` L190–195), which the LAPI documentation advises enabling for self-signed certificates (`DR-2`). On a server running both the agent and LAPI, following that advice silently switches off TLS verification toward CAPI. (Additionally, the Splunk notification plugin hardcodes `InsecureSkipVerify: true` in `cmd/notification-splunk/main.go` L115–117). |
+| E5.3.2 Interception and replay test results | **Gap** | In `pkg/apiclient/decisions_service.go` (L175–250), the community feed is a plain list read line-by-line with no cryptographic signature or replay token (`R5.3`). Its integrity depends entirely on TLS, and the OSS repository includes no MITM or replay test suite for CAPI pulls. |
+| E5.3.3 Feed-provenance and decision-origin records | Easy to get | Seven decision origins are defined and stored on every decision (`pkg/types/constants.go` L10–30, `SR-5.3`), allowing operators to inspect or delete community blocklist decisions selectively with `cscli decisions list/delete --origin CAPI`. |
+| E5.4.1 Code review verifying CAPI deletions only affect CAPI origin | Easy to get | Code review of `pkg/apiserver/apic.go` (L449–477) confirms that CAPI delete messages only expire decisions whose origin is `CAPI`, so the community feed cannot erase local scenario or administrator decisions (`R5.4`). |
+| E5.4.2 LAPI load test during bulk blocklist insertion and CAPI outage test | Company work / **Gap** | Load testing LAPI during bulk blocklist insertion is planned **Company work**. **Gap (`SR-5.5`):** While a running LAPI survives CAPI outages, at startup (`pkg/apiserver/apic.go` L244) it must authenticate to CAPI unless a valid token is already cached; if CAPI is unreachable on cold start without a cached token, LAPI fails to start. |
+
+**Summary for C5:** Out of 10 evidence items, 3 are easy to get, 1 is partly there, 2 require company work, and 4 are gaps in the CrowdSec project.
+
+#### Highlighted Gaps for C5
+1. **Pull-Time Allowlist Filter Ignores CIDR Ranges (`SR-5.2`; E5.2.2):** `pkg/apiserver/apic.go` (L813–848) only filters single IP addresses during normal CAPI blocklist pulls, allowing upstream CIDR blocklist ranges to block allowlisted partner IPs until range-aware cleanup (`apic.go` L678–686) is triggered.
+2. **Unsigned Feed Coupled with Shared `insecure_skip_verify` Flag (`SR-5.4`; E5.3.1, E5.3.2):** The community blocklist feed has no cryptographic signature (`decisions_service.go` L175–250) and relies entirely on TLS, which can be inadvertently disabled toward CAPI because `pkg/csconfig/api.go` (L190–195) shares `insecure_skip_verify` between the LAPI client and the CAPI client.
+3. **Cold-Start Failure When CAPI Is Unreachable (`SR-5.5`; E5.4.2):** `pkg/apiserver/apic.go` (L244) prevents LAPI from starting if CAPI is unreachable and no cached token is present.
+4. **Closed-Source Consensus Engine (`SR-5.1`; E5.1.1):** Multi-source consensus runs on CrowdSec SAS's servers and cannot be audited in the open-source repository.
+
+---
+
+## Cross-Claim Synthesis: Overall Evidence Summary
+
+Across all five top-level claims (**C1–C5**), our assurance cases identify **71 distinct evidence items**:
+
+| Claim | Top-Level Assurance Focus | Total Evidence Items | Easy to Get | Partly There | Company Work | Gaps |
+| --- | --- | :---: | :---: | :---: | :---: | :---: |
+| **C1** | Log Ingestion Resilience & Integrity | 17 | 2 | 5 | 8 | 2 *(+3 shared)* |
+| **C2** | AppSec WAF Inspection & Fail-Closed | 13 | 6 | 1 | 3 | 3 *(+3 default gaps)* |
+| **C3** | LAPI Decision Integrity & Timeliness | 23 | 6 | 6 | 7 | 4 |
+| **C4** | Policy & Detection Content Governance | 8 | 3 | 2 | 0 *(2 shared)* | 3 |
+| **C5** | Community Threat Intelligence | 10 | 3 | 1 | 2 | 4 |
+| **Total** | **All 5 CrowdSec Assurance Claims** | **71** | **20 (28%)** | **15 (21%)** | **20 (28%)** | **16 (23%)** |
+
+## Reflections
 
 #### Mujib Reflection
 For this milestone of our team project, I  worked on the initial structure and claims diagrams. In addition to that, I was assigned to project issues focused on developing the C1 assurance case for the CrowdSec log ingestion pipeline. Based on what I learned from the lectures nd other materials, including AI assistance, I identified critical security risks associated with forged, malformed, and oversized log inputs, particularly their potential to cause agent crashes, detection loss, and incorrect source attribution. I developed the top-level claim, supporting subclaims, rebutting defeaters, and planned evidence to evaluate whether the pipeline can sustain detection under these adversarial conditions. I also refined the context and wording of the claims to focus on security outcomes rather than implementation techniques and used the eliminative induction approach to identify concise “unless” rebuttals that represent plausible reasons the claims might fail. The planned evidence includes authentication verification, adversarial input testing, resource measurements, and source-attribution testing. Throughout this work, I referred to the CrowdSec-v1.8.1 source repository and used our project proposal, previous work milestone of security requirements documentation review, and systems security engineering materials to align the assurance argument with the project's objectives. I also used AI tools to help refine the wording, organize the Markdown report, and improve the clarity and consistency of the assurance cases. This milestone helped me better understand how assurance claims, rebuttals, and evidence work together to evaluate the trustworthiness of an open-source security system. 
