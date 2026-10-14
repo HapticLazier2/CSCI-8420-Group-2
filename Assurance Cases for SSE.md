@@ -587,6 +587,17 @@ community intelligence, and that the diagram and my text drifted apart, which le
 
 I built the assurance case for C3, which argues that the decisions CrowdSec's bouncers receive from LAPI are genuine, unchanged and on time. The hardest part was the evidence. A claim is easy to write, but every branch has to end in something you can actually hand to a reviewer, like a test result or a configuration audit, not another claim. Writing the evidence list showed me that CrowdSec has most of the controls it needs, such as per-bouncer keys and machine validation, but many of them are off by default or fail open, like TLS and OCSP checking. I also learned that a rebuttal you cannot defeat should stay open in the diagram rather than be hidden. Decision deletion (R3.3.1) is one I could not fully close.
 
-As team leader, I split the assignment so each of us owned one claim tied to one use case, then merged everyone's sections into one report. The merge showed me that we never agreed on conventions up front. Each section used different headings and ID styles, and two claims ended up with colliding IDs. Next time I would set a template and naming scheme before anyone starts writing, the same way we would agree on a claim before building its argument.
-late. Next time, I’d confirm claim wording and conventions before starting and check in with the team
-earlier.
+As team leader, I split the assignment so each of us owned one claim tied to one use case, then merged everyone's sections into one report. The merge showed me that we never agreed on conventions up front. Each section used different headings and ID styles, and two claims ended up with colliding IDs. Next time I would set a template and naming scheme before anyone starts writing, the same way we would agree on a claim before building its argument late.
+### Team Reflection (compiled)
+
+Across all five reflections, the clearest shared lesson is that an assurance case is only as strong as its evidence. Kowshik and Leonard both found that a claim is easy to write, but every branch has to end in something a reviewer can actually see, such as a test result or a configuration audit, not another claim. Mujib and Kowshik also learned to word claims as security outcomes rather than tools or techniques, and everyone used the "Unless" question to find the doubts their argument had to answer.
+
+Building the cases also taught us about CrowdSec itself. Trung found that you have to dig deep into the system to know what can and cannot change, and Hrudhay and Mujib grounded their claims in the CrowdSec v1.8.1 source code. Kowshik and Leonard reached the same conclusion from different claims: CrowdSec has most of the controls it needs, but many are off by default or fail open, such as AppSec's passthrough setting, TLS between components, and OCSP revocation checking.
+
+AI was useful to all of us, but only as a starting point. It helped with wording, a baseline structure, and a first list of doubts. Kowshik noted that it missed the doubts specific to CrowdSec and suggested some that did not fit his claim, so each suggestion had to be checked against the source code and our earlier reports before it was kept.
+
+The main process problem was coordination. Hrudhay's claim scope changed midway, from supply chain to community intelligence, and his diagram and text drifted apart. When the sections were merged, each one used different headings and ID styles. For the next milestone, we will:
+
+1. Confirm claim wording and scope as a team before anyone starts building.
+2. Agree on one report template, including heading levels, element IDs, and image paths, before writing begins.
+3. Check in with the team earlier, so gaps between diagrams and text are found before the final merge.
