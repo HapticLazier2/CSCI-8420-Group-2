@@ -79,14 +79,14 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 **Triage summary**
 
 | STRIDE | Generated | Mitigated | Not Applicable | Needs Investigation |
-|---|---|---|---|---|
-| Spoofing | | | | |
-| Tampering | | | | |
-| Repudiation | | | | |
-| Information Disclosure | | | | |
-| Denial of Service | | | | |
-| Elevation of Privilege | | | | |
-| **Total** | | | | |
+|---|---:|---:|---:|---:|
+| Spoofing | 8 | 0 | 0 | 8 |
+| Tampering | 7 | 0 | 0 | 7 |
+| Repudiation | 6 | 0 | 0 | 6 |
+| Information Disclosure | 1 | 0 | 0 | 1 |
+| Denial of Service | 16 | 0 | 0 | 16 |
+| Elevation of Privilege | 9 | 0 | 0 | 9 |
+| **Total** | **47** | **0** | **0** | **47** |
 
 **Mitigations for relevant threats**
 
