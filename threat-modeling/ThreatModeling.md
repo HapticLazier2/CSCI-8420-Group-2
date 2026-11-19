@@ -75,6 +75,11 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 **Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/OWNER/REPO/blob/main/threat-model/reports/dfd2.htm) · [Model file](threat-model/dfd2-remediation/dfd2-remediation.tm7)
 
 **Scope.**
+The data flow diagram **2**  DFD-2 models the CrowdSec remediation path and authentication mechanisms. The model covers administrative API requests, configuration and credentials, and enforcement, read, and write decisions.
+
+The threat model DFD-2 and its following assessments examine interactions between CrowdSec components and their data flow. The components that are covered by the model are cscli, the Local API (LAPI), remote bouncers, protected services, as well as the CrowdSec SQL database. The model DFD-2 focuses on authentication, authorization, privilege escalation, data integrity, service availability, and protection of the components against unauthorized administrative operations.
+
+Internet boundary, LAPI host boundary, remote host boundary, and privilege boundary are the boundaries that the DFD-2 model considers to model and assess threats. The model reviews the links and communication flows across the boundaries mentioned that require authentication, authorization, input validation, and secure communication controls.
 
 **Triage summary**
 
