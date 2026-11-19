@@ -168,7 +168,7 @@ The DFD-2 model is a robust model and the heaviest module from the perspective o
 ### Review Results 
 
 | Status |	Count |	Percentage |
-|---|---|--|
+|---|---:|---:|
 Conditional  |	27	57.45%
 Partial	| 19	| 40.43%
 Present	| 1	| 2.13%
