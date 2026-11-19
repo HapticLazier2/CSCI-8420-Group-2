@@ -161,9 +161,11 @@ The following entries have similar threat templates and could possibly be assume
 | D2-17 and D2-28 | Remote-bouncer repudiation threats occur on registration and enforcement-decision interactions. |
 
 
-**Review Summary and Findings**
+## Review Summary and Findings
+
 The DFD-2 model is a robust model and the heaviest module from the perspective of software assurance and security. Reviewing all the code one by one for each data flow requires a lot of time. To complete the code and documentation review, all the AI frontier models, including GPT, Claude, and Gemini, have been used to review all 47 modeled threats, CrowSec repository codes, and CrowSec documentations. CrowdSec v1.8.1 repository and documentation were reviewed across 47 modeled threats from D2-01 through D2-47.  The review found that 27 of the modeled threats are conditionally implemented, and the final status relies on deployment and configuration; 19 are partially implemented and may require further review conclude solid mitigation, and security controls exit. There is only one threat that is solid and present. Team member will review the 
 
+### Review Results 
 
 | Status |	Count |	Percentage |
 |---|---|--|
