@@ -37,35 +37,45 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 
 | Scenario (from earlier assignments) | Misuse case / assurance claim | DFD | Key flows |
 |---|---|---|---|
-| <!-- e.g. Attacker forges decisions to unblock own IP --> | <!-- MUC-x / C1 --> | DFD-2 | LAPI → Bouncer |
+| UC-1 — Ingest & Analyze Logs | MC-1.1, MC-1.2, MC-1.3 / C1 | DFD-1 | Log Files → Security Engine (Agent) → LAPI → CrowdSec DB |
 | | | | |
 
 ### DFD-1: Detection pipeline
 *Owner: Kowshik Chowdhury*
 
-![DFD-1](threat-model/images/dfd1.png)
+![DFD-1](threat-model/images/dfd1-detection.png)
 
 **Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/OWNER/REPO/blob/main/threat-model/reports/dfd1.htm) · [Model file](threat-model/dfd1-detection/dfd1-detection.tm7)
 
-**Scope.** <!-- 2–3 sentences: elements, boundaries, which scenarios -->
+**Scope.** DFD-1 models the CrowdSec detection pipeline from local log and configuration/credential files through the `Security Engine (Agent)` to `LAPI` and the `CrowdSec DB`. It covers log acquisition, parser/scenario processing, Agent-to-LAPI machine authentication and alert submission, and LAPI database reads and writes. The main trust changes are the `Remote Host Boundary` between the Agent and LAPI and the `LAPI Host Boundary` protecting LAPI and its database. This DFD primarily supports UC-1 (Ingest & Analyze Logs), including MC-1.1 through MC-1.3 and SR-1.1 through SR-1.5, and supports assurance claim C1 on log-ingestion resilience, source authentication, and source-attribution integrity.
 
 **Triage summary**
 
 | STRIDE | Generated | Mitigated | Not Applicable | Needs Investigation |
-|---|---|---|---|---|
-| Spoofing | | | | |
-| Tampering | | | | |
-| Repudiation | | | | |
-| Information Disclosure | | | | |
-| Denial of Service | | | | |
-| Elevation of Privilege | | | | |
-| **Total** | | | | |
+|---|---:|---:|---:|---:|
+| Spoofing | 6 | 0 | 0 | 6 |
+| Tampering | 5 | 0 | 0 | 5 |
+| Repudiation | 2 | 0 | 0 | 2 |
+| Information Disclosure | 5 | 0 | 0 | 5 |
+| Denial of Service | 5 | 0 | 0 | 5 |
+| Elevation of Privilege | 8 | 0 | 4 | 4 |
+| **Total** | **31** | **0** | **4** | **27** |
 
 **Mitigations for relevant threats**
 
-| ID | Threat (STRIDE) | Element / flow | XB? | Mitigation | Layer | Quick win / structural |
+| ID | Threat (STRIDE) | Element / flow | [XB] | Mitigation | Layer | Quick win / structural |
 |---|---|---|---|---|---|---|
-| D1-01 | | | | | | |
+| D1-01 | Spoofing / Information Disclosure | Log Files | No | Restrict log-file ownership and permissions so only authorized services and administrators can read or modify acquisition inputs. | deployment/config | Quick win |
+| D1-02 | Tampering | Log lines (file read) | No | Validate and safely parse log input; reject malformed or unexpected records and test parsers with crafted input. | code/config | Structural |
+| D1-03 | Spoofing / Information Disclosure | Config & Credentials | No | Protect configuration and machine credential files with restrictive ownership, permissions, and least-privilege access. | deployment/config | Quick win |
+| D1-04 | Spoofing | Machine login (HTTP/S POST) | Yes | Require authenticated and validated Agent machines before LAPI accepts machine-originated requests. | code/config | Quick win |
+| D1-05 | Tampering / Information Disclosure / Spoofing | Machine login + Alerts (HTTP/S POST) | Yes | Protect Agent-to-LAPI traffic with TLS and server certificate verification; use mTLS where the deployment requires stronger mutual authentication. | config/deployment | Quick win |
+| D1-06 | Tampering / Elevation of Privilege | Machine login + Alerts (HTTP/S POST) | Yes | Validate API structures, field values, sizes, and authentication data before processing; use safe parsing and reject malformed requests. | code | Structural |
+| D1-07 | Denial of Service | Machine login + Alerts (HTTP/S POST) | Yes | Apply request/body-size limits, timeouts, exposure restrictions, monitoring, and resource controls to reduce login or alert flooding. | code/config/deployment | Structural |
+| D1-08 | Repudiation | Machine login + Alerts (HTTP/S POST) | Yes | Record authenticated machine identity, timestamp, request type, and processing result in audit-capable logs. | code/process | Structural |
+| D1-09 | Elevation of Privilege | LAPI | Yes | Run LAPI with least privilege, keep dependencies patched, and use safe request-processing practices to reduce code-execution impact. | code/deployment | Structural |
+| D1-10 | Spoofing / Information Disclosure | CrowdSec DB | No | Protect database location, ownership, permissions, and connection configuration so only LAPI and authorized administrators can access or replace it. | deployment/config | Quick win |
+| D1-11 | Denial of Service | CrowdSec DB / LAPI | No | Use monitoring, retention controls, capacity planning, and resource limits to prevent database growth or workload from exhausting resources. | config/deployment | Structural |
 
 ### DFD-2: Remediation path and authentication
 *Owner: Mujib Latifi*
