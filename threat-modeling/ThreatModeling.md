@@ -70,7 +70,7 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 ### DFD-2: Remediation path and authentication
 *Owner: Mujib Latifi*
 
-![DFD-2](threat-model/images/dfd2.PNG)
+![DFD-2](images/dfd2.PNG)
 
 **Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/OWNER/REPO/blob/main/threat-model/reports/dfd2.htm) · [Model file](threat-model/dfd2-remediation/dfd2-remediation.tm7)
 
