@@ -43,9 +43,9 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 ### DFD-1: Detection pipeline
 *Owner: Kowshik Chowdhury*
 
-![DFD-1](threat-model/images/dfd1-detection.png)
+![DFD-1](threat-modeling/images/dfd1-detection.png)
 
-**Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/OWNER/REPO/blob/main/threat-model/reports/dfd1.htm) · [Model file](threat-model/dfd1-detection/dfd1-detection.tm7)
+**Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/OWNER/REPO/blob/main/threat-modeling/reports/dfd1.htm) · [Model file](threat-modeling/dfd1-detection/dfd1-detection.tm7)
 
 **Scope.** DFD-1 models the CrowdSec detection pipeline from local log and configuration/credential files through the `Security Engine (Agent)` to `LAPI` and the `CrowdSec DB`. It covers log acquisition, parser/scenario processing, Agent-to-LAPI machine authentication and alert submission, and LAPI database reads and writes. The main trust changes are the `Remote Host Boundary` between the Agent and LAPI and the `LAPI Host Boundary` protecting LAPI and its database. This DFD primarily supports UC-1 (Ingest & Analyze Logs), including MC-1.1 through MC-1.3 and SR-1.1 through SR-1.5, and supports assurance claim C1 on log-ingestion resilience, source authentication, and source-attribution integrity.
 
