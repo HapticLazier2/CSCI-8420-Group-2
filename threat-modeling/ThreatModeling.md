@@ -181,7 +181,7 @@ The following entries have similar threat templates and could possibly be assume
 
 ![DFD-3](/threat-modeling/dfd3-external/dfd3-external-cloud.png)
 
-**Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/HapticLazier2/CSCI-8420-Group-2/blob/main/threat-modeling/reports/dfd3.htm) · [Model file](threat-model/dfd3-external/dfd3-external.tm7)
+**Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/HapticLazier2/CSCI-8420-Group-2/blob/main/threat-modeling/reports/dfd3.htm) · [Model file](threat-model/dfd3-external/dfd3-external-cloud.tm7)
 
 **Scope.** This diagram models the external and cloud interactions for the CrowdSec Security Engine across the Internet Boundary, LAPI Host Boundary, and Privilege Boundary. It covers bidirectional signal sharing (offender IPs) and community blocklist synchronization between the Local API (LAPI) and Central API (CAPI), instance enrollment and telemetry reporting to the Online Console, and `cscli` interactions with the CrowdSec Hub to download and store parsers, scenarios, and collections into Hub Configs and LAPI DB.
 
@@ -413,7 +413,7 @@ The main thing this review shows is that a missing control and a control that's 
 | The server can't start without the cloud | Not found by TMT | Missing in code | If the cloud is down during a restart, local protection doesn't come back | Let startup continue if the cloud login fails |
 
 ### Team collaboration
-Task assignments, issues and progress: **[Project board](https://github.com/users/OWNER/projects/N)** · [Issues for this assignment](https://github.com/OWNER/REPO/issues?q=label%3Athreat-model)
+Task assignments, issues and progress: **[Project board](https://github.com/HapticLazier2/CSCI-8420-Group-2/projects)** · [Issues for this assignment](https://github.com/HapticLazier2/CSCI-8420-Group-2/issues)
 
 | Member | Responsibilities |
 |---|---|
