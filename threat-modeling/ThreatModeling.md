@@ -9,7 +9,7 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
    - [DFD-2: Remediation path and authentication](#dfd-2-remediation-path-and-authentication)
    - [DFD-3: External and cloud services](#dfd-3-external-and-cloud-services)
    - [Cross-boundary threat summary](#cross-boundary-threat-summary)
-   - [AI analysis vs TMT](#ai-analysis-vs-tmt-optional)
+   - [AI analysis vs TMT](#ai-analysis-vs-tmt)
 2. [Part 2: Observations](#part-2-observations)
    - [Mitigation review](#mitigation-review)
    - [Gaps](#gaps)
@@ -20,7 +20,7 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 
 ## Part 1: Threat Modeling
 
-**Approach.** We modeled CrowdSec as three DFDs that together cover all of our prioritized scenarios from the Security Requirements and Assurance Case assignments. Each was drawn and analyzed in the Microsoft Threat Modeling Tool using the *SDL TM Knowledge Base (Core)* template. Shared conventions (element names, trust boundaries, triage format) are in [`threat-model/CONVENTIONS.md`](threat-model/CONVENTIONS.md).
+**Approach.** We modeled CrowdSec as three DFDs that together cover all of our prioritized scenarios from the Security Requirements and Assurance Case assignments. Each was drawn and analyzed in the Microsoft Threat Modeling Tool using the *SDL TM Knowledge Base (Core)* template. Shared conventions (element names, trust boundaries, triage format) are in [`CONVENTIONS.md`](CONVENTIONS.md).
 
 **Trust boundaries used across all diagrams**
 
@@ -80,7 +80,7 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 
 ![DFD-2](images/dfd2.PNG)
 
-**Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/HapticLazier2/CSCI-8420-Group-2/blob/main/threat-modeling/reports/dfd2.htm) · [Model file](threat-model/dfd2-remediation/dfd2-remediation.tm7)
+**Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/HapticLazier2/CSCI-8420-Group-2/blob/main/threat-modeling/reports/dfd2.htm) · [Model file](dfd2-remediation/dfd2-remediation.tm7)
 
 **Scope**
 
@@ -181,7 +181,7 @@ The following entries have similar threat templates and could possibly be assume
 
 ![DFD-3](/threat-modeling/dfd3-external/dfd3-external-cloud.png)
 
-**Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/HapticLazier2/CSCI-8420-Group-2/blob/main/threat-modeling/reports/dfd3.htm) · [Model file](threat-model/dfd3-external/dfd3-external-cloud.tm7)
+**Full TMT report:** [View HTML report](https://htmlpreview.github.io/?https://github.com/HapticLazier2/CSCI-8420-Group-2/blob/main/threat-modeling/reports/dfd3.htm) · [Model file](dfd3-external/dfd3-external-cloud.tm7)
 
 **Scope.** This diagram models the external and cloud interactions for the CrowdSec Security Engine across the Internet Boundary, LAPI Host Boundary, and Privilege Boundary. It covers bidirectional signal sharing (offender IPs) and community blocklist synchronization between the Local API (LAPI) and Central API (CAPI), instance enrollment and telemetry reporting to the Online Console, and `cscli` interactions with the CrowdSec Hub to download and store parsers, scenarios, and collections into Hub Configs and LAPI DB.
 
@@ -264,7 +264,7 @@ The following entries have similar threat templates and could possibly be assume
 - **OS-level least privilege, file permission lockdown, and audit logging:** Running CrowdSec services under least-privilege accounts with restricted file permissions on `LAPI DB` and `Hub Configs`, paired with comprehensive local logging of all REST handshakes and `cscli` updates, eliminates local data store spoofing (`S`), resource exhaustion (`D`), and cross-boundary repudiation (`R`) (mitigating D3-04, D3-06, D3-09, D3-11, D3-13, D3-14, D3-15, D3-19, D3-24).
 
 ### AI analysis vs TMT
-We (Team) ran the instructor's STRIDE-per-interaction prompt on an image of each final DFD. The raw outputs are in [`threat-modeling/ai/`](threat-modeling/ai/).
+We (Team) ran the instructor's STRIDE-per-interaction prompt on an image of each final DFD. The raw outputs are in [`ai/`](ai/).
 
 | DFD | Found by both | TMT only | AI only | AI noise / incorrect |
 |---|---|---|---|---|
@@ -425,10 +425,39 @@ Task assignments, issues and progress: **[Project board](https://github.com/Hapt
 
 ### Reflection
 
-**What we learned**
+#### Steve Phan
+What I learned:
 
-**What we found most useful**
+* Practice modeling and designing the system using DFD level 1
+* Threat assessing using STRIDE threat model
+* Mitigate real vulnerabilities scenario from Microsoft TMT
 
-**What we would do differently**
+What I found most useful
 
----
+* Verifying each TMT justification against crowdsecurity/crowdsec packages (pkg/apiserver/apic.go, pkg/cwhub, config/config.yaml) turned abstract threat modeling claims into concrete, auditable engineering findings.
+
+What I would do differently
+
+* Inspect default configuration files (config.yaml) during Part 1 triage: I initially wrote Part 1 justifications based on CrowdSec's documented security capabilities (such as mTLS and OS resource limits). Checking config/config.yaml and crowdsec.service during Part 1 triage would have allowed me to flag "Partial / opt-in" mitigations earlier rather than discovering them during the Part 2 code review.
+
+#### Kowshik
+What I learned:
+From this assignment, I learned how to use a Data Flow Diagram and STRIDE to identify security threats in a real open-source project. I also learned that finding a threat is not enough. We also need to check whether the software actually has a mitigation for the threat.
+
+What I found most useful:
+The most useful part for me was comparing the threat model with the real CrowdSec code, documentation and default configuration. This helped me understand the difference between a control that is fully present, only partially implemented or completely missing.
+
+I also learned that trust boundaries are very important because many serious threats happen when data moves between different systems, such as between the CrowdSec Agent and LAPI. Overall, this assignment helped me understand how threat modeling can be connected with real software implementation and security gaps.
+
+#### Leonard
+What I learned
+
+I learned that a threat model depends heavily on how the diagram is drawn. When our DFD-2 boundaries were too broad, TMT generated 99 threats. After fixing them, it dropped to 47. I also learned that planning a mitigation is not the same as CrowdSec actually having it.
+
+What I found most useful
+
+Checking our mitigations against the real CrowdSec code was the most useful part. It showed which controls actually exist and which are missing. The AI analysis also helped by finding issues TMT missed, but only when its claims were tied to real code.
+
+What I would do differently
+
+I would review trust boundaries before anyone starts triaging, and set earlier deadlines for the reports so the final assembly isn’t rushed.
