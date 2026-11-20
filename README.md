@@ -16,11 +16,14 @@ hypothetical enterprise network (multi-server LAPI) environment.
 
 ## Quick Links
 
-- 📄 [Project Proposal](Proposal.md)
-- 🛡️ [Requirements for Software Security Engineering](Requirements%20for%20SSE.md) — use/misuse case analysis
-- 📋 [Project Board](https://github.com/users/StevePhan412/projects/1)
-- 📚 [Wiki](../../wiki) — team roles, workflow norms, decisions log
-- 🐛 [Open Issues](../../issues)
+- [Project Proposal](Proposal.md)
+- [Requirements for Software Security Engineering](Requirements%20for%20SSE.md) — use/misuse case analysis
+- [Assurance Cases](Assurance%20Cases%20for%20SSE.md) — top-level claims C1–C5 with arguments and evidence
+- [Security Documentation Review](Security_Documentation_Review_1.md) — installation and configuration docs checked against the code
+- [Threat Modeling](threat-modeling/ThreatModeling.md) — DFDs, TMT reports, mitigation review and gaps
+- [Project Board](https://github.com/users/StevePhan412/projects/1)
+- [Wiki](../../wiki) — team roles, workflow norms, decisions log
+- [Open Issues](../../issues)
   
 ## Status
 
@@ -30,6 +33,9 @@ hypothetical enterprise network (multi-server LAPI) environment.
 - [x] Essential interactions with the operational environment (Issues #1 & #2)
 - [x] Use/misuse case analysis for five use cases with derived security requirements (Issue #3)
 - [x] AI-assisted iteration and final use/misuse diagram (Issue #4)
+- [x] Assurance cases for five top-level claims (C1–C5)
+- [x] Security documentation review of CrowdSec's installation and configuration docs
+- [x] Threat modeling — three DFDs in Microsoft TMT, hosted HTML reports, AI STRIDE comparison, mitigation review and gaps
 
 ## Repository Contents
 
@@ -37,6 +43,10 @@ hypothetical enterprise network (multi-server LAPI) environment.
 |---|---|
 | [`Proposal.md`](Proposal.md) | Project proposal: CrowdSec overview, systems engineering view, threats and security features, license and contribution process, security advisories, team reflections |
 | [`Requirements for SSE.md`](Requirements%20for%20SSE.md) | Essential interactions, misuser catalog, use/misuse cases UC-1 – UC-5, coverage check, derived security requirements, AI-assisted review |
+| [`Assurance Cases for SSE.md`](Assurance%20Cases%20for%20SSE.md) | Assurance cases for claims C1–C5 (log ingestion, AppSec, decision integrity, detection-content changes, community intelligence), assumptions, references, reflections |
+| [`Security_Documentation_Review_1.md`](Security_Documentation_Review_1.md) | Review of CrowdSec's security installation and configuration documentation, with each finding checked against the v1.8.1 code |
+| [`threat-modeling/ThreatModeling.md`](threat-modeling/ThreatModeling.md) | Threat modeling submission: scenario-to-DFD mapping, three DFDs, cross-boundary threats, AI vs TMT comparison, mitigation review, gaps, reflection |
+| [`threat-modeling/`](threat-modeling) | TMT model files (`.tm7`), diagram images, TMT HTML reports (`reports/`), AI STRIDE runs (`ai/`), team conventions and boundary-review checklist |
 | [`resources/static/`](resources/static) | Systems engineering diagram and use-case diagrams (PNG exports and `.drawio` sources) |
 | [`resources/static/issue3-4/`](resources/static/issue3-4) | Per-use-case use/misuse diagrams, the final combined diagram, and the editable `CrowdSec_Use_Misuse_Cases.drawio` |
 | [`.github/workflows/blank.yml`](.github/workflows/blank.yml) | CI: markdown link checking and linting on every push/PR to `main` |
