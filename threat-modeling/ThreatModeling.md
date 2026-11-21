@@ -36,7 +36,12 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 | Scenario (from earlier assignments) | Misuse case / assurance claim | DFD | Key flows |
 |---|---|---|---|
 | UC-1 — Ingest & Analyze Logs | MC-1.1, MC-1.2, MC-1.3 / C1 | DFD-1 | Log Files → Security Engine (Agent) → LAPI → CrowdSec DB |
-| | | | |
+| UC-2 — Inspect HTTP Request (AppSec / WAF) | MC-2.1, MC-2.2, MC-2.3 / C2 | DFD-2 | Protected Services ↔ Remote Bouncer (enforcement decisions) |
+| UC-3 — Retrieve & Enforce Decisions | MC-3.1, MC-3.2 / C3 | DFD-2 | Remote Bouncer → LAPI (X-Api-Key); LAPI → Remote Bouncer (decisions); Remote Bouncer → Protected Services |
+| UC-3 — Retrieve & Enforce Decisions | MC-3.3, MC-3.4 / C3 | DFD-1 | Security Engine (Agent) → LAPI (Machine login, Alerts) |
+| UC-4 — Manage Policy & Detection Content | MC-4.2, MC-4.3 / C4 | DFD-2 | cscli → LAPI (administrative API requests); Config and Credentials → LAPI |
+| UC-4 — Manage Policy & Detection Content | MC-4.1 / C4 | DFD-3 | Crowdsec CLI ↔ Crowdsec Hub (Request config, Download parsers and scenarios) |
+| UC-5 — Exchange Threat Intelligence | MC-5.1, MC-5.2, MC-5.3, MC-5.4 / C5 | DFD-3 | LAPI → CAPI (Send offender IPs); CAPI → LAPI (Transfer community blocklist); LAPI → Online console (Enrollment and Telemetry) |
 
 ### DFD-1: Detection pipeline
 *Owner: Kowshik Chowdhury*
