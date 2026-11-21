@@ -173,13 +173,19 @@ The following entries have similar threat templates and could possibly be assume
 | D2-16 and D2-27 | Remote-bouncer availability threats occur on registration and enforcement-decision interactions. |
 | D2-17 and D2-28 | Remote-bouncer repudiation threats occur on registration and enforcement-decision interactions. |
 
-## Important assessment limitations
 
-1. The report marks all 47 threats as Not Started. None of the recommended mitigations above should be interpreted as implemented or verified.
-2. The report supplies generated threat descriptions, not evidence that each vulnerability exists.
-3. The XB classifications are based on the supplied diagram structure and interaction names. They should be checked against the original diagram before being treated as final.
-4. The report does not provide implementation evidence, test results, owners, or mitigation validation.
-5. Priority is High for all 47 entries in the source report. No independent risk reassessment has been performed.
+## Review Summary and Findings
+
+The DFD-2 model is a robust model and the heaviest module from the perspective of software assurance and security. Reviewing all the code one by one for each data flow requires a lot of time. To complete the code and documentation review, all the AI frontier models, including GPT, Claude, and Gemini, have been used to review all 47 modeled threats, CrowSec repository codes, and CrowSec documentations. CrowdSec v1.8.1 repository and documentation were reviewed across 47 modeled threats from D2-01 through D2-47.  The review found that 27 of the modeled threats are partially implemented and rely on configuration and deployment as their mitigation, 19 are partially implemented and may require further review conclude solid mitigation, and security controls exit. There is only one threat that is solid and present. Team member will review the 
+
+### Review Results 
+
+| Status |	Count |	Percentage |
+|---|---:|---:|
+Partial (Rely on configurations and deployment)  |	27	| 57.45% |
+Partial	| 19	| 40.43%  |
+Present	| 1	| 2.13%  |
+Total	| 47	|  100%  |
 
 ### DFD-3: External and cloud services
 *Owner: Trung Phan*
