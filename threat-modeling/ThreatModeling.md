@@ -473,3 +473,12 @@ Checking our mitigations against the real CrowdSec code was the most useful part
 What I would do differently
 
 I would review trust boundaries before anyone starts triaging, and set earlier deadlines for the reports so the final assembly isn’t rushed.
+
+
+#### Mujib
+
+This milestone of the group project assignment helped me learn threat modeling. Throughout the assignment, I learned how to use the Microsoft Threat Modeling Tool TMT to model threats using Data Flow Diagrams DFD. In addition, I learned how to categorize the threats. I was assigned to Module 2, or DFD-2 remediation and auth, which was heavy and core from a software assurance perspective. In addition, I learned that proper CrowdSec configuration is crucially important when deploying it in an enterprise environment. 
+
+Every step of the assignment was useful. It was great to learn  the diagram notation, using TMT, and drawing the data flow diagrams, analyzing the threats, and looking at docs and code to find pointers and evidence of implementation. The initial diagram generated 99 threats. After modifications, the number of threats dropped to 47.
+
+Thanks to Leonard, our team lead, who assisted in reviewing the DFD-2 model, trust boundaries, and triage, which helped with part 2 of the assignment as well. If I could do anything differently, I would choose one DFD for the team and dive deep into just 10 threats. 
