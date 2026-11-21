@@ -451,6 +451,11 @@ The most useful part for me was comparing the threat model with the real CrowdSe
 
 I also learned that trust boundaries are very important because many serious threats happen when data moves between different systems, such as between the CrowdSec Agent and LAPI. Overall, this assignment helped me understand how threat modeling can be connected with real software implementation and security gaps.
 
+#### Hrudhay
+What I learned: Where you draw the trust boundaries decides what a threat model can find. TMT produced 157 threats across our three DFDs, but none of them covered how CrowdSec downloads its detection rules. Both ends of that flow were inside the same boundary, so the tool never looked at it, and that's where our worst findings ended up being.
+
+What I found most useful: Checking each claimed mitigation against the actual CrowdSec source instead of taking the triage at its word. More than once, a threat was marked as handled when the code showed it wasn't. That gap taught me more than anything else in this assignment.
+
 #### Leonard
 What I learned
 
