@@ -61,19 +61,19 @@ Leonard Meredith (lead) · Kowshik Chowdhury · Mujib Latifi · Trung Phan · Hr
 
 **Mitigations for relevant threats**
 
-| ID | Threat (STRIDE) | Element / flow | [XB] | Mitigation | Layer | Quick win / structural |
-|---|---|---|---|---|---|---|
-| D1-01 | Spoofing / Information Disclosure | Log Files | No | Restrict log-file ownership and permissions so only authorized services and administrators can read or modify acquisition inputs. | deployment/config | Quick win |
-| D1-02 | Tampering | Log lines (file read) | No | Validate and safely parse log input; reject malformed or unexpected records and test parsers with crafted input. | code/config | Structural |
-| D1-03 | Spoofing / Information Disclosure | Config & Credentials | No | Protect configuration and machine credential files with restrictive ownership, permissions, and least-privilege access. | deployment/config | Quick win |
-| D1-04 | Spoofing | Machine login (HTTP/S POST) | Yes | Require authenticated and validated Agent machines before LAPI accepts machine-originated requests. | code/config | Quick win |
-| D1-05 | Tampering / Information Disclosure / Spoofing | Machine login + Alerts (HTTP/S POST) | Yes | Protect Agent-to-LAPI traffic with TLS and server certificate verification; use mTLS where the deployment requires stronger mutual authentication. | config/deployment | Quick win |
-| D1-06 | Tampering / Elevation of Privilege | Machine login + Alerts (HTTP/S POST) | Yes | Validate API structures, field values, sizes, and authentication data before processing; use safe parsing and reject malformed requests. | code | Structural |
-| D1-07 | Denial of Service | Machine login + Alerts (HTTP/S POST) | Yes | Apply request/body-size limits, timeouts, exposure restrictions, monitoring, and resource controls to reduce login or alert flooding. | code/config/deployment | Structural |
-| D1-08 | Repudiation | Machine login + Alerts (HTTP/S POST) | Yes | Record authenticated machine identity, timestamp, request type, and processing result in audit-capable logs. | code/process | Structural |
-| D1-09 | Elevation of Privilege | LAPI | Yes | Run LAPI with least privilege, keep dependencies patched, and use safe request-processing practices to reduce code-execution impact. | code/deployment | Structural |
-| D1-10 | Spoofing / Information Disclosure | CrowdSec DB | No | Protect database location, ownership, permissions, and connection configuration so only LAPI and authorized administrators can access or replace it. | deployment/config | Quick win |
-| D1-11 | Denial of Service | CrowdSec DB / LAPI | No | Use monitoring, retention controls, capacity planning, and resource limits to prevent database growth or workload from exhausting resources. | config/deployment | Structural |
+| ID | Threat (STRIDE) | Element / flow | [XB] | Mitigation | Layer | Quick win / structural | Part 2 ref |
+|---|---|---|---|---|---|---|---|
+| D1-01 | Spoofing / Information Disclosure | Log Files | No | Restrict log-file ownership and permissions so only authorized services and administrators can read or modify acquisition inputs. | deployment/config | Quick win | D1-17 |
+| D1-02 | Tampering | Log lines (file read) | No | Validate and safely parse log input; reject malformed or unexpected records and test parsers with crafted input. | code/config | Structural | D1-18 |
+| D1-03 | Spoofing / Information Disclosure | Config & Credentials | No | Protect configuration and machine credential files with restrictive ownership, permissions, and least-privilege access. | deployment/config | Quick win | D1-03 |
+| D1-04 | Spoofing | Machine login (HTTP/S POST) | Yes | Require authenticated and validated Agent machines before LAPI accepts machine-originated requests. | code/config | Quick win | D1-04 |
+| D1-05 | Tampering / Information Disclosure / Spoofing | Machine login + Alerts (HTTP/S POST) | Yes | Protect Agent-to-LAPI traffic with TLS and server certificate verification; use mTLS where the deployment requires stronger mutual authentication. | config/deployment | Quick win | D1-05 |
+| D1-06 | Tampering / Elevation of Privilege | Machine login + Alerts (HTTP/S POST) | Yes | Validate API structures, field values, sizes, and authentication data before processing; use safe parsing and reject malformed requests. | code | Structural | D1-07 |
+| D1-07 | Denial of Service | Machine login + Alerts (HTTP/S POST) | Yes | Apply request/body-size limits, timeouts, exposure restrictions, monitoring, and resource controls to reduce login or alert flooding. | code/config/deployment | Structural | D1-07, D1-08 |
+| D1-08 | Repudiation | Machine login + Alerts (HTTP/S POST) | Yes | Record authenticated machine identity, timestamp, request type, and processing result in audit-capable logs. | code/process | Structural | D1-10, D1-12 |
+| D1-09 | Elevation of Privilege | LAPI | Yes | Run LAPI with least privilege, keep dependencies patched, and use safe request-processing practices to reduce code-execution impact. | code/deployment | Structural | Gaps: engine runs as root |
+| D1-10 | Spoofing / Information Disclosure | CrowdSec DB | No | Protect database location, ownership, permissions, and connection configuration so only LAPI and authorized administrators can access or replace it. | deployment/config | Quick win | D1-13, D1-14 |
+| D1-11 | Denial of Service | CrowdSec DB / LAPI | No | Use monitoring, retention controls, capacity planning, and resource limits to prevent database growth or workload from exhausting resources. | config/deployment | Structural | D1-15 |
 
 ### DFD-2: Remediation path and authentication
 *Owner: Mujib Latifi*
@@ -308,7 +308,7 @@ Five of these ten came from the AI, not TMT. Honestly, that's the strongest case
 ### Mitigation review
 As a team, we checked the source, docs and default config for every mitigation we expected to find. All code references are to release v1.8.1, and every path in the Evidence column links to that line on GitHub.
 
-The DFD-3 rows take their expected control straight from that diagram's triage justifications, one per generated threat. So for DFD-3, the status column is really a check on whether the triage got it right. The DFD-1 and DFD-2 rows are our own, because those models haven't been triaged yet.
+The DFD-3 rows take their expected control straight from that diagram's triage justifications, one per generated threat. So for DFD-3, the status column is really a check on whether the triage got it right. The DFD-1 rows match Kowshik's triaged model; the Part 2 ref column in the DFD-1 section links each planned mitigation to its row here, and D1-17 and D1-18 come from his DFD-1 review. The DFD-2 rows are our own, because that model hasn't been triaged yet.
 
 We added the six rows numbered D3-S1 to D3-S6 ourselves. TMT didn't generate any tampering or spoofing threats for the hub download flows, so no owner ever gave those controls a mitigation ID. They come from the AI analysis and our code review.
 
@@ -326,10 +326,12 @@ We added the six rows numbered D3-S1 to D3-S6 ourselves. TMT didn't generate any
 | DFD-1 | D1-10 | Every alert can be traced to the machine that sent it | Present | [`pkg/apiserver/controllers/v1/alerts.go#L186`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/pkg/apiserver/controllers/v1/alerts.go#L186) | The server takes the machine name from the login token. |
 | DFD-1 | D1-11 | Admin actions can be traced to a person | **Absent** | [`cmd/crowdsec-cli/clidecision/decisions.go#L156`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/cmd/crowdsec-cli/clidecision/decisions.go#L156), [`#L270`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/cmd/crowdsec-cli/clidecision/decisions.go#L270) | The command-line tool records the machine account, not the user. Everyone with root on the box looks the same. |
 | DFD-1 | D1-12 | Security records can't be quietly changed | **Absent** | — | No audit log, and the docs don't mention one. Records sit in an ordinary database that gets pruned. |
-| DFD-1 | D1-13 | Only the owner can read the database file | Present | [`pkg/database/database.go#L83`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/pkg/database/database.go#L83) | Created with mode 0600. |
+| DFD-1 | D1-13 | Only the owner can read the database file | Partial | [`pkg/database/database.go#L83-L95`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/pkg/database/database.go#L83-L95) | Created with mode 0600, then set to 0640, so the file's group can read it too. |
 | DFD-1 | D1-14 | The database is encrypted at rest | **Absent** | — | There's no option for it. |
 | DFD-1 | D1-15 | The database can't grow forever | Present | — | By default it keeps 5000 alerts or seven days, whichever comes first. The catch is that this also throws away evidence (see D1-12). |
 | DFD-1 | D1-16 | Bad config is caught before it's used | Present | [`config/crowdsec.service#L8-L12`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/config/crowdsec.service#L8-L12), [`pkg/csconfig/config.go#L64`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/pkg/csconfig/config.go#L64) | Any config error stops startup, and the service tests the config before every start and reload. |
+| DFD-1 | D1-17 | Restrict log-file ownership and permissions so only authorized services and administrators can read or modify acquisition inputs. | Partial | [CrowdSec file acquisition docs](https://docs.crowdsec.net/docs/log_processor/data_sources/file/) | CrowdSec reads host log files but the supplied project evidence does not show a CrowdSec-specific permission mechanism for arbitrary /var/log inputs; protection depends on host filesystem permissions. |
+| DFD-1 | D1-18 | Validate and safely parse log input; reject malformed or unexpected records and test parsers with crafted input. | Present | [`pkg/parser/node.go#L181`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/pkg/parser/node.go#L181) | Earlier requirements review found that non-matching lines are marked unparsed and discarded before scenarios. |
 | DFD-2 | D2-01 | Each bouncer gets its own credential that can be revoked on its own | Present | [`cmd/crowdsec-cli/clibouncer/add.go`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/cmd/crowdsec-cli/clibouncer/add.go), [`delete.go`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/cmd/crowdsec-cli/clibouncer/delete.go) | `cscli bouncers add` creates one key per bouncer, and `delete` revokes it. |
 | DFD-2 | D2-02 | Bouncer keys are stored hashed, not in the clear | Present | [`pkg/apiserver/middlewares/v1/api_key.go#L79`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/pkg/apiserver/middlewares/v1/api_key.go#L79) | The key is hashed with SHA-512 and looked up by hash. There's no salt, but that's fine for long random keys. |
 | DFD-2 | D2-03 | Bouncers can only read decisions, never change them | Present | [`pkg/apiserver/controllers/controller.go#L132-L156`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/pkg/apiserver/controllers/controller.go#L132-L156) | A bouncer key can only reach the routes that read decisions, plus the one for reporting usage metrics. This is the best least-privilege result in the whole model. |
@@ -380,7 +382,7 @@ We added the six rows numbered D3-S1 to D3-S6 ourselves. TMT didn't generate any
 | DFD-3 | D3-S5 | Rule updates are reviewed before going live | **Absent** | [`build/debian/hubupdate.sh`](https://github.com/crowdsecurity/crowdsec/blob/v1.8.1/build/debian/hubupdate.sh) | A daily timer updates and reloads everything, with no review step. |
 | DFD-3 | D3-S6 | Blocklists and console pushes are signed | **Absent** | [`pkg/apiclient/`](https://github.com/crowdsecurity/crowdsec/tree/v1.8.1/pkg/apiclient), `pkg/apiserver/papi*` | We searched for any signing or signature check and found none. Only TLS protects them. |
 
-**Summary:** Out of 65 expected mitigations, 24 are present, 17 are partial, 22 are missing and 2 don't apply.
+**Summary:** Out of 67 expected mitigations, 24 are present, 19 are partial, 22 are missing and 2 don't apply.
 
 The DFD-3 numbers deserve their own line. Its triage marks all 27 generated threats as "Mitigation Implemented". When we checked those same 27 against the source, we got 10 present, 8 partial, 7 absent and 2 not applicable.
 
